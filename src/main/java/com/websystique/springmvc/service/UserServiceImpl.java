@@ -36,4 +36,10 @@ public class UserServiceImpl implements UserService{
 			return false;
 		
 	}
+	
+	public void deleteUser(User user) {
+		map.remove(user.getEmail());
+		System.out.println(map);
+	}
+	
 }
