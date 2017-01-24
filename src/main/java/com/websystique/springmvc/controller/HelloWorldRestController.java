@@ -43,6 +43,13 @@ public class HelloWorldRestController {
  
     
      
+    @RequestMapping(value = "/user/exist", method = RequestMethod.GET)
+    public boolean userExist(@RequestBody User user, UriComponentsBuilder ucBuilder) {
+        if (userService.isUserExist(user)) {
+        	return true;
+        }
+        return false;
+    }
     
  
 }
