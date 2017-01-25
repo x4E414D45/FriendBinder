@@ -73,8 +73,7 @@
 
         <!-- Sign Up Form
         ================================================= -->
-        <div class="sign-up-form">
-                <a href="index.html" class="logo"><img src="<c:url value='/static/images/logo.png' />" alt="Friend Finder"/></a>
+        <div class="sign-up-form">            
                 <h2 class="text-white">Find My Friends</h2>
                 <div class="line-divider"></div>
                 <div class="form-wrapper">
@@ -112,7 +111,7 @@
                                                 </fieldset>
                                 <p>By signning up you agree to the terms</p>
                                 <button type="submit" class="btn-secondary"
-                                ng-disabled="myForm.$invalid" />Get Started</button>
+                                ng-disabled="myForm.$invalid" />Create Account</button>
                             </form>
                 </div>               
         </div><!-- Sign Up Form End -->
