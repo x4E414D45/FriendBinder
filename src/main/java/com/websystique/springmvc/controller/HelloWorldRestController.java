@@ -42,7 +42,7 @@ public class HelloWorldRestController {
     }
  
     @RequestMapping(value = "/user/delete", method = RequestMethod.POST)
-    public boolean createUser(@RequestBody User user,    UriComponentsBuilder ucBuilder) {
+    public boolean deleteUser(@RequestBody User user,    UriComponentsBuilder ucBuilder) {
         System.out.println("Deleting User " + user.getEmail());
      
         userService.deleteUser(user);
