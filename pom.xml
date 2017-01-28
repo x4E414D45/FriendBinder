@@ -2,10 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.websystique.springmvc</groupId>
-	<artifactId>Friendify</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
-	<name>Friendify Maven Webapp</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,6 +37,11 @@
 		  	<artifactId>jsoup</artifactId>
 		  	<version>1.10.2</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-math3</artifactId>
+		    <version>3.2</version>
+		</dependency>
 	</dependencies>
 
 
@@ -66,4 +69,6 @@
 		</plugins>
 		<finalName>Friendify</finalName>
 	</build>
+	<name>rafiki</name>
+	<artifactId>rafiki</artifactId>
 </project>
