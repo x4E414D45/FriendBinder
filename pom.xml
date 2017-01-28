@@ -62,12 +62,12 @@
 				<version>2.4</version>
 				<configuration>
 					<warSourceDirectory>src/main/webapp</warSourceDirectory>
-					<warName>Friendify</warName>
+					<warName>rafiki</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>Friendify</finalName>
+		<finalName>rafiki</finalName>
 	</build>
 	<name>rafiki</name>
 	<artifactId>rafiki</artifactId>
