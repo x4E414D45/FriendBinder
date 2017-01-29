@@ -2,6 +2,8 @@ package com.websystique.springmvc.controller;
  
 import java.util.List;
 
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealVector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -57,5 +59,13 @@ public class HelloWorldRestController {
         return false;
     }
     
+    @RequestMapping(value = "/similarity", method = RequestMethod.GET)
+    public double similarity() {
+    	Double d_a[] = {1.0, 2.0, 3.0};
+    	Double d_b[] = {2.0, 2.0, 5.0};
+    	RealVector a = new ArrayRealVector(d_a);
+    	RealVector b = new ArrayRealVector(d_b);
+    	return a.cosine(b);
+    }
  
 }
