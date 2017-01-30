@@ -61,4 +61,13 @@ public class HelloWorldRestController {
     	return a.cosine(b);
     }
  
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public void searchUser(@RequestBody User user, UriComponentsBuilder ucBuilder)
+    {
+        if(userService.isUserExist(user))
+        {
+            System.out.println(user.getName());
+        }
+    }
+ 
 }
