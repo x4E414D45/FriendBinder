@@ -38,12 +38,12 @@ public class HelloWorldRestController {
         if (userService.isUserExist(user)) {
             System.out.println("A User with mail id " + user.getEmail() + " already exist");
         }
-        System.out.println("check");
-        
+        //System.out.println("check");
+        else
         userService.saveUser(user);
         return true;
     }
-     
+    
     @RequestMapping(value = "/user/exist", method = RequestMethod.GET)
     public boolean userExist(@RequestBody User user, UriComponentsBuilder ucBuilder) {
         if (userService.isUserExist(user)) {
