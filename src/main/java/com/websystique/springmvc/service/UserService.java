@@ -12,8 +12,9 @@ public interface UserService {
 	void saveUser(User user);
 
 	boolean isUserExist(User user);
-	
-	void deleteUser(User user);
+
+
+	String passwordEncryption(String password);
 	
 	
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.websystique.springmvc.core.MongoDBConnection;
 import com.websystique.springmvc.model.User;
 import com.websystique.springmvc.service.UserService;
  
@@ -23,32 +24,24 @@ import com.websystique.springmvc.service.UserService;
 public class HelloWorldRestController {
  
     @Autowired
-    UserService userService;  //Service which will do all data retrieval/manipulation work
+    UserService userService; 
+    @Autowired
+    MongoDBConnection connection;//Service which will do all data retrieval/manipulation work
  
-    
-   
-     
-     
     //-------------------Create a User--------------------------------------------------------
      
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
     public boolean createUser(@RequestBody User user,    UriComponentsBuilder ucBuilder) {
+    	user.setPassword(userService.passwordEncryption(user.getPassword()));
         System.out.println("Creating User " + user.getEmail());
  
         if (userService.isUserExist(user)) {
             System.out.println("A User with mail id " + user.getEmail() + " already exist");
         }
+        System.out.println("check");
         
         userService.saveUser(user);
         return true;
-    }
- 
-    @RequestMapping(value = "/user/delete", method = RequestMethod.POST)
-    public boolean deleteUser(@RequestBody User user,    UriComponentsBuilder ucBuilder) {
-        System.out.println("Deleting User " + user.getEmail());
-     
-        userService.deleteUser(user);
-          return true;
     }
      
     @RequestMapping(value = "/user/exist", method = RequestMethod.GET)
