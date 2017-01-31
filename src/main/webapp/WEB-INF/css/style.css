@@ -353,6 +353,36 @@ textarea{
   border: 0;
 }
 
+.navbar-inverse {
+  background: #000000;
+  color: #ffffff;
+}
+
+.navbar-inverse .navbar-nav > .active > a {
+  background: #696969;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .active > a:hover {
+  background: #696969;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .active > a:focus {
+  background: #696969;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .open > a {
+  background: #696969;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .open > a:hover {
+  background: #1a237e;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .open > a:focus {
+  background: #1a237e;
+  color: #ffffff;
+}
+
 /*For Homepage Header*/
 
 #header.lazy-load{
