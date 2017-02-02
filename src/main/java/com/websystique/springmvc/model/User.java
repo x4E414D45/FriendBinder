@@ -1,11 +1,16 @@
 package com.websystique.springmvc.model;
 
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealVector;
+
+
 public class User {
 
 	private long id;
 	private String name;
 	private String email;
 	private String password;
+	private RealVector vectorRepr;
 	public User(){
 		id=0;
 	}
@@ -32,6 +37,12 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+ 	public RealVector getVectorRepr() {
+		return vectorRepr;
+	}
+	public void setVectorRepr(RealVector v) {
+		this.vectorRepr = v;
 	}
 	public User(long id, String name, String email, String password) {
 		super();

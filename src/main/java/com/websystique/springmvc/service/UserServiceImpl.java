@@ -32,13 +32,12 @@ public class UserServiceImpl implements UserService{
 	{
 		BasicDBObject searchForEmail= new BasicDBObject().append("email", user.getEmail());
 
-	DBCursor checkEmailExistence = connection.createConnection().find(searchForEmail);
+		DBCursor checkEmailExistence = connection.createConnection().find(searchForEmail);
 
-	while (checkEmailExistence.hasNext())
+		while (checkEmailExistence.hasNext())
 		{return true;}
 		
-			return false;
-		
+		return false;
 	}
 	
 	public String passwordEncryption(String password)
