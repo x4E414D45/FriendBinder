@@ -44,7 +44,7 @@ public class Recommender {
 		Collections.sort(list, new Comparator<Map.Entry<User, Double>>() {
 		    public int compare(Map.Entry<User, Double> o1,
 				       Map.Entry<User, Double> o2) {
-			return (o1.getValue()).compareTo(o2.getValue());
+			return (o2.getValue()).compareTo(o1.getValue());
 		    }
 		});
 
