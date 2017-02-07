@@ -10,7 +10,9 @@ public class User {
 	private String name;
 	private String email;
 	private String password;
+	private String interests;
 	private RealVector vectorRepr;
+
 	public User(){
 		id=0;
 	}
@@ -37,6 +39,12 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getInterests() {
+		return interests;
+	}
+	public void setInterests(String interests) {
+		this.interests = interests;
 	}
  	public RealVector getVectorRepr() {
 		return vectorRepr;
