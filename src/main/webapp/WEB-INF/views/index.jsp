@@ -13,9 +13,12 @@
     <!-- Stylesheets
     ================================================= -->
     <link href="<c:url value='/static/css/bootstrap.min.css' />" rel="stylesheet"/>
+    <link href="<c:url value='/static/css/bootstrap-theme.min.css' />" rel="stylesheet"/>
+    <link href="<c:url value='/static/css/bootstrap-social.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/style.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/ionicons.min.css' />" rel="stylesheet" />
     <link href="<c:url value='/static/css/font-awesome.min.css' />" rel="stylesheet"/>
+    <link href="<c:url value='/static/css/emoji.css' />" rel="stylesheet"/>    
     <!--Google Webfont-->
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700' rel='stylesheet' type='text/css'/>
     <!--Favicon-->
@@ -116,10 +119,9 @@
         <!-- Footer
     ================================================= -->
     <footer id="footer">
-     
-        <div class="copyright">
-                <p>Copyright @Rafiki 2017. All rights reserved</p>
-        </div>
+      <div class="copyright">
+        <p>x4E414D45 Team © 2017. All rights reserved</p>
+      </div>
     </footer>
 
     <!--preloader-->
@@ -131,14 +133,15 @@
 
     <!-- Scripts
     ================================================= -->
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
     <script src="<c:url value='/static/js/app.js' />"></script>
+    <script src="<c:url value='/static/js/angular.min.js' />"></script>
     <script src="<c:url value='/static/js/controller/user_controller.js' />"></script>
     <script src="<c:url value='/static/js/service/user_service.js' />"></script>
     <script src="<c:url value='/static/js/jquery.incremental-counter.js' />"></script>
-    <script src="<c:url value='/static/js/jquery-3.1.1.min.js' />"></script>
+    <script src="<c:url value='/static/js/jquery.min.js' />"></script>
     <script src="<c:url value='/static/js/jquery.appear.min.js' />"></script>
+    <script src="<c:url value='/static/js/jquery.scrollbar.min.js' />"></script>
+    <script src="<c:url value='/static/js/jquery.sticky-kit.min.js' />"></script>
     <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
     <script src="<c:url value='/static/js/script.js' />"></script>
 </body>
