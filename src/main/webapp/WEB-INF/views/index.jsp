@@ -40,7 +40,7 @@
                                         <span class="icon-bar"></span>
                                         <span class="icon-bar"></span>
                                 </button>
-                                <a class="navbar-brand" id="rafiki" href="<c:url value='FriendBinder' />" >RAFIKI</a>
+                                <a class="navbar-brand" id="rafiki" href="<c:url value='FriendBinder' />" >Rafikie</a>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
