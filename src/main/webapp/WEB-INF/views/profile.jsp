@@ -18,13 +18,13 @@
 
     <!-- Stylesheets
     ================================================= -->
-		<link href="<c:url value='/static/css/bootstrap.min.css' />" rel="stylesheet"/>
+    <link href="<c:url value='/static/css/bootstrap.min.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/bootstrap-theme.min.css' />" rel="stylesheet"/>
+    <link href="<c:url value='/static/css/bootstrap-social.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/style.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/ionicons.min.css' />" rel="stylesheet" />
     <link href="<c:url value='/static/css/font-awesome.min.css' />" rel="stylesheet"/>
-    <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
-    <link href="<c:url value='/static/css/emoji.css' />" rel="stylesheet"/>
+    <link href="<c:url value='/static/css/emoji.css' />" rel="stylesheet"/>    
     <!--Google Webfont-->
 		<link href='https://fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700' rel='stylesheet' type='text/css'>
     <!--Favicon-->
@@ -46,7 +46,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html" id="rafiki">RAFIKI</a>
+            <a class="navbar-brand" href="index.html" id="rafiki">Rafikie</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -349,7 +349,7 @@
       	<div class="row">
           <div class="footer-wrapper">
             <div class="col-md-3 col-sm-3">
-              <a href="" id="rafiki">RAFIKI</a>
+              <a href="" id="rafiki">Rafikie</a>
               <ul class="list-inline social-icons">
               	<li><a href="#"><i class="icon ion-social-facebook"></i></a></li>
               	<li><a href="#"><i class="icon ion-social-twitter"></i></a></li>
@@ -401,14 +401,15 @@
 
     <!-- Scripts
     ================================================= -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTMXfmDn0VlqWIyoOxK8997L-amWbUPiQ&callback=initMap"></script>
-		<script src="<c:url value='/static/js/angular.min.js' />"></script>
     <script src="<c:url value='/static/js/app.js' />"></script>
+    <script src="<c:url value='/static/js/angular.min.js' />"></script>
     <script src="<c:url value='/static/js/controller/user_controller.js' />"></script>
     <script src="<c:url value='/static/js/service/user_service.js' />"></script>
     <script src="<c:url value='/static/js/jquery.incremental-counter.js' />"></script>
-    <script src="<c:url value='/static/js/jquery-3.1.1.min.js' />"></script>
+    <script src="<c:url value='/static/js/jquery.min.js' />"></script>
     <script src="<c:url value='/static/js/jquery.appear.min.js' />"></script>
+    <script src="<c:url value='/static/js/jquery.scrollbar.min.js' />"></script>
+    <script src="<c:url value='/static/js/jquery.sticky-kit.min.js' />"></script>
     <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
     <script src="<c:url value='/static/js/script.js' />"></script>
 		<script>
