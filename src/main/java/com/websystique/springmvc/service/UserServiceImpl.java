@@ -15,7 +15,7 @@ import com.websystique.springmvc.model.User;
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
-    MongoDBConnection connection;
+	MongoDBConnection connection;
 	
 	private static final AtomicLong counter = new AtomicLong();
 	
