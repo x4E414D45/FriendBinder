@@ -46,4 +46,12 @@ public class Interests {
 		return index;
 	}
 
+	public void updateUserVector(String userEmail) {
+		// TODO
+	}
+
+	public void updateAllUserVectors() {
+		// TODO
+	}
+
 }

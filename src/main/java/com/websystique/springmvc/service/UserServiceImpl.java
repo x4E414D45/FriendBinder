@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService{
 		document.put("name", user.getName());
 		document.put("email",user.getEmail());
 		document.put("password", user.getPassword());
+		document.put("interests", user.getInterests());
+		document.put("vectorRepr", user.getVectorRepr());
 		connection.createConnection().insert(document);
 	}
 	
