@@ -31,7 +31,6 @@ public class InterestsTest {
 	@Test
 	public void testInterests() {
 		Interests instance = new Interests();
-		instance.getAllInterests();
 	}
 	
 }
