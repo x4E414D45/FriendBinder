@@ -78,8 +78,8 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>rafiki</finalName>
+		<finalName>rafikie</finalName>
 	</build>
-	<name>rafiki</name>
-	<artifactId>rafiki</artifactId>
+	<name>rafikie</name>
+	<artifactId>rafikie</artifactId>
 </project>
