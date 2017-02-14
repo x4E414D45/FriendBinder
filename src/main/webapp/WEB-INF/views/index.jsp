@@ -60,10 +60,9 @@
                                                     <input type="checkbox">Remember me
                                                 </label>
                                             </fieldset>
-                                                <button type="submit" class="btn-primary">Login In
-                                                </button>                                        
-                                    </form>  
-                                    <button type="submit" ng-click="ctrl.showRegister()" class="btn-primary">Register</button>                          
+                                                <button type="submit" class="btn-primary">Login In</button>
+                                                <button type="submit" ng-click="ctrl.showRegister()" class="btn-primary">Register</button>
+                                    </form>                                                             
                                 </ul>                             
                         </div><!-- /.navbar-collapse -->
                 </div><!-- /.container -->
@@ -75,7 +74,7 @@
     ================================================= -->
     <section id="banner">
         <div class="container" >
-
+        <div class="col-md-5">
         <!-- Sign Up Form
         ================================================= -->
         <div class="sign-up-form"  >            
@@ -85,35 +84,51 @@
                         <p class="signup-text">Signup now and meet awesome people around the world</p>
 
                         <form  ng-submit="ctrl.submit()" name="myForm">
-                                <fieldset class="form-group">
-                                        <input type="text"
-                                        class="form-control" id="example-name" placeholder="Enter name" ng-model="ctrl.user.name" name="name"
-                                        required ng-minlength="3">
-                                        <div class="has-error" ng-show="myForm.$dirty">
-                                                <span ng-show="myForm.name.$error.required">This is arequired field</span> 
-                                                <span ng-show="myForm.name.$error.minlength">Minimum length required is 3</span> <span ng-show="myForm.name.$invalid">This field is invalid </span>
-                                        </div>
-
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                                <input type="email" class="form-control" id="example-email" placeholder="Enter email" ng-model="ctrl.user.email" name="email"
-                                                required>
-                                                <div class="has-error" ng-show="myForm.$dirty">
-                                                        <span ng-show="myForm.email.$error.required">This is arequired field</span>
-                                                        <span ng-show="myForm.email.$invalid">This field is invalid </span>
-                                                </div>
-
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                                    <input type="password" class="form-control" id="example-password" placeholder="Enter a password" ng-model="ctrl.user.password" name="password" required>
-                                                    <div class="has-error" ng-show="myForm.$dirty"> </div>                                      
-                                        </fieldset>
-                                        <p>By signning up you agree to the terms</p>
-                                            <button type="submit" class="btn-secondary" ng-disabled="myForm.$invalid">Create Account </button>
-                            </form>
+                          <fieldset class="form-group" ng-class="{ 'has-error has-feedback' : myForm.name.$error.required && !myForm.name.$pristine }">
+                            <div>
+                              <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name"
+                              ng-model="ctrl.user.name" required ng-minlength=3>
+                              <span ng-show="myForm.name.$error.required && !myForm.name.$pristine">This is required field.</span>
+                              <span ng-show="myForm.name.$error.minlength && !myForm.name.$pristine">Minimum required length is 3.</span>
+                              </div>
+                          </fieldset>
+                          <fieldset class="form-group" ng-class="{ 'has-error has-feedback' : myForm.email.$invalid && !myForm.email.$pristine }">
+                              <div>
+                                  <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                                  ng-model="ctrl.user.email" required>
+                                  <span ng-show="myForm.email.$error.required && !myForm.email.$pristine">This is required field.</span>
+                                  <span ng-show="(myForm.email.$invalid ||
+                                              myForm.email.$error.required) &&
+                                              !myForm.email.$pristine">Enter a valid email address.</span>
+                              </div>
+                          </fieldset>
+                          <fieldset class="form-group" ng-class="{ 'has-error has-feedback' : myForm.password.$error.required && !myForm.password.$pristine }">
+                              <input type="password" class="form-control" id="password" placeholder="Enter a password" ng-model="ctrl.user.password"
+                                            name="password" required>
+                          </fieldset>
+                          <fieldset class=form-group>
+                                <p>By signning up you agree to the terms</p>
+                                <button type="submit" class="btn btn-secondary"
+                                ng-disabled="myForm.$invalid" />Create Account</button>
+                          </fieldset>
+                     </form>
                 </div>               
         </div><!-- Sign Up Form End -->
     </div>
+        <div class="col-sm-7">
+        <div class="row row-content">
+          <p style="padding:80px;"></p>
+        </div>
+        <div class="row row-content">
+          <p style="padding:80px;"></p>
+        </div>
+        <div class="row row-content">
+          <div class="text-center">
+            <h1 style="color: #F0F8FF; font-weight: bold"><span class="typing"></span></h1>
+          </div>
+        </div>
+      </div>
+     </div>
 </section>
 
         <!-- Footer
@@ -144,5 +159,6 @@
     <script src="<c:url value='/static/js/jquery.sticky-kit.min.js' />"></script>
     <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
     <script src="<c:url value='/static/js/script.js' />"></script>
+    <script src="<c:url value='/static/js/typed.min.js' />"></script>
 </body>
 </html>
