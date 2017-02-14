@@ -160,5 +160,13 @@
     <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
     <script src="<c:url value='/static/js/script.js' />"></script>
     <script src="<c:url value='/static/js/typed.min.js' />"></script>
+    <script>
+    $(document).ready(function(){
+        $(".typing").typed({
+          strings: ["Are you alone ?", "Are you looking for friends ?", "This site is for you."],
+          typeSpeed: 30,
+        });
+    });
+</script>
 </body>
 </html>
