@@ -28,7 +28,7 @@
     <!--Google Webfont-->
 		<link href='https://fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700' rel='stylesheet' type='text/css'>
     <!--Favicon-->
-    <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+    <link rel="shortcut icon" type="image/png" href="<c:url value='/static/images/favicon.png' />"/>
 	</head>
   <body>
 
@@ -46,7 +46,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html" id="rafiki">Rafikie</a>
+            <a class="navbar-brand" href="index.html" id="rafikie">Rafikie</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
