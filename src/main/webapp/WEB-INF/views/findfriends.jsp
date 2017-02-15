@@ -28,7 +28,7 @@
     <!--Google Webfont-->
 		<link href='https://fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700' rel='stylesheet' type='text/css'>
     <!--Favicon-->
-    <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
+    <link rel="shortcut icon" type="image/png" href="<c:url value='/static/images/favicon.png' />"/>
 	</head>
   <body>
 
@@ -46,7 +46,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html" id="rafiki">Rafikie</a>
+            <a class="navbar-brand" href="index.html" id="rafikie">Rafikie</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -83,7 +83,7 @@
           ================================================= -->
     			<div class="col-md-3 static">
             <div class="profile-card">
-            	<img src="images/users/user-1.jpg" alt="user" class="profile-photo" />
+            	<img src="<c:url value='/static/images/users/user-1.jpg' />" alt="user" class="profile-photo" />
             	<h5><a href="timeline.html" class="text-white">Thong Pham</a></h5>
             	<a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 100 friends</a>
             </div><!--profile card ends-->
@@ -129,7 +129,7 @@
               <div class="nearby-user">
                 <div class="row">
                   <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-15.jpg" alt="user" class="profile-photo-lg" />
+                    <img src="<c:url value='/static/images/users/user-2' />" alt="user" class="profile-photo-lg" />
                   </div>
                   <div class="col-md-7 col-sm-7">
                     <h5><a href="#" class="profile-link">Dat Do</a></h5>
@@ -144,12 +144,12 @@
               <div class="nearby-user">
                 <div class="row">
                   <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-16.jpg" alt="user" class="profile-photo-lg" />
+                    <img scr="<c:url value='/static/images/users/user-3' />" alt="user" class="profile-photo-lg" />
                   </div>
                   <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Emma Johnson</a></h5>
-                    <p>Model at Fashion</p>
-                    <p class="text-muted">800m away</p>
+                    <h5><a href="#" class="profile-link">Satyam Nikhra</a></h5>
+                    <p>Full-Stack Web Developer</p>
+                    <p class="text-muted">West Covina</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
                     <button class="btn btn-primary pull-right">Add Friend</button>
@@ -158,15 +158,15 @@
               </div>
 						</div>
 						<div role="tabpanel" class="tab-pane" id="dating">
-              <div class="nearby-user">
+             <div class="nearby-user">
                 <div class="row">
                   <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-17.jpg" alt="user" class="profile-photo-lg" />
+                    <img src="<c:url value='/static/images/users/user-2' />" alt="user" class="profile-photo-lg" />
                   </div>
                   <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Nora Wilson</a></h5>
-                    <p>Writer at Newspaper</p>
-                    <p class="text-muted">2.5km away</p>
+                    <h5><a href="#" class="profile-link">Dat Do</a></h5>
+                    <p>Software Engineer</p>
+                    <p class="text-muted">Pasedena</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
                     <button class="btn btn-primary pull-right">Add Friend</button>
@@ -176,12 +176,12 @@
               <div class="nearby-user">
                 <div class="row">
                   <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-11.jpg" alt="user" class="profile-photo-lg" />
+                    <img scr="<c:url value='/static/images/users/user-3' />" alt="user" class="profile-photo-lg" />
                   </div>
                   <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Diana Amber</a></h5>
-                    <p>Student</p>
-                    <p class="text-muted">700m away</p>
+                    <h5><a href="#" class="profile-link">Satyam Nikhra</a></h5>
+                    <p>Full-Stack Web Developer</p>
+                    <p class="text-muted">West Covina</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
                     <button class="btn btn-primary pull-right">Add Friend</button>
@@ -193,12 +193,12 @@
               <div class="nearby-user">
                 <div class="row">
                   <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-18.jpg" alt="user" class="profile-photo-lg" />
+                    <img src="<c:url value='/static/images/users/user-2' />" alt="user" class="profile-photo-lg" />
                   </div>
                   <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Addison Thomas</a></h5>
-                    <p>Barber at Fashion</p>
-                    <p class="text-muted">1.5km away</p>
+                    <h5><a href="#" class="profile-link">Dat Do</a></h5>
+                    <p>Software Engineer</p>
+                    <p class="text-muted">Pasedena</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
                     <button class="btn btn-primary pull-right">Add Friend</button>
@@ -208,44 +208,29 @@
               <div class="nearby-user">
                 <div class="row">
                   <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-19.jpg" alt="user" class="profile-photo-lg" />
+                    <img scr="<c:url value='/static/images/users/user-3' />" alt="user" class="profile-photo-lg" />
                   </div>
                   <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Jonathon Thompson</a></h5>
-                    <p>Fashion Designer</p>
-                    <p class="text-muted">2km away</p>
+                    <h5><a href="#" class="profile-link">Satyam Nikhra</a></h5>
+                    <p>Full-Stack Web Developer</p>
+                    <p class="text-muted">West Covina</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
                     <button class="btn btn-primary pull-right">Add Friend</button>
                   </div>
                 </div>
               </div>
-						</div>
-						<div role="tabpanel" class="tab-pane" id="marriage">
-              <div class="nearby-user">
+		</div>
+		<div role="tabpanel" class="tab-pane" id="marriage">
+             <div class="nearby-user">
                 <div class="row">
                   <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-14.jpg" alt="user" class="profile-photo-lg" />
+                    <img src="<c:url value='/static/images/users/user-2' />" alt="user" class="profile-photo-lg" />
                   </div>
                   <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Olivia Steward</a></h5>
-                    <p>Creative Director</p>
-                    <p class="text-muted">2km away</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-20.jpg" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Elena Foster</a></h5>
-                    <p>Executive Officer</p>
-                    <p class="text-muted">4km away</p>
+                    <h5><a href="#" class="profile-link">Dat Do</a></h5>
+                    <p>Software Engineer</p>
+                    <p class="text-muted">Pasedena</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
                     <button class="btn btn-primary pull-right">Add Friend</button>
@@ -255,27 +240,27 @@
               <div class="nearby-user">
                 <div class="row">
                   <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-13.jpg" alt="user" class="profile-photo-lg" />
+                    <img scr="<c:url value='/static/images/users/user-3' />" alt="user" class="profile-photo-lg" />
                   </div>
                   <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Brian Walton</a></h5>
-                    <p>Designer at Designer</p>
-                    <p class="text-muted">3km away</p>
+                    <h5><a href="#" class="profile-link">Satyam Nikhra</a></h5>
+                    <p>Full-Stack Web Developer</p>
+                    <p class="text-muted">West Covina</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
                     <button class="btn btn-primary pull-right">Add Friend</button>
                   </div>
                 </div>
-              	</div>
-							</div>
-							</div>
-						 </div>
+              </div>
+		</div>
+		</div>
+		</div>
             </div>
           </div>
 
           <!-- Newsfeed Common Side Bar Right
           ================================================= -->
-    			<div class="col-md-2 static">
+    	<div class="col-md-2 static">
             <div class="suggestions" id="sticky-sidebar">
               <h4 class="grey">Notifications</h4>
               <div class="follow-user">
