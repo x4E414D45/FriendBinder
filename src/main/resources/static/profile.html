@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="This is social network site" />
+		<meta name="keywords" content="Social Network, Social Media, Make Friends, Newsfeed, Profile Page" />
+		<meta name="robots" content="index, follow" />
+		<title>About Me | Learn Detail About Me</title>
+
+    <!-- Stylesheets
+    ================================================= -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+		<link href="css/font-awesome.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet"/>
+		<link href="css/ionicons.min.css" rel="stylesheet"/>
+		<link href="css/bootstrap-social.css" rel="stylesheet"/>
+		<link href="css/emoji.css" rel="stylesheet"/>
+
+    <!--Google Webfont-->
+		<link href='https://fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700' rel='stylesheet' type='text/css'>
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+	</head>
+  <body ng-controller="ProfileController">
+
+    <!-- Header
+    ================================================= -->
+		<header id="header">
+      <nav class="navbar navbar-inverse navbar-fixed-top menu">
+        <div class="container">
+
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html" id="rafikie">Rafikie</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right main-menu">
+              <li class="dropdown"><a href="findfriends.html">Find Friends</a></li>
+              <li class="dropdown active">
+                <a href="profile.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Profile</a>
+              </li>
+              <li class="dropdown">
+                <a href="friendlist.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Friends</a>
+              </li>
+							<li class="dropdown">
+                <a href="chatroom.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Chatroom</a>
+              </li>
+            </ul>
+            <form class="navbar-form navbar-right hidden-sm">
+              <div class="form-group">
+                <i class="icon ion-android-search"></i>
+                <input type="text" class="form-control" placeholder="Search friends, photos, videos">
+              </div>
+            </form>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+      </nav>
+    </header>
+    <!--Header End-->
+		<div id="editModal" class="modal fade" role="dialog">
+	      <div class="modal-dialog">
+	        <!-- Modal content-->
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal">&times;</button>
+	                <h4 class="modal-title">Edit Your Information</h4>
+	            </div>
+	            <div class="modal-body" style="padding: 0px 30px 0px 30px">
+				<div class="row">
+					<form class="form-horizontal" ng-submit="edit()" name="profileForm" nonvalidate>
+						<div class="form-group">
+								<label for="yourself" class="col-sm-2 control-label">About Yourself</label>
+								<div class="col-sm-10">
+										<textarea class="form-control" id="yourself" name="yourself" rows="5" placeholder="Tell something about yourself" ng-model="user.about"></textarea>
+								</div>
+						</div>
+						<div class="form-group" ng-class="{ 'has-error' : profileForm.name.$error.required && !profileForm.name.$pristine }">
+								<label for="name" class="col-sm-2 control-label">Full Name</label>
+								<div class="col-sm-10">
+										<input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Full Name" ng-model="user.name" required>
+										<span ng-show="profileForm.name.$error.required && !profileForm.name.$pristine">This is required field.</span>
+								</div>
+						</div>
+						<div class="form-group" ng-class="{ 'has-error' : profileForm.date.$error.required && !profileForm.date.$pristine }" >
+							<label for="date" class="col-sm-2 control-label">Date of Birth</label>
+									<div class="col-sm-4">
+											<input type="text" class="form-control" id="date" name="date" placeholder="Date" ng-model="user.birth" ng-pattern='/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/((19\d{2})|([2-9]\d{3}))$/' required>
+											<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+											<span ng-show="profileForm.date.$error.required && !profileForm.date.$pristine">This is required field.</span>
+											<span ng-show="profileForm.date.$error.pattern && !profileForm.date.$pristine">Incorrect Format, should be DD/MM/YYYY</span>
+									</div>
+						</div>
+						<div class="form-group" ng-class="{ 'has-error' : profileForm.gender.$error.required && !profileForm.gender.$pristine }">
+							<label for="gender" class="col-sm-2 control-label">Gender</label>
+							<div class="col-sm-10">
+									<label class="radio-inline">
+											<input type="radio" name="gender" value="" ng-click="selectGender(1)" ng-class="isSelected(1)">Female
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="gender" value="" ng-click="selectGender(2)" ng-class="isSelected(2)">Male
+									</label>
+									<span ng-show="profileForm.gender.$error.required && !profileForm.gender.$pristine">This is required field.</span>
+								</div>
+						</div>
+						<div class="form-group" ng-class="{ 'has-error' : profileForm.telnum.$error.required && !profileForm.telnum.$pristine && profileForm.areacode.$error.required && !profileForm.areacode.$pristine }">
+							<label for="telnum" class="col-xs-12 col-sm-2 control-label">Contact Tel.</label>
+							<div class="col-xs-5 col-sm-4 col-md-4">
+									<div class="input-group">
+													<input type="tel" class="form-control" id="areacode" name="areacode" placeholder="Country code" ng-model="user.tel.areacode" required ng-maxlength=5>
+													<span ng-show="profileForm.areacode.$error.required && !profileForm.areacode.$pristine">This is required field.</span>
+													<span ng-show="profileForm.areacode.$error.maxlength && !profileForm.areacode.$pristine">Maximum required length is 5.</span>
+									</div>
+							</div>
+							<div class="col-xs-7 col-sm-6 col-md-6">
+									<input type="tel" class="form-control" id="telnum" name="telnum" placeholder="Tel. number" ng-model="user.tel.number" required ng-maxlength=10>
+									<span ng-show="profileForm.telnum.$error.required && !profileForm.telnum.$pristine">This is required field.</span>
+									<span ng-show="profileForm.telnum.$error.maxlength && !profileForm.telnum.$pristine">Maximum required length is 10.</span>
+							</div>
+					</div>
+					<div class="form-group">
+							<label for="emailid" class="col-sm-2 control-label">Email</label>
+							<div class="col-sm-10">
+									<input ng-disabled="true" type="email" class="form-control" id="emailid" name="emailid" placeholder="Email" ng-model="user.email">
+							</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Relationship</label>
+						<div class="col-sm-10">
+							<label class="radio-inline">
+																<input type="radio" name="number" value="" ng-click="selectRelation(1)">Single
+														</label>
+							<label class="radio-inline">
+																<input type="radio" name="number" value="" ng-click="selectRelation(2)">In a relationship
+														</label>
+							<label class="radio-inline">
+																<input type="radio" name="number" value="" ng-click="selectRelation(3)">Marriaged
+														</label>
+							</div>
+					</div>
+					<div class="form-group">
+							<label for="education" class="col-sm-2 control-label">Education Level</label>
+							<div class="col-sm-10">
+									<input type="education" class="form-control" id="education" name="education" placeholder="Education" ng-model="user.education">
+							</div>
+					</div>
+					<div class="form-group">
+							<label for="careerid" class="col-sm-2 control-label">Career</label>
+							<div class="col-sm-10">
+									<input type="career" class="form-control" id="careerid" name="careerid" placeholder="Career" ng-model="user.career">
+							</div>
+					</div>
+					<div class="form-group" ng-class="{ 'has-error' : profileForm.location.$error.required && !profileForm.location.$pristine }">
+							<label for="location" class="col-sm-2 control-label">Location</label>
+							<div class="col-sm-10">
+									<input type="location" class="form-control" id="location" name="location" placeholder="Location" ng-model="user.location" required>
+									<span ng-show="profileForm.location.$error.required && !profileForm.location.$pristine">This is required field.</span>
+							</div>
+					</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Interests</label>
+							<div class="col-sm-10">
+								<label class="checkbox-inline">
+	                                <input type="checkbox" name="number" value="" ng-click="selectInterest(1)">Reading
+	                            </label>
+								<label class="checkbox-inline">
+	                                <input type="checkbox" name="number" value="" ng-click="selectInterest(2)">Travelling
+	                            </label>
+								<label class="checkbox-inline">
+	                                <input type="checkbox" name="number" value="" ng-click="selectInterest(3)">Playing Sports
+	                            </label>
+								<label class="checkbox-inline">
+	                                <input type="checkbox" name="number" value="" ng-click="selectInterest(4)">Cooking
+	                            </label>
+								<label class="checkbox-inline">
+	                                <input type="checkbox" name="number" value="" ng-click="selectInterest(5)">Playing Games
+	                            </label>
+	            	</div>
+								<div class="col-sm-2"></div>
+								<div class="col-sm-10">
+
+									<label class="checkbox-inline">
+		                                <input type="checkbox" name="number" value="" ng-click="selectInterest(6)">Studying
+		                            </label>
+									<label class="checkbox-inline">
+									        <input type="checkbox" name="number" value="" ng-click="selectInterest(7)">Shopping
+									</label>
+								</div>
+						</div>
+						<div class="form-group" ng-class="{ 'has-error' : profileForm.language.$error.required && !profileForm.language.$pristine }">
+								<label for="language" class="col-sm-2 control-label">Language</label>
+								<div class="col-sm-10">
+										<input type="language" class="form-control" id="language" name="language" placeholder="Language" ng-model="user.language" required>
+										<span ng-show="profileForm.language.$error.required && !profileForm.language.$pristine">This is required field.</span>
+								</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-10 col-sm-offset-2">
+	              <button type="submit" class="btn btn-primary" ng-disabled="profileForm.$invalid">Update</button>
+								<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+	            </div>
+						</div>
+					</form>
+					</div>
+	      </div>
+	    </div>
+			</div>
+	  </div>
+
+    <div class="container" ng-init="user">
+
+      <!-- Timeline
+      ================================================= -->
+      <div class="timeline">
+        <div class="timeline-cover">
+
+          <!--Timeline Menu for Large Screens-->
+          <div class="timeline-nav-bar hidden-sm hidden-xs">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="profile-info">
+                  <img src="images/users/user-1.jpg" alt="" class="img-responsive profile-photo" />
+                  <h3>{{user.name}}</h3>
+                  <p class="text-muted">{{user.career}}</p>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <ul class="list-inline profile-menu">
+                  <li><a href=""></a></li>
+                  <li><a href=""></a></li>
+                  <li><a href=""></a></li>
+                </ul>
+                <ul class="follow-me list-inline">
+									<li><button class="btn-primary" id="editInfo">Edit</button></li>
+									<li><button class="btn-primary" id="editInfo">Log Out</button></li>
+                </ul>
+              </div>
+            </div>
+          </div><!--Timeline Menu for Large Screens End-->
+
+          <!--Timeline Menu for Small Screens-->
+          <div class="navbar-mobile hidden-lg hidden-md">
+            <div class="profile-info">
+              <img src="images/users/user-1.jpg" alt="" class="img-responsive profile-photo" />
+              <h4>{{user.name}}</h4>
+              <p class="text-muted">{{user.career}}</p>
+            </div>
+            <div class="mobile-menu">
+              <ul class="list-inline">
+								<li><a href=""></a></li>
+								<li><a href=""></a></li>
+								<li><a href=""></a></li>
+              </ul>
+              <button class="btn-primary" id="editInfo">Edit</button>
+							<button class="btn-primary" id="editInfo">Log Out</button>
+            </div>
+          </div><!--Timeline Menu for Small Screens End-->
+
+        </div>
+        <div id="page-contents">
+					<div class=container>
+            <div class="col-md-3"></div>
+            <div class="col-md-7">
+
+              <!-- About
+              ================================================= -->
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="card">
+										<div class="card-height-indicator"></div>
+                		<div class="card-content">
+                  		<h4 class="card-body"><i class="ion-ios-information-outline icon-in-title"></i> About Yourself</h4>
+                  		<p class="card-footer">{{user.about}}</p>
+                		</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="card">
+									<div class="card-height-indicator"></div>
+									<div class="card-content">
+                  		<h4 class="card-body"><i class="ion-ios-information-outline icon-in-title"></i> Date of Birth</h4>
+                  		<p class="card-footer">{{user.birth}}</p>
+                		</div>
+									</div>
+								</div>
+							</div>
+						<div class="row">
+								<div class="col-md-6">
+								<div class="card">
+									<div class="card-height-indicator"></div>
+								   <div class="card-content">
+                  <h4 class="card-body"><i class="ion-transgender icon-in-title"></i> Gender</h4>
+                  <p class="card-footer">{{user.gender}}</p>
+                </div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-height-indicator"></div>
+								<div class="card-content">
+                  <h4 class="card-body"><i class="ion-ios-telephone icon-in-title"></i> Contact</h4>
+                  <p class="card-footer">{{user.tel.areacode}}{{user.tel.number}}</p>
+                </div>
+							</div>
+						</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="card">
+									<div class="card-height-indicator"></div>
+									<div class="card-content">
+                  <h4 class="card-body"><i class="ion-ios-email icon-in-title"></i> Email</h4>
+                  <p class="card-footer">{{user.email}}</p>
+                </div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-height-indicator"></div>
+								<div class="card-content">
+                  <h4 class="card-body"><i class="ion-ios-information-outline icon-in-title"></i> Relationship</h4>
+                  <p class="card-footer">{{user.relationship}}</p>
+                </div>
+							</div>
+						</div>
+					</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="card">
+									<div class="card-height-indicator"></div>
+									<div class="card-content">
+                  <h4 class="card-body"><i class="ion-university icon-in-title"></i> Education Level</h4>
+                  <p class="card-footer">{{user.education}}</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-height-indicator"></div>
+								<div class="card-content">
+                  <h4 class="card-body"><i class="ion-ios-briefcase-outline icon-in-title"></i> Career</h4>
+                  <p class="card-footer">{{user.career}}</p>
+                </div>
+							</div>
+						</div>
+					</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="card">
+										<div class="card-height-indicator"></div>
+										<div class="card-content">
+                  <h4 class="card-body"><i class="ion-ios-location-outline icon-in-title"></i> Location</h4>
+                  <p class="card-footer">{{user.location}}</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-height-indicator"></div>
+								<div class="card-content">
+                  <h4 class="card-body"><i class="ion-ios-heart-outline icon-in-title"></i> Interests</h4>
+                  <ul class="card-footer interests list-inline">
+                    <li>{{user.interest}}</li>
+                  </ul>
+                </div>
+							</div>
+						</div>
+					</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="card">
+										<div class="card-height-indicator"></div>
+										<div class="card-content">
+                  	<h4 class="card-body"><i class="ion-ios-chatbubble-outline icon-in-title"></i> Language</h4>
+										<p class="card-footer">{{user.language}}</p>
+                </div>
+							</div>
+						</div>
+					</div>
+        </div>
+            <div class="col-md-2 static">
+              <div id="sticky-sidebar">
+              </div>
+            </div>
+          </div>
+				</div>
+        </div>
+      </div>
+
+
+    <!-- Footer
+    ================================================= -->
+    <footer id="footer">
+      <div class="container">
+      	<div class="row">
+          <div class="footer-wrapper">
+            <div class="col-md-3 col-sm-3">
+              <a href="" id="rafiki">Rafikie</a>
+              <ul class="list-inline social-icons">
+              	<li><a href="#"><i class="icon ion-social-facebook"></i></a></li>
+              	<li><a href="#"><i class="icon ion-social-twitter"></i></a></li>
+              	<li><a href="#"><i class="icon ion-social-googleplus"></i></a></li>
+              	<li><a href="#"><i class="icon ion-social-linkedin"></i></a></li>
+              </ul>
+            </div>
+            <div class="col-md-2 col-sm-2">
+              <h6>For individuals</h6>
+              <ul class="footer-links">
+                <li><a href="">Signup</a></li>
+                <li><a href="">Login</a></li>
+                <li><a href="">Explore</a></li>
+                <li><a href="">Finder app</a></li>
+                <li><a href="">Features</a></li>
+              </ul>
+            </div>
+            <div class="col-md-2 col-sm-2">
+              <h6>About</h6>
+              <ul class="footer-links">
+                <li><a href="">About us</a></li>
+                <li><a href="">Contact us</a></li>
+                <li><a href="">Privacy Policy</a></li>
+                <li><a href="">Terms</a></li>
+                <li><a href="">Help</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3 col-sm-3">
+              <h6>Contact Us</h6>
+                <ul class="contact">
+                	<li><i class="icon ion-ios-telephone-outline"></i>+1 (714) 949 9561</li>
+                	<li><i class="icon ion-ios-email-outline"></i>info@cpp.com</li>
+                  <li><i class="icon ion-ios-location-outline"></i>3801 W Temple Ave, Pomona, CA 91768</li>
+                </ul>
+            </div>
+          </div>
+      	</div>
+      </div>
+      <div class="copyright">
+        <p>x4E414D45 Team © 2017. All rights reserved</p>
+      </div>
+		</footer>
+
+    <!--preloader-->
+    <div id="spinner-wrapper">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Scripts
+    ================================================= -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.appear.min.js"></script>
+    <script src="js/jquery.incremental-counter.js"></script>
+    <script src="js/jquery.scrollbar.min.js"></script>
+    <script src="js/jquery.sticky-kit.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/app.js"></script>
+
+    <script src="js/controller/user_controller.js"></script>
+    <script src="js/service/user_service.js"></script>
+		<script>
+	        $(document).ready(function(){
+				 	$("#editInfo").click(function(){
+	                $("#editModal").modal('show');
+	            });
+	        });
+	    </script>
+  </body>
+</html>
