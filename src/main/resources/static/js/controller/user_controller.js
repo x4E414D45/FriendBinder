@@ -5,10 +5,9 @@ angular.module('myApp').controller('UserController', ['$scope','$http','$window'
     self.user={name:'',email:'',password:''};
     self.login={email:'',password:''};
     self.users=[];
-    self.init=init;
     var message=message;
     var name=name;
-    var isShowRegister=isShowRegister;
+    self.isShowRegister=false;
     self.submit = submit;
     self.reset = reset;
     self.showRegister=showRegister;
@@ -20,10 +19,6 @@ angular.module('myApp').controller('UserController', ['$scope','$http','$window'
      function send(response){
       //self.dataShare.sendData(response);
     }
-    
-    function init() {
-    	self.isShowRegister=false;
-      }
  
     function showRegister(){
     	  debugger; 
@@ -33,11 +28,11 @@ angular.module('myApp').controller('UserController', ['$scope','$http','$window'
 
 
     function createUser(user){
-    	  $http.post('register/',user)
+    	  $http.post('register',user)
           .success(function (response, status) {
               message = response;
               if(message)
-              $window.location.href = '/home-ajs.html'
+              $window.location.href = '/profile.html'
               if(!message)
             	  $window.location.href = '/index.html'
               console.log(message);
@@ -61,7 +56,7 @@ angular.module('myApp').controller('UserController', ['$scope','$http','$window'
                 	   //dataService.dataObj=message.name;
                 	   //sharedService.prepForBroadcast(message.name);
                 	   ServiceApp.setValue(message.name);
-                	   $window.location.href = '/home-ajs.html';
+                	   $window.location.href = '/profile.html';
                 	   }
                    console.log(message);
                })
@@ -71,7 +66,6 @@ angular.module('myApp').controller('UserController', ['$scope','$http','$window'
                });
     	
   }    
-
 
     function submit() {
         if(self.user.email!=null){

@@ -3,7 +3,7 @@
 angular.module('myProfile').controller('ProfileController', ['$scope','$http','ServiceProfile', function($scope,$http,ServiceProfile) {
      var self=this;
      self.user={email:'',about:'',name:'',dob:'',gender:'',areacode:'',telnum:'',email:'',relationship:'',other:'',career:'',location:''};
-     self.fetched={}
+     self.fetched={};
      self.fetched.interests=[];
      self.test={};
      var message=message;
