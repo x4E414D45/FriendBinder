@@ -27,22 +27,8 @@ import edu.cpp.Rafikie.data.provider.MongoDBConnection;
 
 public class FSUserManager implements UserManager {
 	
-    MongoDBConnection connection=new MongoDBConnection()
-	{
-		
-		@Override
-		public DBCollection createConnectionforUserTable() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		
-		@Override
-		public DBCollection createConnection() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-	};
-
+@Autowired
+MongoDBConnection connection;
 
 	private static final ObjectMapper JSON = new ObjectMapper();
 
@@ -105,6 +91,7 @@ public class FSUserManager implements UserManager {
 	
 			return list;
 	}
+	
 	@Override
 	public String passwordEncryption(String password)
 	{

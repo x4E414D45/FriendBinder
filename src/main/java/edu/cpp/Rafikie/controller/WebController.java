@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
 import edu.cpp.Rafikie.data.Register;
 import edu.cpp.Rafikie.data.User;
 import edu.cpp.Rafikie.data.UserDetails;
@@ -37,7 +40,7 @@ import edu.cpp.Rafikie.data.provider.UserManager;
  */
 
 @RestController
-public class WebController {
+public class WebController extends WebMvcConfigurerAdapter {
 	
 	User user=new User();
 	UserDetails userDetail=new UserDetails();
@@ -45,6 +48,13 @@ public class WebController {
 
 	@Autowired
 	private UserManager userManager;
+	
+/*	 @Override
+	    public void addViewControllers(ViewControllerRegistry registry) {
+	        registry.addViewController("/index").setViewName("index");
+	        registry.addViewController("/login").setViewName("login");
+	        
+	 }*/
 	
 	@RequestMapping(value = "/getEmail", method = RequestMethod.GET)
 	public User getEmail()

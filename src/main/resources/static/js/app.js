@@ -1,6 +1,6 @@
 'use strict';
 var App = angular.module('myApp',[]);
-var Profile = angular.module('myProfile',['myApp']);
+var Profile = angular.module('myProfile',['myApp','msieurtoph.ngCheckboxes']);
 
 App.factory('ServiceApp', function($rootScope) {
 	var data={};

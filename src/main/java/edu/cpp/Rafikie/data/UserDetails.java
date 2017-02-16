@@ -10,19 +10,13 @@ public class UserDetails {
 	private String dob;
 	private String education;
 	private String gender;
-	private interests interests;
+	private String[] interests;
 	
 	/*private enum interests{Cooking,OnlineGames,Partying,Sleeping,Sports,Studying,Travelling}
 	private interests userPermission;
 	*/
 
 
-public interests getInterests() {
-		return interests;
-	}
-	public void setInterests(interests interests) {
-		this.interests = interests;
-	}
 	/*	public interests getUserPermission() {
 		return userPermission;
 	}*/
@@ -37,6 +31,12 @@ public interests getInterests() {
 		this.interests = interests;
 	}*/
 	private String email;
+	public String[] getInterests() {
+		return interests;
+	}
+	public void setInterests(String[] interests) {
+		this.interests = interests;
+	}
 	private String other;
 	private String language;
 	public String getEmail() {

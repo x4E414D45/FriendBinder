@@ -2,53 +2,53 @@ package edu.cpp.Rafikie.data;
 
 public class interests {
 	
-	private boolean Sleeping;
-	private boolean Cooking;
-	private boolean OnlineGames;
-	private boolean Partying;
-	private boolean Sports;
-	private boolean Studying;
-	private boolean Travelling;
-	public boolean isSleeping() {
+	private Boolean Sleeping;
+	private Boolean Cooking;
+	private Boolean OnlineGames;
+	private Boolean Partying;
+	private Boolean Sports;
+	private Boolean Studying;
+	private Boolean Travelling;
+	public Boolean isSleeping() {
 		return Sleeping;
 	}
-	public void setSleeping(boolean sleeping) {
+	public void setSleeping(Boolean sleeping) {
 		Sleeping = sleeping;
 	}
-	public boolean isCooking() {
+	public Boolean isCooking() {
 		return Cooking;
 	}
-	public void setCooking(boolean cooking) {
+	public void setCooking(Boolean cooking) {
 		Cooking = cooking;
 	}
-	public boolean isOnlineGames() {
+	public Boolean isOnlineGames() {
 		return OnlineGames;
 	}
-	public void setOnlineGames(boolean onlineGames) {
+	public void setOnlineGames(Boolean onlineGames) {
 		OnlineGames = onlineGames;
 	}
-	public boolean isPartying() {
+	public Boolean isPartying() {
 		return Partying;
 	}
-	public void setPartying(boolean partying) {
+	public void setPartying(Boolean partying) {
 		Partying = partying;
 	}
-	public boolean isSports() {
+	public Boolean isSports() {
 		return Sports;
 	}
-	public void setSports(boolean sports) {
+	public void setSports(Boolean sports) {
 		Sports = sports;
 	}
-	public boolean isStudying() {
+	public Boolean isStudying() {
 		return Studying;
 	}
-	public void setStudying(boolean studying) {
+	public void setStudying(Boolean studying) {
 		Studying = studying;
 	}
-	public boolean isTravelling() {
+	public Boolean isTravelling() {
 		return Travelling;
 	}
-	public void setTravelling(boolean travelling) {
+	public void setTravelling(Boolean travelling) {
 		Travelling = travelling;
 	}
 

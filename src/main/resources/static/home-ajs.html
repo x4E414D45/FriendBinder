@@ -25,7 +25,7 @@
     <!--Favicon-->
     <link rel="shortcut icon" type="image/png" href="/images/favicon.png"/>
 	</head>
-  <body ng-app="myProfile" ng-controller="ProfileController as pctrl" ng-init="pctrl.init()">
+  <body ng-app="myProfile" ng-controller="ProfileController as pctrl" ng-init="pctrl.init()" mt-to="pctrl.checkboxList">
 
     <!-- Header
     ================================================= -->
@@ -124,7 +124,7 @@
 					<div class="form-group">
 							<label for="emailid" class="col-sm-2 control-label">Email</label>
 							<div class="col-sm-10">
-									<input ng-disabled="true" type="email" class="form-control" id="emailid" ng-model="pctrl.user.email" name="emailid" placeholder="Email">
+									<input ng-disabled="true" type="email" class="form-control" id="emailid" ng-model="pctrl.email" name="emailid" placeholder="Email">
 							</div>
 					</div>
 					<div class="form-group">
@@ -162,8 +162,10 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Interests</label>
 							<div class="col-sm-10">
-								<label ng-repeat="(interest,enabled) in pctrl.user.interests" class="checkbox-inline">
-	                                <input type="checkbox" name="number"ng-model="pctrl.user.interests[interest]" >{{interest}}
+								<label ng-repeat="interest in pctrl.user.interests track by $index" class="checkbox-inline">
+							
+                               <input type="checkbox" mt-checkbox="interest" /><code>{{interest}}</code>
+	                                <!-- <input type="checkbox" checklist-model="pctrl.user.interests" checklist-value="interest">{{interest}} -->
 	                            </label>
 						
 	            	</div>
@@ -293,7 +295,7 @@
                 </div>
                 <div class="about-content-block">
                   <h4 class="grey"><i class="ion-ios-heart-outline icon-in-title"></i>Interests</h4>
-                  <ul class="interests list-inline" ng-repeat="interest in pctrl.user.interests">
+                  <ul class="interests list-inline" ng-repeat="interest in pctrl.fetched.interests">
                     <li><span class="int-icons" title="Bycycle riding"><i>{{interest}}</i></span></li>
                   <!--   <li><span class="int-icons" title="Photography"><i class="icon ion-ios-camera"></i></span></li>
                     <li><span class="int-icons" title="Shopping"><i class="icon ion-android-cart"></i></span></li>
@@ -384,8 +386,10 @@
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="/js/angular.min.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/checklist-model.js"></script>
+    <script src="/js/angular-checkboxes.js"></script>
+    
     <script src="/js/controller/profile_controller.js"></script>
-    <script src="/js/controller/user_controller.js"></script>
     <script src="/js/jquery.incremental-counter.js"></script>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery.appear.min.js"></script>
