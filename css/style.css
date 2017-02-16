@@ -1,7 +1,7 @@
 /*==================================================
   Template Name: Friend Finder
   Description: A Social Network Template
-  Author: thunder-team
+  Author: Rafikie Team
   Version: 1.1
 ==================================================*/
 
@@ -73,6 +73,12 @@ h1.grey, h2.grey, h3.grey, h4.grey, h5.grey, h6.grey{
   color: #6d6e71;
   margin: 0 auto 20px;
 }
+
+#rafikie {color: #00BFFF;
+    font-weight: bold;
+    font-size: 30px;
+    }
+
 
 .text-white{color: #fff;}
 
@@ -353,6 +359,36 @@ textarea{
   border: 0;
 }
 
+.navbar-inverse {
+  background: #000000;
+  color: #ffffff;
+}
+
+.navbar-inverse .navbar-nav > .active > a {
+  background: #1a237e;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .active > a:hover {
+  background: #696969;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .active > a:focus {
+  background: #696969;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .open > a {
+  background: #696969;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .open > a:hover {
+  background: #1a237e;
+  color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .open > a:focus {
+  background: #1a237e;
+  color: #ffffff;
+}
+
 /*For Homepage Header*/
 
 #header.lazy-load{
@@ -392,7 +428,7 @@ textarea{
   background: linear-gradient(to bottom, rgba(43,57,144,.8), rgba(39,170,225,1) 65%);
   position: absolute;
   width: 340px;
-  min-height: 600px;
+  min-height: 500px;
   top: 0;
   padding: 40px 30px;
   text-align: center;
@@ -697,6 +733,70 @@ textarea{
   Newsfeed Left Sidebar
   ==================================================*/
 
+/*===============*/
+.card {
+  /***** Make height equal to width (http://stackoverflow.com/a/6615994) ****/
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  /**************************************************************************/
+  border-radius: 2px;
+  color: rgba(0,0,0, 0.87);
+  background: #fff;
+  -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.card .card-height-indicator {
+  margin-top: 50%;
+}
+.card .card-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.card .card-image {
+  height: 60%;
+  position: relative;
+  overflow: hidden;
+}
+.card .card-image img {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  pointer-events: none;
+}
+.card .card-image .card-image-headline {
+  position: absolute;
+  bottom: 16px;
+  left: 18px;
+  color: #fff;
+  font-size: 2em;
+}
+.card .card-body {
+  height: 30%;
+  padding: 18px;
+}
+.card .card-footer {
+  height: 10%;
+  padding: 18px;
+}
+.card .card-footer button,
+.card .card-footer a {
+  margin: 0 !important;
+  position: relative;
+  bottom: 25px;
+  width: auto;
+}
+.card .card-footer button:first-child,
+.card .card-footer a:first-child {
+  left: -15px;
+}
+/*===============*/
+
+
 /*Profile Card CSS*/
 
 .profile-card{
@@ -791,8 +891,8 @@ ul.nav-news-feed i.ion-ios-videocam{color: #9e1f63;}
 }
 
 ul.online-users{
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
   text-align: center;
   margin: 0;
 }
