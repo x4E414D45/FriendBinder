@@ -44,7 +44,7 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav navbar-right main-menu">
-                                        <form class="form-inline" name="loginForm" ng-submit="loginSubmit()">
+                                        <form class="form-inline" name="loginForm" ng-submit="ctrl.loginSubmit()">
                                             <fieldset class="form-group" ng-class="{ 'has-error has-feedback' : loginForm.email.$error.required && !loginForm.email.$pristine }">
                                                 <label class="sr-only" for="email">Email Address</label>
                                                 <input type="email" class="form-control input-sm" name="email" id="email" placeholder="Email" ng-model="ctrl.login.email" required>

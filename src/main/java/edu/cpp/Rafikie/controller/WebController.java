@@ -27,8 +27,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 import edu.cpp.Rafikie.App;
+import edu.cpp.Rafikie.data.provider.MongoDBConnection;
 import edu.cpp.Rafikie.data.provider.UserManager;
 
 /**
@@ -48,6 +51,9 @@ public class WebController extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	private UserManager userManager;
+        
+        @Autowired
+        MongoDBConnection connection;
 	
 /*	 @Override
 	    public void addViewControllers(ViewControllerRegistry registry) {
@@ -66,18 +72,17 @@ public class WebController extends WebMvcConfigurerAdapter {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes="application/json")
 	public User test( @RequestBody String login) {
-		//User user=new User();
+		User user = new User();
 		 Gson gson = new GsonBuilder().create();
 		 Login loginDetails=gson.fromJson(login, Login.class);
 		 loginDetails.setPassword(userManager.passwordEncryption(loginDetails.getPassword()));
 		 List<String> list=userManager.isUserExist(loginDetails.getEmail());
 		 if (list.contains(loginDetails.getPassword())) {
-			 user.setName(list.get(2));
-			 return user;
-			 //return true;
+                        user.setName(list.get(0));
+                        return user;
 			     
 		     }
-		 return user;
+            return user;
 		
 	}
 	
@@ -93,10 +98,9 @@ public class WebController extends WebMvcConfigurerAdapter {
 	 if (list.isEmpty()) {
 		   userManager.register(register);
 		   user.setName(register.getEmail());
-	        return true;
-		
+	        return true;		
         
-     }
+        }
 	 else
 	 {
 		 return false;
@@ -107,13 +111,12 @@ public class WebController extends WebMvcConfigurerAdapter {
 	}
 	
 	@RequestMapping(value = "/userDetails", method = RequestMethod.POST, consumes="application/json")
-	public  boolean insertUserDetails( @RequestBody String userDetails) throws JsonParseException, JsonMappingException, IOException{
-	
-		userManager.insertUserDetails(userDetails);
-		//userManager.insertUserDetails(userDetails);
-	//Gson gson = new GsonBuilder().create();
-	 //userDetail=gson.fromJson(userDetails, UserDetails.class);
-	return false;	 
+	public  boolean insertUserDetails( @RequestBody String userDetails) throws JsonParseException, JsonMappingException, IOException{	
+            userManager.insertUserDetails(userDetails);
+            //userManager.insertUserDetails(userDetails);
+            //Gson gson = new GsonBuilder().create();
+            //userDetail=gson.fromJson(userDetails, UserDetails.class);
+            return false;	 
 	
 	}
 	@RequestMapping(value = "/fetchUserDetails", method = RequestMethod.POST,consumes="application/json")

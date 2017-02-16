@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp').controller('UserController', ['$scope','$http','$window','ServiceApp' , function($scope,$http,$window,ServiceApp) {
+angular.module('myApp').controller('UserController', ['$scope','$http','$window','UserService' , function($scope,$http,$window,UserService) {
     var self = this;
     self.user={name:'',email:'',password:''};
     self.login={email:'',password:''};
@@ -28,64 +28,56 @@ angular.module('myApp').controller('UserController', ['$scope','$http','$window'
 
 
     function createUser(user){
-    	  $http.post('register',user)
-          .success(function (response, status) {
+    	UserService.createUser(user).then(
+           function (response) {
               message = response;
               if(message)
-              $window.location.href = '/profile.html'
+              {
+                  $window.location.href = '/profile.html';
+                  alert("Account has been created successfully")
+              }
               if(!message)
-            	  $window.location.href = '/index.html'
-              console.log(message);
-          })
-          .error(function (response, status) {
-             
-       
+              {
+                  alert("This email has been used")
+                  $window.location.href = '/index.html';                
+              }
+          },
+          function (error) {
+             console.log(error);      
           });
     }
     
     
-    function loginDetails(login){
-    	$http.post('login/',login)
-         	  //$http.post('test/'+self.login.email)
-               .success(function (response, status) {
-            	   message=response;
-                   if(message.name==null)
-                	   $window.location.href = '/index.html';
-                   else
-                	   {
-                	   //dataService.dataObj=message.name;
-                	   //sharedService.prepForBroadcast(message.name);
-                	   ServiceApp.setValue(message.name);
-                	   $window.location.href = '/profile.html';
-                	   }
-                   console.log(message);
-               })
-               .error(function (response, status) {
-                  
-            
-               });
-    	
-  }    
+    function loginDetails(user){
+    	UserService.login(user).then(
+            function (response) {
+            	message = response;
+                if(message["name"] !== null)
+                {
+                    $window.location.href = '/profile.html';
+                }
+                else
+                {
+                   //dataService.dataObj=message.name;
+                   //sharedService.prepForBroadcast(message.name);
+                   //ServiceApp.setValue(message.name);   
+                   alert("Email or password incorrect");                  
+                }
+           },
+           function (error) {
+              console.log(error);
+           });   	
+        }  
 
     function submit() {
-        if(self.user.email!=null){
-            console.log('Saving New User', self.user);
-            createUser(self.user);
-        }else{
-            //updateUser(self.user, self.user.id);
-            console.log('User updated with id ', self.user.id);
-        }
+        console.log('Saving New User', self.user);
+        createUser(self.user);
         reset();
     }
     
     function loginSubmit() {
-        if(self.login.email!=null){
-            console.log('Saving New User', self.login);
-            loginDetails(self.login);
-        }else{
-            //updateUser(self.user, self.user.id);
-            console.log('User updated with id ', self.user.id);
-        }
+        console.log('Saving New User', self.login);
+        loginDetails(self.login);
         reset();
     }
 
