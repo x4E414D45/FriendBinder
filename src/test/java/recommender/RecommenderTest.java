@@ -11,7 +11,6 @@ import static org.junit.Assert.*;
 public class RecommenderTest {
 
 	public RecommenderTest() {
-		Interests interests = new Interests();
 	}
 
 	@Before
