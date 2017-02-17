@@ -13,7 +13,12 @@ public class UserDetails {
 	private String gender;
 	private String[] interests;
 	private RealVector vectorRepr;
-
+	private String other;
+	private String language;
+	private String location;
+	private String name;
+	private String relationship;
+	private String telnum;
 
 	/*private enum interests{Cooking,OnlineGames,Partying,Sleeping,Sports,Studying,Travelling}
 	private interests userPermission;
@@ -38,8 +43,6 @@ public class UserDetails {
 	public void setInterests(String[] interests) {
 		this.interests = interests;
 	}
-	private String other;
-	private String language;
 
 	public String getEmail() {
 		return email;
@@ -48,10 +51,6 @@ public class UserDetails {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	private String location;
-	private String name;
-	private String relationship;
-	private String telnum;
 
 	public String getAbout() {
 		return about;
