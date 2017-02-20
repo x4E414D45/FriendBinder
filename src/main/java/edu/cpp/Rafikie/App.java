@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 
 import edu.cpp.Rafikie.data.provider.FSUserManager;
 import edu.cpp.Rafikie.data.provider.UserManager;
+import recommender.Interests;
+import recommender.InterestsImpl;
 
 @Configuration
 @EnableAutoConfiguration
@@ -17,15 +19,21 @@ import edu.cpp.Rafikie.data.provider.UserManager;
 public class App {
 
 	private static final Logger logger = LoggerFactory.getLogger(App.class.getName());
-  
-    @Bean
-    public UserManager userManager() {
-        UserManager userManager =  new FSUserManager();
-        return userManager;
-    }
 
-    public static void main(String[] args) throws Exception {
-        // Run Spring Boot
-        SpringApplication.run(App.class, args);
-    }
+	@Bean
+	public UserManager userManager() {
+		UserManager userManager = new FSUserManager();
+		return userManager;
+	}
+
+	@Bean
+	public Interests interests() {
+		Interests interests = new InterestsImpl();
+		return interests;
+	}
+
+	public static void main(String[] args) throws Exception {
+		// Run Spring Boot
+		SpringApplication.run(App.class, args);
+	}
 }
