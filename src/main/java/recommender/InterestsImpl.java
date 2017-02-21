@@ -1,5 +1,8 @@
 package recommender;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import edu.cpp.Rafikie.data.UserDetails;
@@ -7,6 +10,7 @@ import edu.cpp.Rafikie.data.provider.MongoDBConnection;
 import edu.cpp.Rafikie.data.provider.MongoDBConnectionImpl;
 import edu.cpp.Rafikie.data.provider.UserManager;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -27,8 +31,6 @@ public class InterestsImpl implements Interests {
 
 	public InterestsImpl() {
 		connection = new MongoDBConnectionImpl();
-		allInterests = getInterestsFromDB();
-		interestIndex = createInterestIndex();
 	}
 
 	private ArrayList<String> getInterestsFromDB() {
@@ -62,15 +64,33 @@ public class InterestsImpl implements Interests {
 	}
 
 	public void updateUserVector(String userEmail) {
+		allInterests = getInterestsFromDB();
+		interestIndex = createInterestIndex();
 		UserDetails userDetails = userManager.fetchUserDetails(userEmail);
 		String[] userInterests = userDetails.getInterests();
 		if (userInterests != null) {
 			Double[] d_v = new Double[interestIndex.size()];
+			Arrays.fill(d_v, 0.0);
 			for (String interest : userInterests) {
-				d_v[interestIndex.get(interest)] = 1.0;
+				interest = preprocessInterest(interest);
+				try {
+					d_v[interestIndex.get(interest)] = 1.0;
+				}
+				catch (Exception e) {
+					System.out.println("Interest not in allInterests");
+				}
 			}
 			RealVector vectorRepr = new ArrayRealVector(d_v);
 			userDetails.setVectorRepr(vectorRepr);
+			Gson gson = new GsonBuilder().create();
+			try {
+				String userDetailsStr = gson.toJson(userDetails);
+				userManager.insertUserDetails(userDetailsStr);
+			}
+			catch (Exception e) {
+				System.out.println(e);
+				System.out.println("Could not convert UserDetails to string and add to DB.");
+			}
 		}
 	}
 
