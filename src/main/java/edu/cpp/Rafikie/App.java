@@ -12,6 +12,7 @@ import edu.cpp.Rafikie.data.provider.FSUserManager;
 import edu.cpp.Rafikie.data.provider.UserManager;
 import recommender.Interests;
 import recommender.InterestsImpl;
+import recommender.Recommender;
 
 @Configuration
 @EnableAutoConfiguration
@@ -30,6 +31,12 @@ public class App {
 	public Interests interests() {
 		Interests interests = new InterestsImpl();
 		return interests;
+	}
+
+	@Bean
+	public Recommender recommender() {
+		Recommender recommender = new Recommender();
+		return recommender;
 	}
 
 	public static void main(String[] args) throws Exception {

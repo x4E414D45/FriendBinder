@@ -2,8 +2,6 @@ package recommender;
 
 import edu.cpp.Rafikie.data.UserDetails;
 import java.util.ArrayList;
-import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealVector;
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -30,10 +28,9 @@ public class RecommenderTest {
 		ArrayList<UserDetails> allUsers = new ArrayList<>();
 
 		Double d_v[] = {1.0, 2.0, 3.0};
-		RealVector v = new ArrayRealVector(d_v);
 
-		a.setVectorRepr(v);
-		b.setVectorRepr(v);
+		a.setVectorRepr(d_v);
+		b.setVectorRepr(d_v);
 
 		allUsers.add(b);
 		ArrayList<UserDetails> retUsers = r.mostSimilarUsers(a, allUsers);
@@ -49,11 +46,9 @@ public class RecommenderTest {
 
 		Double d_v[] = {1.0, 2.0, 3.0};
 		Double d_w[] = {1.0, 1.0, 3.0};
-		RealVector v = new ArrayRealVector(d_v);
-		RealVector w = new ArrayRealVector(d_w);
 
-		a.setVectorRepr(v);
-		b.setVectorRepr(w);
+		a.setVectorRepr(d_v);
+		b.setVectorRepr(d_w);
 
 		allUsers.add(b);
 		allUsers.add(a);

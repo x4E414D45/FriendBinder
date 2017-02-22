@@ -10,8 +10,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Hashtable;
-import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealVector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +31,6 @@ public class InterestsImpl implements Interests {
 		ArrayList<String> allUserEmails = new DBAccessor().getAllEmails();
 		for (String email : allUserEmails) {
 			try {
-				System.out.println(email);
 				UserDetails userDetails = userManager.fetchUserDetails(email);
 				for (String interest : userDetails.getInterests()) {
 					interestsSet.add(preprocessInterest(interest));
@@ -73,8 +70,7 @@ public class InterestsImpl implements Interests {
 					System.out.println("Interest not in allInterests");
 				}
 			}
-			RealVector vectorRepr = new ArrayRealVector(d_v);
-			userDetails.setVectorRepr(vectorRepr);
+			userDetails.setVectorRepr(d_v);
 			Gson gson = new GsonBuilder().create();
 			try {
 				String userDetailsStr = gson.toJson(userDetails);

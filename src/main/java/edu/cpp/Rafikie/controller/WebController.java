@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import recommender.Interests;
+import recommender.Recommender;
 
 /**
  * This is the controller used by Spring framework.
@@ -46,6 +47,9 @@ public class WebController extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	Interests interests;
+
+	@Autowired 
+	Recommender recommender;
 
 	/*	 @Override
 	    public void addViewControllers(ViewControllerRegistry registry) {

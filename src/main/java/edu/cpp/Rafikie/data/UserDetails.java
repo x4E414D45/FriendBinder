@@ -12,7 +12,7 @@ public class UserDetails {
 	private String education;
 	private String gender;
 	private String[] interests;
-	private RealVector vectorRepr;
+	private Double[] vectorRepr;
 	private String other;
 	private String language;
 	private String location;
@@ -148,11 +148,11 @@ public class UserDetails {
 		this.telnum = telnum;
 	}
 
-	public RealVector getVectorRepr() {
+	public Double[] getVectorRepr() {
 		return vectorRepr;
 	}
 
-	public void setVectorRepr(RealVector vectorRepr) {
+	public void setVectorRepr(Double[] vectorRepr) {
 		this.vectorRepr = vectorRepr;
 	}
 

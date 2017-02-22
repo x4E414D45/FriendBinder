@@ -9,6 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealVector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +64,9 @@ public class Recommender {
 			System.out.println("Error: add interests to get recommendations!");
 			return 0.0;
 		}
-		return a.getVectorRepr().cosine(b.getVectorRepr());
+		RealVector rv_a = new ArrayRealVector(a.getVectorRepr());
+		RealVector rv_b = new ArrayRealVector(b.getVectorRepr());
+		return rv_a.cosine(rv_b);
 	}
 
 	private Map<UserDetails, Double> sortByValue(Map<UserDetails, Double> unsortMap) {
