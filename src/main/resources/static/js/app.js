@@ -1,26 +1,23 @@
 'use strict';
-var App = angular.module('myApp',[]);
-var Profile = angular.module('myProfile',['myApp','msieurtoph.ngCheckboxes']);
 
-App.factory('ServiceApp', function($rootScope) {
-	var data={};
-	data.myValue=false;
-    data.getValue = function() {
-        return this.myValue;
-    };
+var App = angular.module('myApp',['ngCookies'])
 
-    data.setValue = function(newValue) {
-        this.myValue = newValue;
-    };
-    return data;
-});
+      .run(run);
 
-Profile.service('ServiceProfile', function(ServiceApp) {
-    this.getValue = function() {
-        return ServiceApp.getValue();
-    };
+      run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
+      function run($rootScope, $location, $cookies, $http) {
+          // keep user logged in after page refresh
+          $rootScope.globals = $cookies.getObject('globals') || {};
+          if ($rootScope.globals.currentUser) {
+              $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+          }
 
-    this.setValue = function() {
-        ServiceApp.setValue('New value');
-    }
-});
+          $rootScope.$on('$locationChangeStart', function (event, next, current) {
+              // redirect to login page if not logged in and trying to access a restricted page
+              var restrictedPage = $.inArray($location.path(), ['/index','/profile']) === -1;
+              var loggedIn = $rootScope.globals.currentUser;
+              if (restrictedPage && !loggedIn) {
+                  $location.path('/index');
+              }
+          });
+      }
