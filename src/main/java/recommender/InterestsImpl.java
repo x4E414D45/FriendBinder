@@ -1,13 +1,9 @@
 package recommender;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
 import edu.cpp.Rafikie.data.UserDetails;
 import edu.cpp.Rafikie.data.provider.MongoDBConnection;
-import edu.cpp.Rafikie.data.provider.MongoDBConnectionImpl;
 import edu.cpp.Rafikie.data.provider.UserManager;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,17 +26,15 @@ public class InterestsImpl implements Interests {
 	private UserManager userManager;
 
 	public InterestsImpl() {
-		connection = new MongoDBConnectionImpl();
 	}
 
 	private ArrayList<String> getInterestsFromDB() {
-		DBCollection collection = connection.createConnectionforUserTable();
-		DBCursor cursor = collection.find();
 		HashSet<String> interestsSet = new HashSet();
-		while (cursor.hasNext()) {
+		ArrayList<String> allUserEmails = new DBAccessor().getAllEmails();
+		for (String email : allUserEmails) {
 			try {
-				String userEmail = cursor.next().get("email").toString();
-				UserDetails userDetails = userManager.fetchUserDetails(userEmail);
+				System.out.println(email);
+				UserDetails userDetails = userManager.fetchUserDetails(email);
 				for (String interest : userDetails.getInterests()) {
 					interestsSet.add(preprocessInterest(interest));
 				}
@@ -75,8 +69,7 @@ public class InterestsImpl implements Interests {
 				interest = preprocessInterest(interest);
 				try {
 					d_v[interestIndex.get(interest)] = 1.0;
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					System.out.println("Interest not in allInterests");
 				}
 			}
@@ -86,8 +79,7 @@ public class InterestsImpl implements Interests {
 			try {
 				String userDetailsStr = gson.toJson(userDetails);
 				userManager.insertUserDetails(userDetailsStr);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				System.out.println(e);
 				System.out.println("Could not convert UserDetails to string and add to DB.");
 			}

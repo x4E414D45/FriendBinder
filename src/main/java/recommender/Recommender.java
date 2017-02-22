@@ -1,20 +1,46 @@
 package recommender;
 
 import edu.cpp.Rafikie.data.UserDetails;
+import edu.cpp.Rafikie.data.provider.UserManager;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service("Recommender")
 public class Recommender {
 
 	private static final int MAX_RECOMMENDED = 100;
 
-	public UserDetails[] mostSimilarUsers(UserDetails a, UserDetails[] allUsers) {
+	@Autowired
+	private UserManager userManager;
+
+	public ArrayList<String> recommend(String userEmail) {
+		ArrayList<String> recommendations = new ArrayList<>();
+		ArrayList<UserDetails> allUsers = new ArrayList<>();
+		UserDetails user = userManager.fetchUserDetails(userEmail);
+		for (String email : new DBAccessor().getAllEmails()) {
+			allUsers.add(userManager.fetchUserDetails(email));
+		}
+
+		ArrayList<UserDetails> similarUsers = mostSimilarUsers(user, allUsers); 
+		for (UserDetails similarUser : similarUsers) {
+			if (!similarUser.getEmail().equals(user.getEmail())) {
+				recommendations.add(similarUser.getEmail());
+			}
+		}	
+		
+		return recommendations;
+	}
+
+	public ArrayList<UserDetails> mostSimilarUsers(UserDetails a, ArrayList<UserDetails> allUsers) {
 		Map<UserDetails, Double> userSimilarityMap = new LinkedHashMap<>();
-		UserDetails[] similarUsers = new UserDetails[MAX_RECOMMENDED];
+		ArrayList<UserDetails> similarUsers = new ArrayList<>();
 		for (UserDetails b : allUsers) {
 			userSimilarityMap.put(b, getUserSimilarity(a, b));
 		}
@@ -25,13 +51,17 @@ public class Recommender {
 			if (i >= MAX_RECOMMENDED) {
 				break;
 			}
-			similarUsers[i] = b;
+			similarUsers.add(b);
 			++i;
 		}
 		return similarUsers;
 	}
 
 	private Double getUserSimilarity(UserDetails a, UserDetails b) {
+		if (a.getVectorRepr() == null || b.getVectorRepr() == null) {
+			System.out.println("Error: add interests to get recommendations!");
+			return 0.0;
+		}
 		return a.getVectorRepr().cosine(b.getVectorRepr());
 	}
 
