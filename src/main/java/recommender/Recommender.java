@@ -1,14 +1,17 @@
 package recommender;
 
+import edu.cpp.Rafikie.data.FriendsWithSimilarInterests;
 import edu.cpp.Rafikie.data.UserDetails;
 import edu.cpp.Rafikie.data.provider.UserManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +25,11 @@ public class Recommender {
 	@Autowired
 	private UserManager userManager;
 
-	public ArrayList<String> recommend(String userEmail) {
-		ArrayList<String> recommendations = new ArrayList<>();
-		ArrayList<UserDetails> allUsers = new ArrayList<>();
+	public ArrayList<FriendsWithSimilarInterests> recommend(String userEmail) {
+		ArrayList<FriendsWithSimilarInterests> recommendations = new ArrayList<>();
 		UserDetails user = userManager.fetchUserDetails(userEmail);
+
+		ArrayList<UserDetails> allUsers = new ArrayList<>();
 		for (String email : new DBAccessor().getAllEmails()) {
 			allUsers.add(userManager.fetchUserDetails(email));
 		}
@@ -33,7 +37,15 @@ public class Recommender {
 		ArrayList<UserDetails> similarUsers = mostSimilarUsers(user, allUsers); 
 		for (UserDetails similarUser : similarUsers) {
 			if (!similarUser.getEmail().equals(user.getEmail())) {
-				recommendations.add(similarUser.getEmail());
+				FriendsWithSimilarInterests friend = new FriendsWithSimilarInterests();
+				friend.setAbout(similarUser.getAbout());
+				friend.setName(similarUser.getName());
+				friend.setInterests(intersectInterests(user, similarUser));
+				friend.setLanguages(similarUser.getLanguage());
+				friend.setLocation(similarUser.getLocation());
+				// FIXME: Add actual image
+				friend.setImage("");
+				recommendations.add(friend);
 			}
 		}	
 		
@@ -87,6 +99,16 @@ public class Recommender {
 		}
 
 		return sortedMap;
+	}
+
+	private String[] intersectInterests(UserDetails a, UserDetails b) {
+		Set<String> a_interests = new HashSet<>();
+		Collections.addAll(a_interests, StringProcessor.preprocessInterests(a.getInterests()));
+		Set<String> b_interests = new HashSet();
+		Collections.addAll(b_interests, StringProcessor.preprocessInterests(b.getInterests()));
+		a_interests.retainAll(b_interests);
+		String[] intersect = a_interests.toArray(new String[a_interests.size()]);
+		return intersect;
 	}
 
 }

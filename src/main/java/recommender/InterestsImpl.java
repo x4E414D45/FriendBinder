@@ -33,7 +33,7 @@ public class InterestsImpl implements Interests {
 			try {
 				UserDetails userDetails = userManager.fetchUserDetails(email);
 				for (String interest : userDetails.getInterests()) {
-					interestsSet.add(preprocessInterest(interest));
+					interestsSet.add(StringProcessor.preprocessInterest(interest));
 				}
 			} catch (NullPointerException e) {
 				System.out.println(e);
@@ -63,7 +63,7 @@ public class InterestsImpl implements Interests {
 			Double[] d_v = new Double[interestIndex.size()];
 			Arrays.fill(d_v, 0.0);
 			for (String interest : userInterests) {
-				interest = preprocessInterest(interest);
+				interest = StringProcessor.preprocessInterest(interest);
 				try {
 					d_v[interestIndex.get(interest)] = 1.0;
 				} catch (Exception e) {
@@ -86,7 +86,4 @@ public class InterestsImpl implements Interests {
 		// TODO
 	}
 
-	private String preprocessInterest(String interest) {
-		return interest.trim().toLowerCase();
-	}
 }
