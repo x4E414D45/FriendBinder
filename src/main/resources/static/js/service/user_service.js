@@ -1,48 +1,25 @@
 'use strict';
 
-angular.module('myApp').factory('UserService', ['$http', '$q', function($http, $q){
+angular.module('myApp')
+        .constant("baseURL","http://localhost:8080/")
+        .factory('UserService',['$http','baseURL', function($http,baseURL) {
 
-    var REST_SERVICE_URI = 'http://localhost:8080/';
-
-    var factory = {
-        createUser: createUser,
-        login : login
-    };
-
-    return factory;
-
-   
-
-    function createUser(user) {
-        var deferred = $q.defer();
-        $http.post(REST_SERVICE_URI + "register", user)
-            .then(
-            function (response) {
-            	 deferred.resolve(response.data);            	 
-            },
-            function(errResponse){
-                console.error('Error while creating User');
-                deferred.reject(errResponse);
-            }
-        );
-        return deferred.promise;
-    }
-    
-    function login(user) {
-        var deferred = $q.defer();
-        $http.post(REST_SERVICE_URI + "login", user)
-            .then(
-            function (response) {
-            	 deferred.resolve(response.data);            	 
-            },
-            function(errResponse){
-                console.error('Error while logging');
-                deferred.reject(errResponse);
-            }
-        );
-        return deferred.promise;
-    }
+        var userfac = {};
 
 
+        userfac.createUser = function(user){
+            return $http.post(baseURL + "register", user);
+        };
+        userfac.getUser = function(email){
+            return $http.post(baseURL + "fetchUserDetails", email);
+        };
+        userfac.login = function (user) {
+            return $http.post(baseURL + "login", user);
+        };
+        userfac.updateUser = function(email, user){
+            return $http.put(baseURL + "update/" + email, user);
+        };
 
-}]);
+        return userfac;
+        }])
+;

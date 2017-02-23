@@ -64,8 +64,8 @@ public class FSUserManager implements UserManager {
 		Gson gson = new GsonBuilder().create();
 		UserDetails details = new UserDetails();
 		while (checkEmailExistence.hasNext()) {
-			details = gson.fromJson(checkEmailExistence.next().toString(), UserDetails.class);
-			return details;
+                    details = gson.fromJson(checkEmailExistence.next().toString(), UserDetails.class);
+                    return details;
 		}
 		return details;
 

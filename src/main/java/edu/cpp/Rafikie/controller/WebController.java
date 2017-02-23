@@ -59,45 +59,36 @@ public class WebController extends WebMvcConfigurerAdapter {
 	 }*/
 	@RequestMapping(value = "/getEmail", method = RequestMethod.GET)
 	public User getEmail() {
-		return user;
-
+            return user;
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
-	public User test(@RequestBody String login) {
-		User user = new User();
-		Gson gson = new GsonBuilder().create();
-		Login loginDetails = gson.fromJson(login, Login.class);
-		loginDetails.setPassword(userManager.passwordEncryption(loginDetails.getPassword()));
-		List<String> list = userManager.isUserExist(loginDetails.getEmail());
-		if (list.contains(loginDetails.getPassword())) {
-			user.setName(list.get(0));
-			return user;
-
-		}
-		return user;
-
+	public boolean login(@RequestBody String login) {
+            User user = new User();
+            Gson gson = new GsonBuilder().create();
+            Login loginDetails = gson.fromJson(login, Login.class);
+            loginDetails.setPassword(userManager.passwordEncryption(loginDetails.getPassword()));
+            List<String> list = userManager.isUserExist(loginDetails.getEmail());
+            return list.contains(loginDetails.getPassword());
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "application/json")
 	public boolean register(@RequestBody String registerDetails) {
-		System.out.println("test");
-		Gson gson = new GsonBuilder().create();
-		Register register = gson.fromJson(registerDetails, Register.class);
-		register.setPassword(userManager.passwordEncryption(register.getPassword()));
-		List<String> list = new ArrayList<>();
-		list = userManager.isUserExist(register.getEmail());
+            System.out.println("test");
+            Gson gson = new GsonBuilder().create();
+            Register register = gson.fromJson(registerDetails, Register.class);
+            register.setPassword(userManager.passwordEncryption(register.getPassword()));
+            List<String> list = new ArrayList<>();
+            list = userManager.isUserExist(register.getEmail());
 
-		if (list.isEmpty()) {
-			userManager.register(register);
-			user.setName(register.getEmail());
-			return true;
-
-		} else {
-			return false;
-
-		}
-
+            if (list.isEmpty()) {
+                userManager.register(register);
+                return true;
+            } 
+            else 
+            {
+                return false;
+            }
 	}
 
 	@RequestMapping(value = "/userDetails", method = RequestMethod.POST, consumes = "application/json")

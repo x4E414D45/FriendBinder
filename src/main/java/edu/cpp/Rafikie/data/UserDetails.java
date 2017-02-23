@@ -1,6 +1,8 @@
 package edu.cpp.Rafikie.data;
 
 import org.apache.commons.math3.linear.RealVector;
+import java.util.Map;
+import java.util.HashMap;
 
 public class UserDetails {
 
@@ -19,6 +21,7 @@ public class UserDetails {
 	private String name;
 	private String relationship;
 	private String telnum;
+        private Map<String,String> image = new HashMap<String,String>();
 
 	/*private enum interests{Cooking,OnlineGames,Partying,Sleeping,Sports,Studying,Travelling}
 	private interests userPermission;
@@ -154,6 +157,15 @@ public class UserDetails {
 
 	public void setVectorRepr(Double[] vectorRepr) {
 		this.vectorRepr = vectorRepr;
+	}
+        
+        public String getImage(String key) {
+            String link = (String)image.get(key);
+            return link;
+	}
+
+	public void setImage(String key, String link) {
+               this.image.put(key, link);
 	}
 
 }

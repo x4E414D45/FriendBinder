@@ -1,90 +1,68 @@
 'use strict';
 
-angular.module('myApp').controller('UserController', ['$scope','$http','$window','UserService' , function($scope,$http,$window,UserService) {
-    var self = this;
-    self.user={name:'',email:'',password:''};
-    self.login={email:'',password:''};
-    self.users=[];
-    var message=message;
-    var name=name;
-    self.isShowRegister=false;
-    self.submit = submit;
-    self.reset = reset;
-    self.showRegister=showRegister;
-    self.loginDetails=loginDetails;
-    self.loginSubmit=loginSubmit;
-    self.send=send;
-    //$scope.text = 'Hey';
-    
-     function send(response){
-      //self.dataShare.sendData(response);
-    }
- 
-    function showRegister(){
-    	  debugger; 
-    	self.isShowRegister=true;
+angular.module('myApp')
+
+    .controller('UserController', ['$scope', '$location', 'AuthenticationService','UserService', function($scope, $location, AuthenticationService, UserService) {
+
+    $scope.user={id:null, name:'',email:'',password:''};
+    $scope.showForm = false;
+    $scope.loginInfo = {email:'', password:''};
+    $scope.showMessage = false;
+    $scope.successLogin = false;
+    var message = message;
+
+    initController();
+
+    function initController() {
+        AuthenticationService.ClearCredentials();
     }
 
+    $scope.login = function(){
+    console.log($scope.loginInfo);
+    $scope.dataLoading = true;
+    UserService.login($scope.loginInfo).then(
+      function(response){
+          message = response.data;
+          if (message){
+            AuthenticationService.SetCredentials($scope.loginInfo.email, $scope.loginInfo.password);
+            alert('Login Successfully');
+            window.location = 'profile.html';
+          }
+          else {
+              $scope.dataLoading = false;
+              alert('Email or password is wrong');
+          }
+    });
+    $scope.user={id:null, name:'',email:'',password:''};
+    $scope.myForm.$setPristine();
+  }
 
-
-    function createUser(user){
-    	UserService.createUser(user).then(
-           function (response) {
-              message = response;
-              if(message)
-              {
-                  $window.location.href = '/profile.html';
-                  alert("Account has been created successfully")
-              }
-              if(!message)
-              {
-                  alert("This email has been used")
-                  $window.location.href = '/index.html';                
-              }
-          },
-          function (error) {
-             console.log(error);      
-          });
-    }
-    
-    
-    function loginDetails(user){
-    	UserService.login(user).then(
-            function (response) {
-            	message = response;
-                if(message["name"] !== null)
-                {
-                    $window.location.href = '/profile.html';
-                }
-                else
-                {
-                   //dataService.dataObj=message.name;
-                   //sharedService.prepForBroadcast(message.name);
-                   //ServiceApp.setValue(message.name);   
-                   alert("Email or password incorrect");                  
-                }
-           },
-           function (error) {
-              console.log(error);
-           });   	
-        }  
-
-    function submit() {
-        console.log('Saving New User', self.user);
-        createUser(self.user);
-        reset();
-    }
-    
-    function loginSubmit() {
-        console.log('Saving New User', self.login);
-        loginDetails(self.login);
-        reset();
+    $scope.toggleDetails = function() {
+        $scope.showForm = !$scope.showForm;
     }
 
-    function reset(){
-        self.user={name:'',email:'',password:''};
-        $scope.myForm.$setPristine(); //reset Form
+    $scope.submit = function(){
+      console.log($scope.user);
+      UserService.createUser($scope.user).then(
+        function(response){
+           message = response.data;
+          if (message)
+          {  
+               alert('Account has been created successfully');
+          }
+          else
+          {
+               alert('This email has been used');
+          }
+        },
+        function(error){
+          console.log(error);
+        }
+      );
+      $scope.user={id:null, name:'',email:'',password:''};
+      $scope.myForm.$setPristine();
     }
-    
 
-}]);
+}])
+
+;

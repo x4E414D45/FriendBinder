@@ -1,93 +1,82 @@
-'use strict';
+'user strict';
 
-angular.module('myProfile').controller('ProfileController', ['$scope','$http','ServiceProfile', function($scope,$http,ServiceProfile) {
-     var self=this;
-     self.user={email:'',about:'',name:'',dob:'',gender:'',areacode:'',telnum:'',relationship:'',other:'',career:'',location:''};
-     self.fetched={};
-     self.fetched.interests=[];
-     self.test={};
-     var message=message;
-     var name=name;
-     self.email={};
-     self.init=init;
-     self.detailSubmit=detailSubmit;
-     self.user.interests = ['Travelling','OnlineGames','Cooking','Sports','Studying','Sleeping','Partying'];
-     self.getEmail=getEmail;
-     self.getUserDetails=getUserDetails;
-     
-     function getEmail()
-     {
-    	 $http.get('getEmail/')
-    	 .then(function (success){
-    		 self.email=success.data.name;
-    		 getUserDetails();
+angular.module('myApp')
 
-    	   },function (error){
+.controller('ProfileController', ['$scope', '$rootScope', 'UserService', function($scope, $rootScope, UserService){
+    $scope.message = "Loading....";
+    $scope.user = {id:null, about:'', name:'', birth:'', tel:'', email:'', relationship:'',
+                    education:'', career:'', location:'', interest:[], language:'', gender:'', image:{}, areacode:''};
 
-    	   });
-     }
-     
-     function getUserDetails()
-     {
-    	 $http.post('fetchUserDetails/',self.email)
-    	 .then(function (success){
-    		 self.user=success.data;
-    		 self.fetched.interests=self.user.interests;
-    		 self.user.interests=['Travelling','OnlineGames','Cooking','Sports','Studying','Sleeping','Partying'];
+    $scope.check = null;
+    $scope.interest = '';
 
-    	   },function (error){
+    initController();
 
-    	   });
-     }
-     
-     function init()
-     {
-    	 //self.user.interests = {Travelling:false,OnlineGames:false,Cooking:false,Sports:false,Studying:false,Sleeping:false,Partying:false};
-    	 getEmail();
-    	/* name= ServiceProfile.getValue;
-    	 console.log(name);*/
-     }
-     
-     function detailSubmit()
-     {
-    	 var str_array = self.user.other.split(',');
-    	 for(var i = 0; i < str_array.length; i++) {
-    		   self.user.interests.push(str_array[i]);
-    		}
+    function initController() {
+        UserService.getUser($rootScope.globals.currentUser.email).then(
+        function(response) {
+              $scope.user = response.data;
+          }
+      );
+    }
 
-    	 self.user.email=self.email;
-    	 self.user.interests=self.checkboxList;
-    	$http.post('userDetails/',self.user)
-         .then(function (success) {
-             message = success;
-             if(message)
-             init();
-             if(!message)
-           	  //$window.location.href = '/index.html'
-             console.log(message);
-         },function (error){
+    $scope.selectGender = function(choice){
+      if (choice === 1){
+        $scope.user.gender = "Female";
+      }
+      else {
+        $scope.user.gender = "Male";
+      }
+    }
 
-  	   });
-   }
-     
-     self.add = function(value){
-    	    if (!angular.isArray(self.checkboxList)){
-    	    	self.checkboxList = [];
-    	    }
-    	    if (-1 === self.checkboxList.indexOf(value)){
-    	    	self.checkboxList.push(value);
-    	    }
-    	  }
-     self.remove = function(value){
-    	    if (!angular.isArray(self.checkboxList)) {
-    	      return;
-    	    }
-    	    var index = self.checkboxList.indexOf(value);
-    	    if (-1 !== index){
-    	    	self.checkboxList.splice(index, 1);
-    	    }
-    	  }
+    $scope.selectRelation = function(choice){
+      if (choice === 1){
+        $scope.user.relationship = "Single";
+      }
+      else if (choice === 2){
+        $scope.user.relationship = "In a relationship";
+      }
+      else {
+        $scope.user.relationship = "Marriaged";
+      }
+    }
 
-   
+    $scope.selectInterest = function(choice){
+      if (choice === 1){
+        $scope.interest = "Reading";
+        $scope.user.interest.push($scope.interest);
+      }
+      else if (choice === 2){
+        $scope.interest = "Travel";
+        $scope.user.interest.push($scope.interest);
+      }
+      else if (choice === 3){
+        $scope.interest = "Playing Sports";
+        $scope.user.interest.push($scope.interest);
+      }
+      else if (choice === 4){
+        $scope.interest = "Cooking";
+        $scope.user.interest.push($scope.interest);
+      }
+      else if (choice === 5){
+        $scope.interest = "Playing Games";
+          $scope.user.interest.push($scope.interest);
+      }
+      else if (choice === 6){
+        $scope.interest = "Study";
+        $scope.user.interest.push($scope.interest);
+      }
+      else {
+        $scope.interest = "Shopping";
+        $scope.user.interest.push($scope.interest);
+      }
+    }
 
-}]);
+    $scope.edit = function(){
+       console.log($scope.user);
+       UserService.updateUser($rootScope.globals.currentUser.email, $scope.user);
+       alert("Information Updated");
+    }
+}])
+
+;
