@@ -87,12 +87,6 @@
                         <p class="signup-text">Signup now and meet awesome people around the world</p>
 
                       <form ng-submit="submit()" name="myForm" novalidate>
-                          <fieldset class="form-group" ng-class="{ 'has-error has-feedback' : myForm.name.$error.required && !myForm.name.$pristine }">
-                              <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name"
-                              ng-model="user.name" required ng-minlength=3>
-                              <span ng-show="myForm.name.$error.required && !myForm.name.$pristine">This is required field.</span>
-                              <span ng-show="myForm.name.$error.minlength && !myForm.name.$pristine">Minimum required length is 3.</span>
-                          </fieldset>
                           <fieldset class="form-group" ng-class="{ 'has-error has-feedback' : myForm.email.$invalid && !myForm.email.$pristine }">
                                   <input type="email" class="form-control" id="email" name="email" placeholder="Email"
                                   ng-model="user.email" required>
