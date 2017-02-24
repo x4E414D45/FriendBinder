@@ -4,7 +4,7 @@ angular.module('myApp')
 
     .controller('UserController', ['$scope', '$location', 'AuthenticationService','UserService', function($scope, $location, AuthenticationService, UserService) {
 
-    $scope.user={id:null, name:'',email:'',password:''};
+    $scope.user={email:'',password:''};
     $scope.showForm = false;
     $scope.loginInfo = {email:'', password:''};
     $scope.showMessage = false;
@@ -33,8 +33,6 @@ angular.module('myApp')
               alert('Email or password is wrong');
           }
     });
-    $scope.user={id:null, name:'',email:'',password:''};
-    $scope.myForm.$setPristine();
   }
 
     $scope.toggleDetails = function() {
@@ -47,20 +45,16 @@ angular.module('myApp')
         function(response){
            message = response.data;
           if (message)
-          {  
+          {
+               AuthenticationService.SetCredentials($scope.user.email, $scope.user.password);
                alert('Account has been created successfully');
+               window.location = 'profile.html';
           }
           else
           {
                alert('This email has been used');
           }
-        },
-        function(error){
-          console.log(error);
-        }
-      );
-      $scope.user={id:null, name:'',email:'',password:''};
-      $scope.myForm.$setPristine();
+        });
     }
 
 }])
