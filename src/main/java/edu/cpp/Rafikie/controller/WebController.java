@@ -64,7 +64,6 @@ public class WebController extends WebMvcConfigurerAdapter {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
 	public boolean login(@RequestBody String login) {
-            User user = new User();
             Gson gson = new GsonBuilder().create();
             Login loginDetails = gson.fromJson(login, Login.class);
             loginDetails.setPassword(userManager.passwordEncryption(loginDetails.getPassword()));
@@ -73,8 +72,7 @@ public class WebController extends WebMvcConfigurerAdapter {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "application/json")
-	public boolean register(@RequestBody String registerDetails) {
-            System.out.println("test");
+	public boolean register(@RequestBody String registerDetails) throws JsonParseException, JsonMappingException, IOException {
             Gson gson = new GsonBuilder().create();
             Register register = gson.fromJson(registerDetails, Register.class);
             register.setPassword(userManager.passwordEncryption(register.getPassword()));
@@ -94,32 +92,14 @@ public class WebController extends WebMvcConfigurerAdapter {
 	@RequestMapping(value = "/userDetails", method = RequestMethod.POST, consumes = "application/json")
 	public boolean insertUserDetails(@RequestBody String userDetails) throws JsonParseException, JsonMappingException, IOException {
 		userManager.insertUserDetails(userDetails);
-		//userManager.insertUserDetails(userDetails);
-		//Gson gson = new GsonBuilder().create();
-		//userDetail=gson.fromJson(userDetails, UserDetails.class);
 		return false;
 
 	}
 
 	@RequestMapping(value = "/fetchUserDetails", method = RequestMethod.POST, consumes = "application/json")
-	public UserDetails fetchUserDetails(@RequestBody String userEmail) {
-		userDetail = userManager.fetchUserDetails(userEmail);
+	public UserDetails fetchUserDetails(@RequestBody String userEmail)  {
+		userDetail = userManager.fetchUserDetails(userEmail);                         
 		return userDetail;
-	}
-
-	@RequestMapping(value = "/cs580/submit", method = RequestMethod.GET)
-	String alert() {
-		return "<html><body onload = \"alert('Successfully submitted the custom form')\"> </body></html>";
-
-	}
-
-	@RequestMapping(value = "/cs580/display", method = RequestMethod.GET)
-	String getWebPageItems() throws IOException {
-		Document doc = Jsoup.connect("http://localhost:8080/cs580/home").get();
-		Elements newsHeadLines = doc.select("div ul li");
-		System.out.println(newsHeadLines);
-		return newsHeadLines.toString();
-
 	}
 
 }
