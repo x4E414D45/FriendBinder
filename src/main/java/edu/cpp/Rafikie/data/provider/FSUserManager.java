@@ -34,7 +34,6 @@ public class FSUserManager implements UserManager {
 	@Override
 	public String register(Register register) {
 		BasicDBObject document = new BasicDBObject();
-		document.put("name", register.getName());
 		document.put("email", register.getEmail());
 		document.put("password", register.getPassword());
 		connection.createConnection().insert(document);
@@ -49,8 +48,10 @@ public class FSUserManager implements UserManager {
 		BasicDBObject searchForEmail = new BasicDBObject().append("email", object);
 		DBCursor checkEmailExistence = connection.createConnectionforUserTable().find(searchForEmail);
 		document.putAll(result);
+                System.out.println(document);
 		if (checkEmailExistence.hasNext()) {
 			connection.createConnectionforUserTable().update(searchForEmail, document);
+                        System.out.println("Updated");
 		} else {
 			connection.createConnectionforUserTable().insert(document);
 		}
@@ -59,15 +60,14 @@ public class FSUserManager implements UserManager {
 
 	@Override
 	public UserDetails fetchUserDetails(String email) {
-		BasicDBObject searchForEmail = new BasicDBObject().append("email", email);
-		DBCursor checkEmailExistence = connection.createConnectionforUserTable().find(searchForEmail);
-		Gson gson = new GsonBuilder().create();
-		UserDetails details = new UserDetails();
-		while (checkEmailExistence.hasNext()) {
-                    details = gson.fromJson(checkEmailExistence.next().toString(), UserDetails.class);
-                    return details;
-		}
-		return details;
+            DBObject query = new BasicDBObject().append("email", email);
+            System.out.println(query);
+            DBObject data = connection.createConnectionforUserTable().findOne(query);
+            Gson gson = new GsonBuilder().create();
+            UserDetails details = new UserDetails();
+            details = gson.fromJson(data.toString(), UserDetails.class);
+            System.out.println(details);
+            return details;
 
 	}
 
@@ -79,7 +79,6 @@ public class FSUserManager implements UserManager {
 		Gson gson = new GsonBuilder().create();
 		while (checkEmailExistence.hasNext()) {
 			Register register = gson.fromJson(checkEmailExistence.next().toString(), Register.class);
-			list.add(register.getName());
 			list.add(register.getPassword());
 			list.add(register.getEmail());
 			return list;
