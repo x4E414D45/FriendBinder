@@ -4,8 +4,8 @@ angular.module('myApp')
 
 .controller('ProfileController', ['$scope', '$rootScope', 'UserService', function($scope, $rootScope, UserService){
     $scope.message = "Loading....";
-    $scope.user = {id:null, about:'', name:'', birth:'', tel:'', email:'', relationship:'',
-                    education:'', career:'', location:'', interest:[], language:'', gender:'', image:{}, areacode:''};
+    $scope.user = {about:'', name:'', birth:'', tel:'', email:'', relationship:'',
+                    education:'', career:'', location:'', interest:[], language:'', gender:'', image:[], areacode:''};
 
     $scope.check = null;
     $scope.interest = '';
@@ -13,6 +13,7 @@ angular.module('myApp')
     initController();
 
     function initController() {
+        $scope.user.email = $rootScope.globals.currentUser.email;
         UserService.getUser($rootScope.globals.currentUser.email).then(
         function(response) {
               $scope.user = response.data;
@@ -74,7 +75,7 @@ angular.module('myApp')
 
     $scope.edit = function(){
        console.log($scope.user);
-       UserService.updateUser($rootScope.globals.currentUser.email, $scope.user);
+       UserService.updateUser($scope.user);
        alert("Information Updated");
     }
 }])
