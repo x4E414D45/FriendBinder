@@ -16,8 +16,8 @@ angular.module('myApp')
         userfac.login = function (user) {
             return $http.post(baseURL + "login", user);
         };
-        userfac.updateUser = function(email, user){
-            return $http.put(baseURL + "update/" + email, user);
+        userfac.updateUser = function(user){
+            return $http.post(baseURL + "userDetails", user);
         };
 
         return userfac;
