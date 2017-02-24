@@ -38,7 +38,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index" id="rafiki">Rafikie</a>
+            <a class="navbar-brand" href="index.html" id="rafikie">Rafikie</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -93,7 +93,7 @@
 						<div class="form-group" ng-class="{ 'has-error' : profileForm.date.$error.required && !profileForm.date.$pristine }" >
 							<label for="date" class="col-sm-2 control-label">Date of Birth</label>
 									<div class="col-sm-4">
-											<input type="text" class="form-control" id="date" name="date" placeholder="Date" ng-model="user.birth" ng-pattern='/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/((19\d{2})|([2-9]\d{3}))$/' required>
+											<input type="text" class="form-control" id="date" name="date" placeholder="Date" ng-model="user.dob" ng-pattern='/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/((19\d{2})|([2-9]\d{3}))$/' required>
 											<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
 											<span ng-show="profileForm.date.$error.required && !profileForm.date.$pristine">This is required field.</span>
 											<span ng-show="profileForm.date.$error.pattern && !profileForm.date.$pristine">Incorrect Format, should be DD/MM/YYYY</span>
@@ -114,7 +114,7 @@
 						<div class="form-group" ng-class="{ 'has-error' : profileForm.telnum.$error.required && !profileForm.telnum.$pristine && profileForm.areacode.$error.required && !profileForm.areacode.$pristine }">
 							<label for="telnum" class="col-xs-12 col-sm-2 control-label">Contact Tel.</label>
 							<div class="col-xs-7 col-sm-6 col-md-6">
-									<input type="tel" class="form-control" id="telnum" name="telnum" placeholder="Tel. number" ng-model="user.tel" required ng-maxlength=10>
+									<input type="tel" class="form-control" id="telnum" name="telnum" placeholder="Tel. number" ng-model="user.telnum" required ng-maxlength=10>
 									<span ng-show="profileForm.telnum.$error.required && !profileForm.telnum.$pristine">This is required field.</span>
 									<span ng-show="profileForm.telnum.$error.maxlength && !profileForm.telnum.$pristine">Maximum required length is 10.</span>
 							</div>
@@ -162,7 +162,7 @@
 						<label for="telnum" class="col-xs-12 col-sm-2 control-label">Areacode</label>
 						<div class="col-xs-5 col-sm-4 col-md-4">
 								<div class="input-group">
-												<input type="number" class="form-control" id="areacode" name="areacode" placeholder="Country code" ng-model="user.areacode" required ng-maxlength=5>
+												<input type="code" class="form-control" id="areacode" name="areacode" placeholder="Country code" ng-model="user.areacode" required ng-maxlength=5>
 												<span ng-show="profileForm.areacode.$error.required && !profileForm.areacode.$pristine">This is required field.</span>
 												<span ng-show="profileForm.areacode.$error.maxlength && !profileForm.areacode.$pristine">Maximum required length is 5.</span>
 								</div>
@@ -231,7 +231,7 @@
               <div class="col-md-3">
                 <div class="profile-info">
 		<div>
-                  <img ng-src={{user.image.profile}} alt="" class="img-responsive profile-photo" />
+                  <img ng-src={{user.image[0]}} alt="" class="img-responsive profile-photo" />
                         <div class="fileUpload btn btn-primary">
                         <span>Upload Profile Picture</span>
                         <input type="file" class="upload" />
@@ -258,7 +258,7 @@
           <!--Timeline Menu for Small Screens-->
           <div class="navbar-mobile hidden-lg hidden-md">
             <div class="profile-info">
-              <img ng-src={{user.image.profile}} alt="" class="img-responsive profile-photo" />
+              <img ng-src={{user.image[0]}} alt="" class="img-responsive profile-photo" />
               <h4>{{user.name}}</h4>
               <p class="text-muted">{{user.career}}</p>
             </div>
@@ -297,7 +297,7 @@
 									<div class="card-height-indicator"></div>
 									<div class="card-content">
                   		<h4 class="card-body"><i class="ion-ios-information-outline icon-in-title"></i> Date of Birth</h4>
-                  		<p class="card-footer">{{user.birth}}</p>
+                  		<p class="card-footer">{{user.dob}}</p>
                 		</div>
 									</div>
 								</div>
@@ -317,7 +317,7 @@
 								<div class="card-height-indicator"></div>
 								<div class="card-content">
                   <h4 class="card-body"><i class="ion-ios-telephone icon-in-title"></i> Contact</h4>
-                  <p class="card-footer">{{user.tel}}</p>
+                  <p class="card-footer">{{user.telnum}}</p>
                 </div>
 							</div>
 						</div>
