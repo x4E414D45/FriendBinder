@@ -1,8 +1,6 @@
 package edu.cpp.Rafikie.data;
 
-import org.apache.commons.math3.linear.RealVector;
-import java.util.Map;
-import java.util.HashMap;
+import edu.cpp.Rafikie.util.Geocoder;
 
 public class UserDetails {
 
@@ -18,10 +16,11 @@ public class UserDetails {
 	private String other;
 	private String language;
 	private String location;
+	private Double[] coordinates;
 	private String name;
 	private String relationship;
 	private String telnum;
-        private String[] image;
+	private String[] image;
 
 	/*private enum interests{Cooking,OnlineGames,Partying,Sleeping,Sports,Studying,Travelling}
 	private interests userPermission;
@@ -125,6 +124,15 @@ public class UserDetails {
 
 	public void setLocation(String location) {
 		this.location = location;
+		setCoordinates(Geocoder.geocode(location));
+	}
+
+	public Double[] getCoordinates() {
+		return coordinates;
+	}
+
+	private void setCoordinates(Double[] coordinates) {
+		this.coordinates = coordinates;
 	}
 
 	public String getName() {
@@ -158,13 +166,12 @@ public class UserDetails {
 	public void setVectorRepr(Double[] vectorRepr) {
 		this.vectorRepr = vectorRepr;
 	}
-        
-        public String[] getImage() {
-            return image;
+
+	public String[] getImage() {
+		return image;
 	}
 
 	public void setImage(String[] image) {
-               this.image = image;
+		this.image = image;
 	}
-
 }
