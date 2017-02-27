@@ -57,10 +57,58 @@ public class WebController extends WebMvcConfigurerAdapter {
 	        registry.addViewController("/login").setViewName("login");
 	        
 	 }*/
+	 	@RequestMapping(value = "/getNotifications", method = RequestMethod.POST,consumes="application/json")
+      	public List<Notifications> getNotifications(@RequestBody String email)
+      	{
+    		ArrayList<Notifications> notifications=userManager.getNotifications(email);
+			return notifications;
+   		
+      		
+      		
+      		
+      	}
+
+      	@RequestMapping(value = "/fetchFriendsList", method = RequestMethod.POST,consumes="application/json")
+   	public List<FriendsWithSimilarInterests> getFriends(@RequestBody String email)
+   	{
+   		ArrayList<FriendsWithSimilarInterests> friendsWithSimilarInterests=new ArrayList<>();
+   		Recommender recommender=new Recommender();
+   		friendsWithSimilarInterests=recommender.recommend(email);
+		return friendsWithSimilarInterests;
+   		
+   		
+   		
+   	}
+
+   		@RequestMapping(value = "/addFriend", method = RequestMethod.POST,consumes="application/json")
+   	public boolean addFriend(@RequestBody String email) throws JsonParseException, JsonMappingException, IOException
+   	{
+ 		userManager.addFriendRequests(email);
+		return false;  		
+   	}
+
 	@RequestMapping(value = "/getEmail", method = RequestMethod.GET)
 	public User getEmail() {
             return user;
 	}
+
+	@RequestMapping(value = "/fetchImage", method = RequestMethod.POST,consumes="application/json")
+	public Image getImage(@RequestBody String email)
+	{
+		image=userManager.fetchImage(email);
+		
+		return image;
+		
+	}
+
+		@RequestMapping(value = "/fileUpload/{userId:.+}", method = RequestMethod.POST )
+	@Produces(MediaType.APPLICATION_JSON) 
+	public void continueFileUpload(HttpServletRequest request, HttpServletResponse response,@PathVariable("userId") String userId) throws JsonParseException, JsonMappingException, IOException, CoreException{
+	
+	
+		userManager.uploadImageToDatabase(request,userId);
+
+		}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
 	public boolean login(@RequestBody String login) {

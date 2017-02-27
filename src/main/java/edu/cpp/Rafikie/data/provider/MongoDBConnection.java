@@ -6,5 +6,7 @@ public interface MongoDBConnection {
 	
 	 public	DBCollection createConnection();
 	 public DBCollection createConnectionforUserTable();
+	 public	DBCollection createConnectionforUserImageTable();
+	 public DBCollection  createConnectionforUserNotificationTable();
 
 }

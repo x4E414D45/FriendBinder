@@ -9,6 +9,14 @@ public class FriendsWithSimilarInterests {
 	private String location;
 	private String image;
 
+	private String email;
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getAbout() {
 		return about;
 	}

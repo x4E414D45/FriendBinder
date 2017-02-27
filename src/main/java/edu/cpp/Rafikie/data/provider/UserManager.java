@@ -16,7 +16,12 @@ public interface UserManager {
 	public List isUserExist(String email);
 	public String passwordEncryption(String password);
 	public void insertUserDetails(String result)throws JsonParseException, JsonMappingException, IOException;
-	public UserDetails fetchUserDetails(String email);
+	public UserDetails fetchUserDetails(String email);public String convertImageToBase64(HttpServletRequest request);
+	public String convertImageToBase64(HttpServletRequest request);
+	public void uploadImageToDatabase(HttpServletRequest request,String image)throws JsonParseException, JsonMappingException, IOException;
+	public Image fetchImage(String email);
+	public boolean addFriendRequests(String email) throws JsonParseException, JsonMappingException, IOException;
+	public ArrayList<Notifications> getNotifications(String email);
 	
 
 }
