@@ -36,7 +36,7 @@ public class Recommender {
 			allUsers.add(userManager.fetchUserDetails(email));
 		}
 
-		ArrayList<UserDetails> similarUsers = mostSimilarUsers(user, allUsers); 
+		ArrayList<UserDetails> similarUsers = mostSimilarUsers(user, allUsers);
 		for (UserDetails similarUser : similarUsers) {
 			if (!similarUser.getEmail().equals(user.getEmail())) {
 				FriendsWithSimilarInterests friend = new FriendsWithSimilarInterests();
@@ -49,8 +49,8 @@ public class Recommender {
 				friend.setImage("");
 				recommendations.add(friend);
 			}
-		}	
-		
+		}
+
 		return recommendations;
 	}
 
@@ -82,15 +82,20 @@ public class Recommender {
 		RealVector rv_b = new ArrayRealVector(b.getVectorRepr());
 		Double interestSimilarity = rv_a.cosine(rv_b);
 		Double physicalDistanceNorm = getNormalizedPhysicalDistance(a, b);
-		
+
 		return interestSimilarity - physicalDistanceNorm;
 	}
 
 	private Double getNormalizedPhysicalDistance(UserDetails a, UserDetails b) {
 		Double MAX_DIST = 6356000.0;
-		Double dist = Geocoder.getDistanceMeters(Geocoder.geocode(a.getLocation()), Geocoder.geocode(b.getLocation()));
-		Double distNormalized = dist / MAX_DIST;
-		return distNormalized;
+		try {
+			Double dist = Geocoder.getDistanceMeters(Geocoder.geocode(a.getLocation()), Geocoder.geocode(b.getLocation()));
+			Double distNormalized = dist / MAX_DIST;
+			return distNormalized;
+		} catch(NullPointerException e) {
+			System.out.println("Error: location is not set");
+			return 1.0;
+		}
 	}
 
 	private Map<UserDetails, Double> sortByValue(Map<UserDetails, Double> unsortMap) {
