@@ -3,6 +3,7 @@ package recommender;
 import edu.cpp.Rafikie.data.FriendsWithSimilarInterests;
 import edu.cpp.Rafikie.data.UserDetails;
 import edu.cpp.Rafikie.data.provider.UserManager;
+import edu.cpp.Rafikie.util.Geocoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
+import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,7 +80,17 @@ public class Recommender {
 		}
 		RealVector rv_a = new ArrayRealVector(a.getVectorRepr());
 		RealVector rv_b = new ArrayRealVector(b.getVectorRepr());
-		return rv_a.cosine(rv_b);
+		Double interestSimilarity = rv_a.cosine(rv_b);
+		Double physicalDistanceNorm = getNormalizedPhysicalDistance(a, b);
+		
+		return interestSimilarity - physicalDistanceNorm;
+	}
+
+	private Double getNormalizedPhysicalDistance(UserDetails a, UserDetails b) {
+		Double MAX_DIST = 6356000.0;
+		Double dist = Geocoder.getDistanceMeters(Geocoder.geocode(a.getLocation()), Geocoder.geocode(b.getLocation()));
+		Double distNormalized = dist / MAX_DIST;
+		return distNormalized;
 	}
 
 	private Map<UserDetails, Double> sortByValue(Map<UserDetails, Double> unsortMap) {

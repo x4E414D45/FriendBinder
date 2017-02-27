@@ -7,6 +7,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.gavaghan.geodesy.Ellipsoid;
+import org.gavaghan.geodesy.GeodeticCalculator;
+import org.gavaghan.geodesy.GlobalPosition;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,7 +18,7 @@ public class Geocoder {
 	public static Double[] geocode(String location) {
 		Double geocode[] = new Double[2];
 		String locationEncoded = URLEncoder.encode(location);
-		String url = "http://api.opencagedata.com/geocode/v1/json?q=" + locationEncoded + "&key=8e871547aa2876d0451e299011ca47e9";
+		String url = "http://api.opencagedata.com/geocode/v1/json?q=" + locationEncoded + "&key=1e341babc4fcd66cb12fe7ff462951b9";
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet request = new HttpGet(url);
 
@@ -42,5 +45,14 @@ public class Geocoder {
 		}
 
 		return geocode;
+	}
+
+	public static Double getDistanceMeters(Double[] a, Double[] b) {
+		GeodeticCalculator geoCalc = new GeodeticCalculator();
+		Ellipsoid reference = Ellipsoid.WGS84;  
+		GlobalPosition globalPosA = new GlobalPosition(a[0], a[1], 0.0);
+		GlobalPosition globalPosB = new GlobalPosition(b[0], b[1], 0.0);
+		Double distance = geoCalc.calculateGeodeticCurve(reference, globalPosA, globalPosB).getEllipsoidalDistance();
+		return distance;
 	}
 }

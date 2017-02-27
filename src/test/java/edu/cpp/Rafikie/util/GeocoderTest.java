@@ -44,4 +44,12 @@ public class GeocoderTest {
 		assertArrayEquals(expResult, result);
 	}
 
+	@Test
+	public void testGetDistanceMeters() {
+		Double[] a = {34.055903, -117.820416};
+		Double[] b = {34.057540, -117.751457};
+		Double dist = Geocoder.getDistanceMeters(a, b);
+		assertEquals(dist, 6370.0, 5);
+	}
+
 }

@@ -54,9 +54,8 @@ public class InterestsImpl implements Interests {
 		return index;
 	}
 
+	// Call this every time the user updates their interests
 	public void updateUserVector(String userEmail) {
-		allInterests = getInterestsFromDB();
-		interestIndex = createInterestIndex();
 		UserDetails userDetails = userManager.fetchUserDetails(userEmail);
 		String[] userInterests = userDetails.getInterests();
 		if (userInterests != null) {
@@ -82,8 +81,16 @@ public class InterestsImpl implements Interests {
 		}
 	}
 
+	// Call this everytime the server is started
 	public void updateAllUserVectors() {
-		// TODO
+		allInterests = getInterestsFromDB();
+		interestIndex = createInterestIndex();
+
+		ArrayList<String> allUserEmails = new DBAccessor().getAllEmails();
+		for (String email : allUserEmails) {
+			updateUserVector(email);
+		}
+		
 	}
 
 }

@@ -16,7 +16,6 @@ public class UserDetails {
 	private String other;
 	private String language;
 	private String location;
-	private Double[] coordinates;
 	private String name;
 	private String relationship;
 	private String telnum;
@@ -124,15 +123,6 @@ public class UserDetails {
 
 	public void setLocation(String location) {
 		this.location = location;
-		setCoordinates(Geocoder.geocode(location));
-	}
-
-	public Double[] getCoordinates() {
-		return coordinates;
-	}
-
-	private void setCoordinates(Double[] coordinates) {
-		this.coordinates = coordinates;
 	}
 
 	public String getName() {
