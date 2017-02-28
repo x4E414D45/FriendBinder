@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myApp')
-        .constant("baseURL","http://localhost:8080/")
+        .constant("baseURL","http://www.rafikie.com/")
         .factory('UserService',['$http','baseURL', function($http,baseURL) {
 
         var userfac = {};
