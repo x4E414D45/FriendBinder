@@ -25,7 +25,6 @@ angular.module('myApp')
           message = response.data;
           if (message){
             AuthenticationService.SetCredentials($scope.loginInfo.email, $scope.loginInfo.password);
-            alert('Login Successfully');
             window.location = 'profile.html';
           }
           else {

@@ -103,10 +103,10 @@
 							<label for="gender" class="col-sm-2 control-label">Gender</label>
 							<div class="col-sm-10">
 									<label class="radio-inline">
-											<input type="radio" name="gender" value="" ng-click="selectGender(1)" ng-class="isSelected(1)">Female
+                                                                            <input type="radio" name="gender" ng-click="selectGender(1)" ng-model="user.gender" value="Female">Female
 									</label>
 									<label class="radio-inline">
-										<input type="radio" name="gender" value="" ng-click="selectGender(2)" ng-class="isSelected(2)">Male
+										<input type="radio" name="gender" ng-click="selectGender(2)" ng-model="user.gender" value="Male">Male
 									</label>
 									<span ng-show="profileForm.gender.$error.required && !profileForm.gender.$pristine">This is required field.</span>
 								</div>
@@ -129,13 +129,13 @@
 						<label class="col-sm-2 control-label">Relationship</label>
 						<div class="col-sm-10">
 							<label class="radio-inline">
-																<input type="radio" name="number" value="" ng-click="selectRelation(1)">Single
+                                                            <input type="radio" name="number" ng-click="selectRelation(1)" ng-model="user.relationship" value="Single">Single
 														</label>
 							<label class="radio-inline">
-																<input type="radio" name="number" value="" ng-click="selectRelation(2)">In a relationship
+                                                            <input type="radio" name="number" ng-click="selectRelation(2)"  ng-model="user.relationship" value="In a relationship">In a relationship
 														</label>
 							<label class="radio-inline">
-																<input type="radio" name="number" value="" ng-click="selectRelation(3)">Marriaged
+                                                            <input type="radio" name="number" ng-click="selectRelation(3)" ng-model="user.relationship" value="Married">Married
 														</label>
 							</div>
 					</div>
@@ -159,7 +159,7 @@
 							</div>
 					</div>
 					<div class="form-group" ng-class="{ 'has-error' : profileForm.areacode.$error.required && !profileForm.areacode.$pristine }">
-						<label for="telnum" class="col-xs-12 col-sm-2 control-label">Areacode</label>
+						<label for="telnum" class="col-xs-12 col-sm-2 control-label">Zip Code</label>
 						<div class="col-xs-5 col-sm-4 col-md-4">
 								<div class="input-group">
 												<input type="code" class="form-control" id="areacode" name="areacode" placeholder="Country code" ng-model="user.areacode" required ng-maxlength=5>
@@ -172,30 +172,36 @@
 							<label class="col-sm-2 control-label">Interests</label>
 							<div class="col-sm-10">
 								<label class="checkbox-inline">
-	                                <input type="checkbox" name="number" value="" ng-click="selectInterest(1)">Reading
+	                                <input type="checkbox" name="number" ng-click="selectInterest(1)">Reading
 	                            </label>
 								<label class="checkbox-inline">
-	                                <input type="checkbox" name="number" value="" ng-click="selectInterest(2)">Travelling
+	                                <input type="checkbox" name="number" ng-click="selectInterest(2)">Travelling
 	                            </label>
 								<label class="checkbox-inline">
-	                                <input type="checkbox" name="number" value="" ng-click="selectInterest(3)">Playing Sports
+	                                <input type="checkbox" name="number" ng-click="selectInterest(3)">Playing Sports
 	                            </label>
 								<label class="checkbox-inline">
-	                                <input type="checkbox" name="number" value="" ng-click="selectInterest(4)">Cooking
+	                                <input type="checkbox" name="number" ng-click="selectInterest(4)">Cooking
 	                            </label>
 								<label class="checkbox-inline">
-	                                <input type="checkbox" name="number" value="" ng-click="selectInterest(5)">Playing Games
+	                                <input type="checkbox" name="number" ng-click="selectInterest(5)">Playing Games
 	                            </label>
 	            	</div>
 								<div class="col-sm-2"></div>
 								<div class="col-sm-10">
 
 									<label class="checkbox-inline">
-		                                <input type="checkbox" name="number" value="" ng-click="selectInterest(6)">Studying
+		                                <input type="checkbox" name="number" ng-click="selectInterest(6)">Studying
 		                            </label>
 									<label class="checkbox-inline">
-									        <input type="checkbox" name="number" value="" ng-click="selectInterest(7)">Shopping
+						<input type="checkbox" name="number" ng-click="selectInterest(7)">Shopping
 									</label>
+								</div>
+						</div>
+                                            <div class="form-group">
+								<label for="other" class="col-sm-2 control-label">Other</label>
+								<div class="col-sm-10">
+										<input type="other" class="form-control" id="other" name="other" placeholder="Other" ng-model="user.other">										
 								</div>
 						</div>
 						<div class="form-group" ng-class="{ 'has-error' : profileForm.language.$error.required && !profileForm.language.$pristine }">

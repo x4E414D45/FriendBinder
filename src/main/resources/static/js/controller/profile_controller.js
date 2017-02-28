@@ -5,9 +5,9 @@ angular.module('myApp')
 .controller('ProfileController', ['$scope', '$rootScope', 'UserService', function($scope, $rootScope, UserService){
     $scope.message = "Loading....";
     $scope.user = {about:'', name:'', birth:'', tel:'', email:'', relationship:'',
-                    education:'', career:'', location:'', interest:[], language:'', gender:'', image:[], areacode:''};
+                    education:'', career:'', location:'', interest:[], language:'', gender:'', image:[], areacode:'', other:''};
 
-    $scope.check = null;
+    $scope.checkInterests = null;
     $scope.interest = '';
 
     initController();
@@ -38,37 +38,37 @@ angular.module('myApp')
         $scope.user.relationship = "In a relationship";
       }
       else {
-        $scope.user.relationship = "Marriaged";
+        $scope.user.relationship = "Married";
       }
     }
 
     $scope.selectInterest = function(choice){
       if (choice === 1){
-        $scope.interest = "Reading";
+        $scope.interest = "reading";
         $scope.user.interest.push($scope.interest);
       }
       else if (choice === 2){
-        $scope.interest = "Travel";
+        $scope.interest = "travel";
         $scope.user.interest.push($scope.interest);
       }
       else if (choice === 3){
-        $scope.interest = "Playing Sports";
+        $scope.interest = "playing sports";
         $scope.user.interest.push($scope.interest);
       }
       else if (choice === 4){
-        $scope.interest = "Cooking";
+        $scope.interest = "cooking";
         $scope.user.interest.push($scope.interest);
       }
       else if (choice === 5){
-        $scope.interest = "Playing Games";
+        $scope.interest = "playing games";
           $scope.user.interest.push($scope.interest);
       }
       else if (choice === 6){
-        $scope.interest = "Study";
+        $scope.interest = "study";
         $scope.user.interest.push($scope.interest);
       }
       else {
-        $scope.interest = "Shopping";
+        $scope.interest = "shopping";
         $scope.user.interest.push($scope.interest);
       }
     }
