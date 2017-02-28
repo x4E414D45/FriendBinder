@@ -1,4 +1,4 @@
-package recommender;
+package edu.cpp.Rafikie.recommender;
 
 import edu.cpp.Rafikie.data.FriendsWithSimilarInterests;
 import edu.cpp.Rafikie.data.UserDetails;
@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Set;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
-import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,7 +73,9 @@ public class Recommender {
 	}
 
 	private Double getUserSimilarity(UserDetails a, UserDetails b) {
-		if (a.getVectorRepr() == null || b.getVectorRepr() == null) {
+		Double[] a_v = a.getVectorRepr();
+		Double[] b_v = b.getVectorRepr();
+		if (a_v == null || b_v == null || a_v.length == 0 || b_v.length == 0) {
 			System.out.println("Error: add interests to get recommendations!");
 			return 0.0;
 		}

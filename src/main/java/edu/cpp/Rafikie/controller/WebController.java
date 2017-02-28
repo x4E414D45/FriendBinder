@@ -29,16 +29,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import recommender.Interests;
-import recommender.Recommender;
+import edu.cpp.Rafikie.recommender.Interests;
+import edu.cpp.Rafikie.recommender.Recommender;
 
-/**
- * This is the controller used by Spring framework.
- * <p>
- * The basic function of this controller is to map each HTTP API Path to the
- * correspondent method.
- *
- */
 @RestController
 public class WebController extends WebMvcConfigurerAdapter {
 
@@ -50,6 +43,12 @@ public class WebController extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	MongoDBConnection connection;
+
+	@Autowired
+	Recommender recommender;
+
+	@Autowired
+	Interests interests;
 
 	/*	 @Override
 	    public void addViewControllers(ViewControllerRegistry registry) {
@@ -67,7 +66,6 @@ public class WebController extends WebMvcConfigurerAdapter {
 	@RequestMapping(value = "/fetchFriendsList", method = RequestMethod.POST, consumes = "application/json")
 	public List<FriendsWithSimilarInterests> getFriends(@RequestBody String email) {
 		ArrayList<FriendsWithSimilarInterests> friendsWithSimilarInterests = new ArrayList<>();
-		Recommender recommender = new Recommender();
 		friendsWithSimilarInterests = recommender.recommend(email);
 		return friendsWithSimilarInterests;
 

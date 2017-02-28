@@ -1,4 +1,4 @@
-package recommender;
+package edu.cpp.Rafikie.recommender;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,4 +1,4 @@
-package recommender;
+package edu.cpp.Rafikie.recommender;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;

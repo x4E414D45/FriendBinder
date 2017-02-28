@@ -1,4 +1,4 @@
-package recommender;
+package edu.cpp.Rafikie.recommender;
 
 public class StringProcessor {
 	

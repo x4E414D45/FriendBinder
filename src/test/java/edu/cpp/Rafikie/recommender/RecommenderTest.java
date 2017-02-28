@@ -1,5 +1,4 @@
-package recommender;
-
+package edu.cpp.Rafikie.recommender;
 import edu.cpp.Rafikie.data.UserDetails;
 import java.util.ArrayList;
 import org.junit.After;
@@ -57,3 +56,4 @@ public class RecommenderTest {
 	}
 
 }
+
