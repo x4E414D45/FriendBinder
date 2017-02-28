@@ -51,12 +51,6 @@ public class WebController extends WebMvcConfigurerAdapter {
 	@Autowired
 	MongoDBConnection connection;
 
-	@Autowired
-	Interests interests;
-
-	@Autowired
-	Recommender recommender;
-
 	/*	 @Override
 	    public void addViewControllers(ViewControllerRegistry registry) {
 	        registry.addViewController("/index").setViewName("index");

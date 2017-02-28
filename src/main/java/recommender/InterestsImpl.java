@@ -13,7 +13,7 @@ import java.util.Hashtable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("interests")
+@Service("Interests")
 public class InterestsImpl implements Interests {
 
 	MongoDBConnection connection;

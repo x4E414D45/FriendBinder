@@ -27,18 +27,6 @@ public class App {
 		return userManager;
 	}
 
-	@Bean
-	public Interests interests() {
-		Interests interests = new InterestsImpl();
-		return interests;
-	}
-
-	@Bean
-	public Recommender recommender() {
-		Recommender recommender = new Recommender();
-		return recommender;
-	}
-
 	public static void main(String[] args) throws Exception {
 		// Run Spring Boot
 		SpringApplication.run(App.class, args);
