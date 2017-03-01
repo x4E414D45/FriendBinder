@@ -109,4 +109,3 @@ var Friends = angular.module('myFriends',[])
               }
           });
       }
-;
