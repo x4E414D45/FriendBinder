@@ -182,7 +182,7 @@ public class FSUserManager implements UserManager {
 			String fileName = mFile.getOriginalFilename();
 			String[] split = fileName.split("\\.");
 
-			path = Paths.get("src/main/resources/static/images/users/" + filename + "." + split[split.length - 1]);
+			path = Paths.get("target/classes/static/images/users/" + filename + "." + split[split.length - 1]);
 			Files.deleteIfExists(path);
 			InputStream in = mFile.getInputStream();
 			Files.copy(in, path);
