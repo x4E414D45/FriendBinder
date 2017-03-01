@@ -10,18 +10,17 @@ angular.module('myProfile')
     $scope.interests = [];
     var interest = interest;
     $scope.image = '';
-    var email = email;
 
     initController();
 
     function initController() {
-        email = $rootScope.globals.currentUser.email;
+        $scope.user.email = $rootScope.globals.currentUser.email;
         getUser();
         getImage();
     }
     
     function getUser(){       
-        ProfileService.getUser(email).then(
+        ProfileService.getUser($scope.user.email).then(
         function(response) {
               $scope.user = response.data;
           },function (error){
@@ -30,7 +29,7 @@ angular.module('myProfile')
     }
     
     function getImage(){       
-        ProfileService.getImage(email).then(
+        ProfileService.getImage($scope.user.email).then(
         function(response) {
               $scope.image = response.data.image;
           },function (error){
