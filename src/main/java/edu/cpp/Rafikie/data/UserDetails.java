@@ -19,7 +19,7 @@ public class UserDetails {
 	private String name;
 	private String relationship;
 	private String telnum;
-	private String[] image;
+	private String image;
 
 	/*private enum interests{Cooking,OnlineGames,Partying,Sleeping,Sports,Studying,Travelling}
 	private interests userPermission;
@@ -157,11 +157,11 @@ public class UserDetails {
 		this.vectorRepr = vectorRepr;
 	}
 
-	public String[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(String[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 }
