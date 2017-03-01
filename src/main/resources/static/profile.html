@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app="myProfile">
 <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,15 +44,20 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right main-menu">
-              <li class="dropdown"><a href="findfriends.html">Find Friends</a></li>
+              <li class="dropdown">
+                  <a href="findfriends.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Find Friends</a>
+              </li>
               <li class="dropdown active">
                 <a href="profile.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Profile</a>
               </li>
               <li class="dropdown">
                 <a href="friendlist.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Friends</a>
               </li>
-							<li class="dropdown">
+              <li class="dropdown">
                 <a href="chatroom.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Chatroom</a>
+              </li>
+              <li class="dropdown">
+                <a href="index.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Log Out</a>
               </li>
             </ul>
             <form class="navbar-form navbar-right hidden-sm">
@@ -66,7 +71,29 @@
       </nav>
     </header>
     <!--Header End-->
-		<div id="editModal" class="modal fade" role="dialog">
+    <div id="openbox" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Profile Photo</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                    <label for="yourself" class="col-sm-2 control-label">Insert your Image</label>
+                    <div class="col-sm-10">
+                        <input type="file" file-model="myFile"/>
+                        <button ng-click="uploadFile()" id="finish">Upload Image</button>  							                                                             
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+	<div id="editModal" class="modal fade" role="dialog">
 	      <div class="modal-dialog">
 	        <!-- Modal content-->
 	        <div class="modal-content">
@@ -175,7 +202,7 @@
 	                                <input type="checkbox" name="number" ng-click="selectInterest(1)">Reading
 	                            </label>
 								<label class="checkbox-inline">
-	                                <input type="checkbox" name="number" ng-click="selectInterest(2)">Travelling
+	                                <input type="checkbox" name="number" ng-click="selectInterest(2)">Travel
 	                            </label>
 								<label class="checkbox-inline">
 	                                <input type="checkbox" name="number" ng-click="selectInterest(3)">Playing Sports
@@ -237,12 +264,9 @@
               <div class="col-md-3">
                 <div class="profile-info">
 		<div>
-                  <img ng-src={{user.image[0]}} alt="" class="img-responsive profile-photo" />
-                        <div class="fileUpload btn btn-primary">
-                        <span>Upload Profile Picture</span>
-                        <input type="file" class="upload" />
-                    </div>
-                    </div>
+                  <img ng-src="../../images/users/{{image}}" alt="" class="img-responsive profile-photo" />
+                        <button type="button" class="btn btn-primary" id="upload">Upload Profile Photo</button>
+                   </div>
                   <h3>{{user.name}}</h3>
                   <p class="text-muted">{{user.career}}</p>
                 </div>
@@ -254,8 +278,7 @@
                   <li><a href=""></a></li>
                 </ul>
                 <ul class="follow-me list-inline">
-                    <li><button class="btn-primary" id="editInfo">Edit</button></li>
-                    <li><a href="index.html"><button class="btn-primary" id="editInfo">Log Out</button></a></li>
+                    <li><button class="btn-primary" id="editInfo">Edit</button></li>                   
                 </ul>
               </div>
             </div>
@@ -264,7 +287,7 @@
           <!--Timeline Menu for Small Screens-->
           <div class="navbar-mobile hidden-lg hidden-md">
             <div class="profile-info">
-              <img ng-src={{user.image[0]}} alt="" class="img-responsive profile-photo" />
+              <img ng-src="../../images/users/{{image}}" alt="" class="img-responsive profile-photo" />
               <h4>{{user.name}}</h4>
               <p class="text-muted">{{user.career}}</p>
             </div>
@@ -394,22 +417,18 @@
 										<div class="card-height-indicator"></div>
 										<div class="card-content">
 		                  <h4 class="card-body"><i class="ion-ios-heart-outline icon-in-title"></i> Interests</h4>
-		                  <ul class="card-footer interests list-inline">
-		                    <li>{{user.interest[0]}}</li>
-                                        <li>{{user.interest[1]}}</li>
-                                        <li>{{user.interest[2]}}</li>
-                                        <li>{{user.interest[3]}}</li>
-                                        <li>{{user.interest[4]}}</li>
+		                  <ul class="interests list-inline" ng-repeat="interest in user.interests" style="display: inline-block; padding-left: 20px">
+		                    <li>{{interest}}</li>
 		                  </ul>
 		                </div>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="card">
-										<div class="card-height-indicator"></div>
-										<div class="card-content">
+					</div>
+					</div>
+					<div class="col-md-6">
+					<div class="card">
+						<div class="card-height-indicator"></div>
+					<div class="card-content">
                   	<h4 class="card-body"><i class="ion-ios-chatbubble-outline icon-in-title"></i> Language</h4>
-										<p class="card-footer">{{user.language}}</p>
+					<p class="card-footer">{{user.language}}</p>
                 </div>
 							</div>
 						</div>
@@ -494,17 +513,27 @@
     <script src="js/angular.min.js"></script>
     <script src="js/angular-cookies.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/checklist-model.js"></script>
+    <script src="js/angular-checkboxes.js"></script>
+    <script src="js/ng-flow-standalone.min.js"></script>
+    <script src="js/ng-flow.min.js"></script>
     <script src="js/controller/profile_controller.js"></script>
-    <script src="js/service/user_service.js"></script>
+    <script src="js/service/profile_service.js"></script>
     <script src="js/service/authentication.js"></script>
 	<script>
 	        $(document).ready(function(){
-				 	$("#editInfo").click(function(){
+			$("#editInfo").click(function(){
 	                $("#editModal").modal('show');
 	            });
-					$("#close").click(function(){
-			                $("#editModal").modal('hide');
-			            });
+                        $("#close").click(function(){
+                        $("#editModal").modal('hide');
+                    });
+                        $("#upload").click(function(){
+                        $("#openbox").modal('show');
+                    });
+                        $("#finish").click(function(){
+                        $("#openbox").modal('hide');                      
+                    });
 	        });
 	    </script>
   </body>
