@@ -1,25 +1,16 @@
 'use strict';
 
 angular.module('myApp')
-        .constant("baseURL","http://www.rafikie.com/")
-        .factory('UserService',['$http','baseURL', function($http,baseURL) {
+        .factory('UserService',['$http', function($http) {
 
         var userfac = {};
 
-
         userfac.createUser = function(user){
-            return $http.post(baseURL + "register", user);
-        };
-        userfac.getUser = function(email){
-            return $http.post(baseURL + "fetchUserDetails", email);
+            return $http.post("register", user);
         };
         userfac.login = function (user) {
-            return $http.post(baseURL + "login", user);
+            return $http.post("login", user);
         };
-        userfac.updateUser = function(user){
-            return $http.post(baseURL + "userDetails", user);
-        };
-
         return userfac;
         }])
 ;
