@@ -1,24 +1,41 @@
 'user strict';
 
-angular.module('myApp')
+angular.module('myProfile')
 
-.controller('ProfileController', ['$scope', '$rootScope', 'UserService', function($scope, $rootScope, UserService){
-    $scope.message = "Loading....";
+.controller('ProfileController', ['$scope', '$rootScope', 'ProfileService','fileUpload', function($scope, $rootScope, ProfileService, fileUpload){
+    var message = "Loading....";
     $scope.user = {about:'', name:'', birth:'', tel:'', email:'', relationship:'',
-                    education:'', career:'', location:'', interest:[], language:'', gender:'', image:[], areacode:'', other:''};
+                    education:'', career:'', location:'', interests:[], language:'', gender:'', image:'', areacode:'', other:''};
 
-    $scope.checkInterests = null;
-    $scope.interest = '';
+    $scope.interests = [];
+    var interest = interest;
+    $scope.image = '';
+    var email = email;
 
     initController();
 
     function initController() {
-        $scope.user.email = $rootScope.globals.currentUser.email;
-        UserService.getUser($rootScope.globals.currentUser.email).then(
+        email = $rootScope.globals.currentUser.email;
+        getUser();
+        getImage();
+    }
+    
+    function getUser(){       
+        ProfileService.getUser(email).then(
         function(response) {
               $scope.user = response.data;
-          }
-      );
+          },function (error){
+
+    	});
+    }
+    
+    function getImage(){       
+        ProfileService.getImage(email).then(
+        function(response) {
+              $scope.image = response.data.image;
+          },function (error){
+
+    	});
     }
 
     $scope.selectGender = function(choice){
@@ -44,40 +61,61 @@ angular.module('myApp')
 
     $scope.selectInterest = function(choice){
       if (choice === 1){
-        $scope.interest = "reading";
-        $scope.user.interest.push($scope.interest);
+        interest = "Reading";
+        $scope.interests.push(interest);
       }
       else if (choice === 2){
-        $scope.interest = "travel";
-        $scope.user.interest.push($scope.interest);
+        interest = "Travel";
+        $scope.interests.push(interest);
       }
       else if (choice === 3){
-        $scope.interest = "playing sports";
-        $scope.user.interest.push($scope.interest);
+        interest = "Playing Sports";
+        $scope.interests.push(interest);
       }
       else if (choice === 4){
-        $scope.interest = "cooking";
-        $scope.user.interest.push($scope.interest);
+        interest = "Cooking";
+        $scope.interests.push(interest);
       }
       else if (choice === 5){
-        $scope.interest = "playing games";
-          $scope.user.interest.push($scope.interest);
+        interest = "Playing games";
+         $scope.interests.push(interest);
       }
       else if (choice === 6){
-        $scope.interest = "study";
-        $scope.user.interest.push($scope.interest);
+        interest = "Study";
+        $scope.interests.push(interest);
       }
       else {
-        $scope.interest = "shopping";
-        $scope.user.interest.push($scope.interest);
+        interest = "Shopping";
+        $scope.interests.push(interest);
       }
     }
 
     $scope.edit = function(){
+       console.log($scope.interests);
+       $scope.user.interests = $scope.interests;
        console.log($scope.user);
-       UserService.updateUser($scope.user);
-       alert("Information Updated");
+       ProfileService.updateUser($scope.user);
     }
+    
+    $scope.dataUpload = true;
+    $scope.errVisibility = false;
+    $scope.uploadFile = function ()
+    {
+         var file = $scope.myFile;
+         console.log('file is ' );
+         var uploadUrl = "/fileUpload" + "/" + $scope.user.email;
+         fileUpload.uploadFileToUrl(file, uploadUrl).then(function(result){
+            $scope.user.image = result;
+            $scope.errors = fileUpload.getResponse();
+            console.log($scope.errors);
+            $scope.errVisibility = true;
+        }, 
+        function(error) {
+        alert('error');
+     })
+
+    }
+    
 }])
 
 ;
