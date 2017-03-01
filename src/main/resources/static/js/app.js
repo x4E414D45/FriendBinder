@@ -22,7 +22,7 @@ var App = angular.module('myApp',['ngCookies'])
           });
       }
 
-var Profile = angular.module('myProfile',['ngCookies','flow'])
+var Profile = angular.module('myProfile',['ngCookies'])
 
     .run(run);
 
