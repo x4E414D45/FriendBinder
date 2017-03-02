@@ -63,7 +63,7 @@
             <form class="navbar-form navbar-right hidden-sm">
               <div class="form-group">
                 <i class="icon ion-android-search"></i>
-                <input type="text" class="form-control" placeholder="Search friends, photos, videos">
+                <input id="pac-input" type="text" class="form-control" placeholder="Search friends, photos, videos">
               </div>
             </form>
           </div><!-- /.navbar-collapse -->
@@ -181,8 +181,8 @@
 					<div class="form-group" ng-class="{ 'has-error' : profileForm.location.$error.required && !profileForm.location.$pristine }">
 							<label for="location" class="col-sm-2 control-label">Location</label>
 							<div class="col-sm-10">
-									<input type="location" class="form-control" id="location" name="location" placeholder="Location" ng-model="user.location" required>
-									<span ng-show="profileForm.location.$error.required && !profileForm.location.$pristine">This is required field.</span>
+                                                            <input id="pac-input" type="text" class="form-control" name="location" placeholder="Location" ng-model="user.location" required>
+                                                            <span ng-show="profileForm.location.$error.required && !profileForm.location.$pristine">This is required field.</span>
 							</div>
 					</div>
 					<div class="form-group" ng-class="{ 'has-error' : profileForm.areacode.$error.required && !profileForm.areacode.$pristine }">
@@ -278,7 +278,7 @@
                   <li><a href=""></a></li>
                 </ul>
                 <ul class="follow-me list-inline">
-                    <li><button class="btn-primary" id="editInfo">Edit</button></li>                   
+                    <li><button class="btn-primary" id="editInfo">Edit profile</button></li>                   
                 </ul>
               </div>
             </div>
@@ -297,8 +297,7 @@
                 <li><a href=""></a></li>
                 <li><a href=""></a></li>
               </ul>
-              <button class="btn-primary" id="editInfo">Edit</button>
-               <a href="index"><button class="btn-primary" id="editInfo">Log Out</button></a>
+              <button class="btn-primary" id="editInfo">Edit profile</button>               
             </div>
           </div><!--Timeline Menu for Small Screens End-->
 
@@ -502,6 +501,7 @@
 
     <!-- Scripts
     ================================================= -->
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/typed.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

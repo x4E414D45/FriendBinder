@@ -165,3 +165,16 @@ function initMap() {
     map: map
   });
 }
+
+google.maps.event.addDomListener(window, 'load', initialize);
+function initialize() {
+    var input = document.getElementById('pac-input');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.addListener('place_changed', function () {
+        var place = autocomplete.getPlace();
+        console.log(place);
+        console.log(place.geometry['location'].lat());
+        console.log(place.geometry['location'].lng());
+    });
+
+}
