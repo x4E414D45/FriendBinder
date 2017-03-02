@@ -82,21 +82,25 @@ public class Recommender {
 		RealVector rv_a = new ArrayRealVector(a.getVectorRepr());
 		RealVector rv_b = new ArrayRealVector(b.getVectorRepr());
 		Double interestSimilarity = rv_a.cosine(rv_b);
-		Double physicalDistanceNorm = getNormalizedPhysicalDistance(a, b);
+		// Double physicalDistanceNorm = getNormalizedPhysicalDistance(a, b);
 
-		return interestSimilarity - physicalDistanceNorm;
+		//return interestSimilarity - physicalDistanceNorm;
+		return interestSimilarity;
 	}
 
 	private Double getNormalizedPhysicalDistance(UserDetails a, UserDetails b) {
 		Double MAX_DIST = 6356000.0;
+		/*
 		try {
-			Double dist = Geocoder.getDistanceMeters(Geocoder.geocode(a.getLocation()), Geocoder.geocode(b.getLocation()));
+			Double dist = Geocoder.getDistanceMeters(a.getCoordinates(), b.getCoordinates());
 			Double distNormalized = dist / MAX_DIST;
 			return distNormalized;
 		} catch(NullPointerException e) {
 			System.out.println("Error: location is not set");
 			return 1.0;
 		}
+		*/
+		return null;
 	}
 
 	private Map<UserDetails, Double> sortByValue(Map<UserDetails, Double> unsortMap) {
