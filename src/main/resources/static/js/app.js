@@ -88,7 +88,7 @@ var Profile = angular.module('myProfile',['ngCookies'])
     }
 }]);
 
-var Friends = angular.module('myFriends',[])
+var Friends = angular.module('myFriends',['ngCookies'])
 
     .run(run);
 

@@ -4,8 +4,8 @@ angular.module('myProfile')
 
 .controller('ProfileController', ['$scope', '$rootScope', 'ProfileService','fileUpload', function($scope, $rootScope, ProfileService, fileUpload){
     var message = "Loading....";
-    $scope.user = {about:'', name:'', birth:'', tel:'', email:'', relationship:'',
-                    education:'', career:'', location:'', interests:[], language:'', gender:'', image:'', areacode:'', other:''};
+    $scope.user = {about:'', name:'', dob:'', telnum:'', email:'', relationship:'',
+                    education:'', career:'', location:'', interests:[], language:'', gender:'', areacode:'', other:''};
 
     $scope.interests = [];
     var interest = interest;

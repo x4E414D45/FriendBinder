@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myFriends">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,7 +24,7 @@
     <!--Favicon-->
     <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
 	</head>
-  <body>
+  <body ng-controller="FriendController">
 
     <!-- Header
     ================================================= -->
@@ -45,16 +45,21 @@
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav navbar-right main-menu">
-              <li class="dropdown active"><a href="findfriends.html">Find Friends</a></li>
+            <ul class="nav navbar-nav navbar-right main-menu">
+              <li class="dropdown active">
+                  <a href="findfriends.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Find Friends</a>
+              </li>
               <li class="dropdown">
                 <a href="profile.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Profile</a>
               </li>
               <li class="dropdown">
                 <a href="friendlist.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Friends</a>
               </li>
-							<li class="dropdown">
+              <li class="dropdown">
                 <a href="chatroom.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Chatroom</a>
+              </li>
+              <li class="dropdown">
+                <a href="index.html" class="" role="button" aria-haspopup="true" aria-expanded="false">Log Out</a>
               </li>
             </ul>
             <form class="navbar-form navbar-right hidden-sm">
@@ -71,37 +76,37 @@
 
     <div id="page-contents">
     	<div class="container">
-    		<div class="row">
+    	<div class="row">
 
     			<!-- Newsfeed Common Side Bar Left
           ================================================= -->
-    			<div class="col-md-3 static">
+    	<div class="col-md-3 static">
             <div class="profile-card">
-            	<img src="" alt="user" class="profile-photo" />
-            	<h5><a href="timeline.html" class="text-white">Thong Pham</a></h5>
+            	<img ng-src="../../images/users/{{image}}" alt="user" class="profile-photo" />
+            	<h5><a href="timeline.html" class="text-white">{{user.name}}</a></h5>
             	<a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 100 friends</a>
-            </div><!--profile card ends-->
-						<form>
-							<h4 class="grey">Search for Friends</h4>
-						  <div class="form-group">
-						    <label for="college">College or University</label>
-						    <input type="" class="form-control" id="college" placeholder="Enter College or University">
-						  </div>
-						  <div class="form-group">
-						    <label for="city">City</label>
-						    <input type="" class="form-control" id="city" placeholder="Enter city">
-						  </div>
-						  <div class="form-group">
-						    <label for="interests">Interests</label>
-						    <input type="" class="form-control" id="interests" placeholder="Enter interests">
-						  </div>
-						<div class="form-group">
-							<label for="languages">Languages</label>
-							<input type="" class="form-control" id="languages" placeholder="Enter Languages">
-						</div>
-						</form>
-          </div>
-    			<div class="col-md-7">
+                        </div><!--profile card ends-->
+                    <form>
+                            <h4 class="grey">Search for Friends</h4>
+                      <div class="form-group">
+                        <label for="college">College or University</label>
+                        <input type="" class="form-control" id="college" placeholder="Enter College or University">
+                      </div>
+                      <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="" class="form-control" id="city" placeholder="Enter city">
+                      </div>
+                      <div class="form-group">
+                        <label for="interests">Interests</label>
+                        <input type="" class="form-control" id="interests" placeholder="Enter interests">
+                      </div>
+                    <div class="form-group">
+                            <label for="languages">Languages</label>
+                            <input type="" class="form-control" id="languages" placeholder="Enter Languages">
+                    </div>
+               </form>
+         </div>
+    	<div class="col-md-7">
 
             <!-- Post Create Box
             ================================================= -->
@@ -111,146 +116,42 @@
               <div>
                 <h2>Friend Suggestions</h2>
               </div>
-							<div>
-								<ul class="nav nav-tabs" role="tablist">
-    						<li role="presentation" class="active"><a href="#friends" aria-controls="home" role="tab" data-toggle="tab">Friends</a></li>
-    						<li role="presentation"><a href="#dating" aria-controls="profile" role="tab" data-toggle="tab">Dating</a></li>
-    						<li role="presentation"><a href="#studymates" aria-controls="messages" role="tab" data-toggle="tab">Study Mates</a></li>
-    						<li role="presentation"><a href="#marriage" aria-controls="settings" role="tab" data-toggle="tab">Marriage</a></li>
-  							</ul>
-						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane active" id="friends">
-              <div class="nearby-user">
+          <div>
+           <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#friends" aria-controls="home" role="tab" data-toggle="tab">Friends</a></li>
+            <li role="presentation"><a href="#dating" aria-controls="profile" role="tab" data-toggle="tab">Dating</a></li>
+            <li role="presentation"><a href="#studymates" aria-controls="messages" role="tab" data-toggle="tab">Study Mates</a></li>
+            <li role="presentation"><a href="#marriage" aria-controls="settings" role="tab" data-toggle="tab">Marriage</a></li>
+           </ul>
+            <div class="tab-content">
+             <div role="tabpanel" class="tab-pane active" id="friends">
+              <div class="nearby-user" ng-repeat="user in recommendedFriends">
                 <div class="row">
                   <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-2" alt="user" class="profile-photo-lg" />
+                    <img ng-scr="../../images/users/{{user.image}}" alt="user" class="profile-photo-lg" />
                   </div>
                   <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Dat Do</a></h5>
-                    <p>Software Engineer</p>
-                    <p class="text-muted">Pasedena</p>
+                    <h5><a href="#" class="profile-link">{{user.name}}</a></h5>
+                    <p>{{user.about}}</p>
+                    <p ng-repeat="interest in user.interests">{{interest}}<p>
+                    <p class="text-muted">{{user.location}}</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
+                    <button ng-click="friendRequestSent(user)"class="btn btn-primary pull-right">Add Friend</button>
+                  </div>
                   </div>
                 </div>
               </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img scr="images/users/user-3" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Satyam Nikhra</a></h5>
-                    <p>Full-Stack Web Developer</p>
-                    <p class="text-muted">West Covina</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-						</div>
-						<div role="tabpanel" class="tab-pane" id="dating">
-             <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-2" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Dat Do</a></h5>
-                    <p>Software Engineer</p>
-                    <p class="text-muted">Pasedena</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img scr="images/users/user-3" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Satyam Nikhra</a></h5>
-                    <p>Full-Stack Web Developer</p>
-                    <p class="text-muted">West Covina</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-						</div>
-						<div role="tabpanel" class="tab-pane" id="studymates">
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-2" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Dat Do</a></h5>
-                    <p>Software Engineer</p>
-                    <p class="text-muted">Pasedena</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img scr="images/users/user-3" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Satyam Nikhra</a></h5>
-                    <p>Full-Stack Web Developer</p>
-                    <p class="text-muted">West Covina</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-		</div>
-		<div role="tabpanel" class="tab-pane" id="marriage">
-             <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img src="images/users/user-2" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Dat Do</a></h5>
-                    <p>Software Engineer</p>
-                    <p class="text-muted">Pasedena</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-              <div class="nearby-user">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2">
-                    <img scr="images/users/user-3" alt="user" class="profile-photo-lg" />
-                  </div>
-                  <div class="col-md-7 col-sm-7">
-                    <h5><a href="#" class="profile-link">Satyam Nikhra</a></h5>
-                    <p>Full-Stack Web Developer</p>
-                    <p class="text-muted">West Covina</p>
-                  </div>
-                  <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary pull-right">Add Friend</button>
-                  </div>
-                </div>
-              </div>
-		</div>
-		</div>
-		</div>
             </div>
-          </div>
+	<div role="tabpanel" class="tab-pane" id="dating">                   
+	</div>
+	<div role="tabpanel" class="tab-pane" id="studymates">
+         </div>
+	<div role="tabpanel" class="tab-pane" id="marriage">           
+        </div>
+        </div>
+        </div>
+     </div>
 
           <!-- Newsfeed Common Side Bar Right
           ================================================= -->
@@ -356,16 +257,19 @@
 
     <!-- Scripts
     ================================================= -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/typed.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.appear.min.js"></script>
+    <script src="js/jquery.incremental-counter.js"></script>
+    <script src="js/jquery.scrollbar.min.js"></script>
+    <script src="js/jquery.sticky-kit.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
     <script src="js/app.js"></script>
-    <script src="/js/angular.min.js"></script>
-    <script src="/js/controller/user_controller.js"></script>
-    <script src="/js/jquery.incremental-counter.js"></script>
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery.appear.min.js"></script>
-    <script src="/js/jquery.scrollbar.min.js"></script>
-    <script src="/js/jquery.sticky-kit.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/script.js"></script>
-    <script src="/js/typed.min.js"></script>
+    <script src="js/controller/friend_controller.js"></script>
+    <script src="js/service/friend_service.js"></script>
+    <script src="js/service/authentication.js"></script>
   </body>
 </html>
