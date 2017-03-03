@@ -3,7 +3,6 @@ package edu.cpp.Rafikie.recommender;
 import edu.cpp.Rafikie.data.FriendsWithSimilarInterests;
 import edu.cpp.Rafikie.data.UserDetails;
 import edu.cpp.Rafikie.data.provider.UserManager;
-import edu.cpp.Rafikie.util.Geocoder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,9 +51,7 @@ public class Recommender {
 				friend.setInterests(intersectInterests(user, similarUser));
 				friend.setLanguages(similarUser.getLanguage());
 				friend.setLocation(similarUser.getLocation());
-				// FIXME: Add actual image
 				friend.setImage(userManager.fetchImage(similarUser.getEmail()).getImage());
-
 				friend.setEmail(similarUser.getEmail());
 				recommendations.add(friend);
 			}

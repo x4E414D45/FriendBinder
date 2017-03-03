@@ -10,9 +10,6 @@ import org.springframework.context.annotation.Configuration;
 
 import edu.cpp.Rafikie.data.provider.FSUserManager;
 import edu.cpp.Rafikie.data.provider.UserManager;
-import edu.cpp.Rafikie.recommender.Interests;
-import edu.cpp.Rafikie.recommender.InterestsImpl;
-import edu.cpp.Rafikie.recommender.Recommender;
 
 @Configuration
 @EnableAutoConfiguration

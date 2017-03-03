@@ -20,14 +20,12 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
-import edu.cpp.Rafikie.data.AddedFriends;
 import edu.cpp.Rafikie.data.FriendDetails;
 import edu.cpp.Rafikie.data.FriendRequests;
 import edu.cpp.Rafikie.data.Image;
 import edu.cpp.Rafikie.data.Notifications;
 import edu.cpp.Rafikie.data.Register;
 import edu.cpp.Rafikie.data.UserDetails;
-import edu.cpp.Rafikie.recommender.InterestsImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -61,19 +59,14 @@ public class FSUserManager implements UserManager {
 		HashMap<String, Object> result = new ObjectMapper().readValue(userDetails, HashMap.class);
 		BasicDBObject document = new BasicDBObject();
 		String object = (String) result.get("email");
-		InterestsImpl impl=new InterestsImpl();
 		
 		BasicDBObject searchForEmail = new BasicDBObject().append("email", object);
 		DBCursor checkEmailExistence = connection.createConnectionforUserTable().find(searchForEmail);
 		document.putAll(result);
-		System.out.println(document);
 		if (checkEmailExistence.hasNext()) {
 			connection.createConnectionforUserTable().update(searchForEmail, document);
-			System.out.println("Updated");
-			impl.updateUserVector(object);
 		} else {
 			connection.createConnectionforUserTable().insert(document);
-			impl.updateUserVector(object);
 		}
 
 	}
@@ -82,12 +75,10 @@ public class FSUserManager implements UserManager {
 	public UserDetails fetchUserDetails(String email) {
 		DBObject query = new BasicDBObject().append("email", email);
 		MongoDBConnection connect=new MongoDBConnectionImpl();
-		System.out.println(query);
 		DBObject data = connect.createConnectionforUserTable().findOne(query);
 		Gson gson = new GsonBuilder().create();
 		UserDetails details = new UserDetails();
 		details = gson.fromJson(data.toString(), UserDetails.class);
-		System.out.println(details);
 		return details;
 
 	}
@@ -153,7 +144,6 @@ public class FSUserManager implements UserManager {
 			while (itr.hasNext()) {
 				MultipartFile mFile = mRequest.getFile((String) itr.next());
 				String fileName = mFile.getOriginalFilename();
-				System.out.println(fileName);
 
 				java.nio.file.Path path = Paths.get("D:/Data/" + filename);
 				Files.deleteIfExists(path);

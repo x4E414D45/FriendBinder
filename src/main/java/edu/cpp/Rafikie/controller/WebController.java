@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import edu.cpp.Rafikie.recommender.Interests;
-import edu.cpp.Rafikie.recommender.InterestsImpl;
 import edu.cpp.Rafikie.recommender.Recommender;
 
 @RestController
@@ -65,16 +64,17 @@ public class WebController extends WebMvcConfigurerAdapter {
 		return notifications;
 
 	}
-	
+
 	@RequestMapping(value = "/acceptFriendRequest", method = RequestMethod.POST, consumes = "application/json")
 	public boolean addedFriendDetails(@RequestBody String details) throws JsonParseException, JsonMappingException, IOException {
-       userManager.addFriendRequests(details);
-      return false;
+		userManager.addFriendRequests(details);
+		return false;
 
 	}
 
 	@RequestMapping(value = "/fetchFriendsList", method = RequestMethod.POST, consumes = "application/json")
 	public List<FriendsWithSimilarInterests> getFriends(@RequestBody String email) throws JsonParseException, JsonMappingException, IOException {
+		interests.updateAllUserVectors();
 		ArrayList<FriendsWithSimilarInterests> friendsWithSimilarInterests = new ArrayList<>();
 		friendsWithSimilarInterests = recommender.recommend(email);
 		return friendsWithSimilarInterests;
@@ -99,20 +99,18 @@ public class WebController extends WebMvcConfigurerAdapter {
 		return image;
 
 	}
-	
+
 	@RequestMapping(value = "/fetchAddedFriends", method = RequestMethod.POST, consumes = "application/json")
 	public List<FriendDetails> getAddedFriends(@RequestBody String email) throws JsonParseException, JsonMappingException, IOException {
-		List<FriendDetails> friendDetails=new ArrayList<>();
-		friendDetails=userManager.getFriendDetails(email);
-
+		List<FriendDetails> friendDetails = new ArrayList<>();
+		friendDetails = userManager.getFriendDetails(email);
 		return friendDetails;
 
 	}
-	
+
 	@RequestMapping(value = "/updateAllVectors", method = RequestMethod.GET)
 	public void updateAllVectors() {
-		InterestsImpl impl=new InterestsImpl();
-		impl.updateAllUserVectors();
+		interests.updateAllUserVectors();
 
 	}
 
@@ -151,7 +149,7 @@ public class WebController extends WebMvcConfigurerAdapter {
 
 	@RequestMapping(value = "/userDetails", method = RequestMethod.POST, consumes = "application/json")
 	public boolean insertUserDetails(@RequestBody String userDetails) throws JsonParseException, JsonMappingException, IOException {
-		
+
 		userManager.insertUserDetails(userDetails);
 		return false;
 
