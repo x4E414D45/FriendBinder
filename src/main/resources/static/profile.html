@@ -63,7 +63,7 @@
             <form class="navbar-form navbar-right hidden-sm">
               <div class="form-group">
                 <i class="icon ion-android-search"></i>
-                <input id="pac-input" type="text" class="form-control" placeholder="Search friends, photos, videos">
+                <input type="text" class="form-control" placeholder="Search friends, photos, videos">
               </div>
             </form>
           </div><!-- /.navbar-collapse -->
@@ -181,7 +181,7 @@
 					<div class="form-group" ng-class="{ 'has-error' : profileForm.location.$error.required && !profileForm.location.$pristine }">
 							<label for="location" class="col-sm-2 control-label">Location</label>
 							<div class="col-sm-10">
-                                                            <input id="pac-input" type="text" class="form-control" name="location" placeholder="Location" ng-model="user.location" required>
+                                                            <input id="location" type="text" class="form-control" name="location" placeholder="Location" ng-model="user.location" required>
                                                             <span ng-show="profileForm.location.$error.required && !profileForm.location.$pristine">This is required field.</span>
 							</div>
 					</div>
@@ -248,7 +248,8 @@
 					</div>
 	      </div>
 	    </div>
-			</div>
+		</div>
+            
 	  </div>
 
     <div class="container" ng-init="user">
@@ -263,12 +264,12 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="profile-info">
-		<div>
-                  <img ng-src="../../images/users/{{image}}" alt="" class="img-responsive profile-photo" />
+                    <div>
+                        <img ng-src="../../images/users/{{image}}" alt="" class="img-responsive profile-photo" />
                         <button type="button" class="btn btn-primary" id="upload">Upload Profile Photo</button>
-                   </div>
+                    </div>
                   <h3>{{user.name}}</h3>
-                  <p class="text-muted">{{user.career}}</p>
+                  <p class="text-muted">{{user.career}}</p>                
                 </div>
               </div>
               <div class="col-md-9">
@@ -501,7 +502,7 @@
 
     <!-- Scripts
     ================================================= -->
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/typed.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

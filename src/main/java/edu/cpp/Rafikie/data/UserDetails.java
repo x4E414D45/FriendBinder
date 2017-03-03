@@ -20,6 +20,8 @@ public class UserDetails {
 	private String relationship;
 	private String telnum;
 	private String image;
+        private String lat;
+        private String lng;
 
 	/*private enum interests{Cooking,OnlineGames,Partying,Sleeping,Sports,Studying,Travelling}
 	private interests userPermission;
@@ -163,5 +165,21 @@ public class UserDetails {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+        
+        public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+        
+        public String getLng() {
+		return lng;
+	}
+
+	public void setLng(String lng) {
+		this.lng = lng;
 	}
 }

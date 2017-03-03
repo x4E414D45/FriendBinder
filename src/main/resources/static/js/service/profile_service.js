@@ -14,6 +14,9 @@ angular.module('myProfile')
         userfac.getImage = function(email){
             return $http.post("fetchImage", email);
         };
+        userfac.getCoordinates = function(location){
+            return $http.get("http://maps.googleapis.com/maps/api/geocode/json?address=" + location);
+        };
         return userfac;
         }])
 ;

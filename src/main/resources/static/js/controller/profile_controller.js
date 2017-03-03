@@ -5,11 +5,14 @@ angular.module('myProfile')
 .controller('ProfileController', ['$scope', '$rootScope', 'ProfileService','fileUpload', function($scope, $rootScope, ProfileService, fileUpload){
     var message = "Loading....";
     $scope.user = {about:'', name:'', dob:'', telnum:'', email:'', relationship:'',
-                    education:'', career:'', location:'', interests:[], language:'', gender:'', areacode:'', other:''};
+                    education:'', career:'', location:'', interests:[], language:'', gender:'', areacode:'', other:'', lat: '', lng: ''};
 
     $scope.interests = [];
     var interest = interest;
     $scope.image = '';
+    var geocoder = new google.maps.Geocoder();
+    var lat = lat;
+    var lng = lng;
 
     initController();
 
@@ -36,6 +39,19 @@ angular.module('myProfile')
 
     	});
     }
+    
+   function codeAddress() {
+    var address = document.getElementById('location').value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status === 'OK') {
+          lat = results[0].geometry.location.lat();
+          alert(lat);
+          lng = results[0].geometry.location.lng();
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
 
     $scope.selectGender = function(choice){
       if (choice === 1){
@@ -92,8 +108,17 @@ angular.module('myProfile')
     $scope.edit = function(){
        console.log($scope.interests);
        $scope.user.interests = $scope.interests;
-       console.log($scope.user);
-       ProfileService.updateUser($scope.user);
+       var address = document.getElementById('location').value;
+        geocoder.geocode( { 'address': address}, function(results, status) {
+          if (status === 'OK') {
+              $scope.user.lat = results[0].geometry.location.lat().toString();
+              $scope.user.lng = results[0].geometry.location.lng().toString();
+              console.log($scope.user);
+              ProfileService.updateUser($scope.user);
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
     }
     
     $scope.dataUpload = true;
