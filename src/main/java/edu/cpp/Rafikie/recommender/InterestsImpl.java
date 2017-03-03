@@ -3,6 +3,8 @@ package edu.cpp.Rafikie.recommender;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import edu.cpp.Rafikie.data.UserDetails;
+import edu.cpp.Rafikie.data.UserMap;
+import edu.cpp.Rafikie.data.provider.FSUserManager;
 import edu.cpp.Rafikie.data.provider.MongoDBConnection;
 import edu.cpp.Rafikie.data.provider.UserManager;
 import java.util.ArrayList;
@@ -20,12 +22,11 @@ public class InterestsImpl implements Interests {
 	private ArrayList<String> allInterests;
 	private Hashtable<String, Integer> interestIndex;
 
-	@Autowired
+@Autowired
 	private UserManager userManager;
+	//UserManager userManager=new FSUserManager();
 
 	public InterestsImpl() {
-		allInterests = getInterestsFromDB();
-		interestIndex = createInterestIndex();
 	}
 
 	private ArrayList<String> getInterestsFromDB() {
@@ -58,7 +59,8 @@ public class InterestsImpl implements Interests {
 
 	// Call this every time the user updates their interests
 	public void updateUserVector(String userEmail) {
-		UserDetails userDetails = userManager.fetchUserDetails(userEmail);
+		UserManager manager=new FSUserManager();
+		UserDetails userDetails = manager.fetchUserDetails(userEmail);
 		String[] userInterests = userDetails.getInterests();
 		if (userInterests != null) {
 			Double[] d_v = new Double[interestIndex.size()];

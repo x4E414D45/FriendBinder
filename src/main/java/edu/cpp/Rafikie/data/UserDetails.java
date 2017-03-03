@@ -20,25 +20,9 @@ public class UserDetails {
 	private String relationship;
 	private String telnum;
 	private String image;
-        private String lat;
-        private String lng;
+    private String lat;
+    private String lng;
 
-	/*private enum interests{Cooking,OnlineGames,Partying,Sleeping,Sports,Studying,Travelling}
-	private interests userPermission;
-	 */
- /*	public interests getUserPermission() {
-		return userPermission;
-	}*/
- /*	public void setUserPermission(interests userPermission) {
-		this.userPermission = userPermission;
-	}*/
-	//private ArrayList<String> interests;
-/*	public ArrayList<String> getInterests() {
-		return interests;
-	}
-	public void setInterests(ArrayList<String> interests) {
-		this.interests = interests;
-	}*/
 	public String[] getInterests() {
 		return interests;
 	}

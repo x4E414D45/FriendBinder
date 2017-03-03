@@ -1,8 +1,11 @@
 package edu.cpp.Rafikie.data.provider;
 
+import edu.cpp.Rafikie.data.FriendDetails;
 import edu.cpp.Rafikie.data.FriendsWithSimilarInterests;
 import edu.cpp.Rafikie.data.UserDetails;
 import edu.cpp.Rafikie.data.provider.UserManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 
 public class Recommender {
 
@@ -25,9 +31,11 @@ public class Recommender {
 
 	UserManager userManager =  new FSUserManager();
 
-	public ArrayList<FriendsWithSimilarInterests> recommend(String userEmail) {
+	public ArrayList<FriendsWithSimilarInterests> recommend(String userEmail) throws JsonParseException, JsonMappingException, IOException {
 		ArrayList<FriendsWithSimilarInterests> recommendations = new ArrayList<>();
 		UserDetails user = userManager.fetchUserDetails(userEmail);
+		List<String> details=new ArrayList<>();
+		details=userManager.allFriends(userEmail);
 
 		ArrayList<UserDetails> allUsers = new ArrayList<>();
 		for (String email : new DBAccessor().getAllEmails()) {
@@ -37,6 +45,8 @@ public class Recommender {
 		ArrayList<UserDetails> similarUsers = mostSimilarUsers(user, allUsers); 
 		for (UserDetails similarUser : similarUsers) {
 			if (!similarUser.getEmail().equals(user.getEmail())) {
+				if(!details.contains(similarUser.getEmail()))
+						{
 				FriendsWithSimilarInterests friend = new FriendsWithSimilarInterests();
 				friend.setEmail(similarUser.getEmail());
 				friend.setAbout(similarUser.getAbout());
@@ -44,9 +54,10 @@ public class Recommender {
 				friend.setInterests(intersectInterests(user, similarUser));
 				friend.setLanguages(similarUser.getLanguage());
 				friend.setLocation(similarUser.getLocation());
-				// FIXME: Add actual image
 				friend.setImage(userManager.fetchImage(similarUser.getEmail()).getImage());
+				friend.setEmail(similarUser.getEmail());
 				recommendations.add(friend);
+			}
 			}
 		}	
 		

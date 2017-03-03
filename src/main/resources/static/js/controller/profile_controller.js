@@ -4,15 +4,19 @@ angular.module('myProfile')
 
 .controller('ProfileController', ['$scope', '$rootScope', 'ProfileService','fileUpload', function($scope, $rootScope, ProfileService, fileUpload){
     var message = "Loading....";
+
     $scope.user = {about:'', name:'', dob:'', telnum:'', email:'', relationship:'',
                     education:'', career:'', location:'', interests:[], language:'', gender:'', areacode:'', other:'', lat: '', lng: ''};
+
 
     $scope.interests = [];
     var interest = interest;
     $scope.image = '';
+
     var geocoder = new google.maps.Geocoder();
     var lat = lat;
     var lng = lng;
+
 
     initController();
 

@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class FriendRequests {
 	
 	private String email;
-	private ArrayList<Image> requests;
+	private ArrayList<FriendDetails> requests;
 	
-	public ArrayList<Image> getRequests() {
+	public ArrayList<FriendDetails> getRequests() {
 		return requests;
 	}
-	public void setRequests(ArrayList<Image> requests) {
+	public void setRequests(ArrayList<FriendDetails> requests) {
 		this.requests = requests;
 	}
 	public String getEmail() {

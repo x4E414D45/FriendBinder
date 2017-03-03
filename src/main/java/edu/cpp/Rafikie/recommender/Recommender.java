@@ -4,6 +4,8 @@ import edu.cpp.Rafikie.data.FriendsWithSimilarInterests;
 import edu.cpp.Rafikie.data.UserDetails;
 import edu.cpp.Rafikie.data.provider.UserManager;
 import edu.cpp.Rafikie.util.Geocoder;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,6 +20,9 @@ import org.apache.commons.math3.linear.RealVector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 @Service("Recommender")
 public class Recommender {
 
@@ -26,10 +31,11 @@ public class Recommender {
 	@Autowired
 	private UserManager userManager;
 
-	public ArrayList<FriendsWithSimilarInterests> recommend(String userEmail) {
+	public ArrayList<FriendsWithSimilarInterests> recommend(String userEmail) throws JsonParseException, JsonMappingException, IOException {
 		ArrayList<FriendsWithSimilarInterests> recommendations = new ArrayList<>();
 		UserDetails user = userManager.fetchUserDetails(userEmail);
-
+		List<String> friendList=new ArrayList<>();
+		friendList=userManager.allFriends(userEmail);
 		ArrayList<UserDetails> allUsers = new ArrayList<>();
 		for (String email : new DBAccessor().getAllEmails()) {
 			allUsers.add(userManager.fetchUserDetails(email));
@@ -38,15 +44,20 @@ public class Recommender {
 		ArrayList<UserDetails> similarUsers = mostSimilarUsers(user, allUsers);
 		for (UserDetails similarUser : similarUsers) {
 			if (!similarUser.getEmail().equals(user.getEmail())) {
+				if(!friendList.contains(similarUser.getEmail()))
+				{
 				FriendsWithSimilarInterests friend = new FriendsWithSimilarInterests();
 				friend.setAbout(similarUser.getAbout());
 				friend.setName(similarUser.getName());
 				friend.setInterests(intersectInterests(user, similarUser));
 				friend.setLanguages(similarUser.getLanguage());
 				friend.setLocation(similarUser.getLocation());
-				friend.setImage(similarUser.getImage());
+				// FIXME: Add actual image
+				friend.setImage(userManager.fetchImage(similarUser.getEmail()).getImage());
+
 				friend.setEmail(similarUser.getEmail());
 				recommendations.add(friend);
+			}
 			}
 		}
 

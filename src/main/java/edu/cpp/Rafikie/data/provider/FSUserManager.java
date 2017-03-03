@@ -19,11 +19,16 @@ import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+
+import edu.cpp.Rafikie.data.AddedFriends;
+import edu.cpp.Rafikie.data.FriendDetails;
 import edu.cpp.Rafikie.data.FriendRequests;
 import edu.cpp.Rafikie.data.Image;
 import edu.cpp.Rafikie.data.Notifications;
 import edu.cpp.Rafikie.data.Register;
 import edu.cpp.Rafikie.data.UserDetails;
+import edu.cpp.Rafikie.recommender.InterestsImpl;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -56,6 +61,8 @@ public class FSUserManager implements UserManager {
 		HashMap<String, Object> result = new ObjectMapper().readValue(userDetails, HashMap.class);
 		BasicDBObject document = new BasicDBObject();
 		String object = (String) result.get("email");
+		InterestsImpl impl=new InterestsImpl();
+		
 		BasicDBObject searchForEmail = new BasicDBObject().append("email", object);
 		DBCursor checkEmailExistence = connection.createConnectionforUserTable().find(searchForEmail);
 		document.putAll(result);
@@ -63,8 +70,10 @@ public class FSUserManager implements UserManager {
 		if (checkEmailExistence.hasNext()) {
 			connection.createConnectionforUserTable().update(searchForEmail, document);
 			System.out.println("Updated");
+			impl.updateUserVector(object);
 		} else {
 			connection.createConnectionforUserTable().insert(document);
+			impl.updateUserVector(object);
 		}
 
 	}
@@ -72,8 +81,9 @@ public class FSUserManager implements UserManager {
 	@Override
 	public UserDetails fetchUserDetails(String email) {
 		DBObject query = new BasicDBObject().append("email", email);
+		MongoDBConnection connect=new MongoDBConnectionImpl();
 		System.out.println(query);
-		DBObject data = connection.createConnectionforUserTable().findOne(query);
+		DBObject data = connect.createConnectionforUserTable().findOne(query);
 		Gson gson = new GsonBuilder().create();
 		UserDetails details = new UserDetails();
 		details = gson.fromJson(data.toString(), UserDetails.class);
@@ -181,8 +191,6 @@ public class FSUserManager implements UserManager {
 			MultipartFile mFile = mRequest.getFile((String) itr.next());
 			String fileName = mFile.getOriginalFilename();
 			String[] split = fileName.split("\\.");
-
-			path = Paths.get("src/main/resources/static/images/users/" + filename + "." + split[split.length - 1]);
 			Files.deleteIfExists(path);
 			InputStream in = mFile.getInputStream();
 			Files.copy(in, path);
@@ -203,6 +211,7 @@ public class FSUserManager implements UserManager {
 
 	@Override
 	public boolean addFriendRequests(String email) throws JsonParseException, JsonMappingException, IOException {
+		int count=0;
 		HashMap<String, Object> result = new ObjectMapper().readValue(email, HashMap.class);
 
 		BasicDBObject document = new BasicDBObject();
@@ -210,6 +219,8 @@ public class FSUserManager implements UserManager {
 		BasicDBObject friend = new BasicDBObject();
 		friend.put("email", (String) result.get("email"));
 		friend.put("image", (String) result.get("image"));
+		friend.put("name", (String) result.get("friendName"));
+		friend.put("isAdded", (Boolean) result.get("isAdded"));
 		friendDetails.add(friend);
 		Gson gson = new Gson();
 		String userEmail = (String) result.get("email");
@@ -222,16 +233,34 @@ public class FSUserManager implements UserManager {
 
 			friendRequests = gson.fromJson(checkEmailExistence.next().toString(), FriendRequests.class);
 
-			for (Image image : friendRequests.getRequests()) {
+			for (FriendDetails details : friendRequests.getRequests()) {
 				BasicDBObject fri = new BasicDBObject();
-				if (!image.getEmail().equals((String) result.get("email"))) {
-					fri.put("email", image.getEmail());
-					fri.put("image", image.getImage());
+				if (!details.getEmail().equals((String) result.get("email"))) {
+					fri.put("email", details.getEmail());
+					fri.put("image", details.getImage());
+					fri.put("name", details.getName());
+					fri.put("isAdded",details.isAdded());
+					fri.put("isIgnored", details.isIgnored());
+					fri.put("isBlocked", details.isIgnored());
 					friendDetails.add(fri);
 				}
+				else if(details.getEmail().equals((String) result.get("email"))&& (Boolean) result.get("isAdded"))
+				{
+					count++;
+				}
 			}
+			if(count!=0)
+			{
+				connection.createConnectionforUserNotificationTable().remove(searchForEmail);
+				document.put("requests", friendDetails);
+				connection.createConnectionforUserNotificationTable().insert(document);
+				
+			}
+			else
+			{
 			document.put("requests", friendDetails);
 			connection.createConnectionforUserNotificationTable().update(searchForEmail, document);
+			}
 
 		} else {
 			document.put("requests", friendDetails);
@@ -248,23 +277,127 @@ public class FSUserManager implements UserManager {
 		Gson gson = new GsonBuilder().create();
 		FriendRequests friendRequests = new FriendRequests();
 		ArrayList<Notifications> arrayList = new ArrayList<>();
-
 		UserManager manager = new FSUserManager();
 		int count = 0;
 
 		while (checkEmailExistence.hasNext()) {
 			friendRequests = gson.fromJson(checkEmailExistence.next().toString(), FriendRequests.class);
-			for (Image image : friendRequests.getRequests()) {
+			for (FriendDetails details : friendRequests.getRequests()) {
 				Notifications notifications = new Notifications();
-				notifications.setName(manager.fetchUserDetails(image.getEmail()).getName());
-				notifications.setEmail(image.getImage());
-				notifications.setImage(image.getImage());
+				if(!details.isAdded())
+				{
+				notifications.setName(details.getName());
+				notifications.setEmail(details.getEmail());
+				notifications.setImage(details.getImage());
 				arrayList.add(notifications);
+				}
 			}
 
 		}
 		return arrayList;
 
 	}
+
+	@Override
+	public void addFriend(String email) throws JsonParseException, JsonMappingException, IOException {
+		
+//		HashMap<String, Object> result = new ObjectMapper().readValue(email, HashMap.class);
+//		BasicDBObject document = new BasicDBObject();
+//		BasicDBList friendDetails = new BasicDBList();
+//		BasicDBObject friend = new BasicDBObject();
+//		friend.put("email", (String) result.get("acceptorEmail"));
+//		friend.put("image", (String) result.get("acceptorImage"));
+//		friend.put("name", (String) result.get("acceptorName"));
+//		friend.put("isAdded", (Boolean) result.get("isAdded"));
+//		friendDetails.add(friend);
+//		Gson gson = new Gson();
+//		String userEmail = (String) result.get("acceptorEmail");
+//		FriendRequests friendRequests = new FriendRequests();
+//		BasicDBObject searchForEmail = new BasicDBObject().append("email", (String) result.get("friendEmail"));
+//		DBCursor checkEmailExistence = connection.createConnectionforUserNotificationTable().find(searchForEmail);
+//		document.put("email", (String) result.get("friendEmail"));
+//
+//		if (checkEmailExistence.hasNext()) {
+//
+//			friendRequests = gson.fromJson(checkEmailExistence.next().toString(), FriendRequests.class);
+//
+//			for (FriendDetails details : friendRequests.getRequests()) {
+//				BasicDBObject fri = new BasicDBObject();
+//				if (!details.getEmail().equals((String) result.get("email"))) {
+//					fri.put("email", details.getEmail());
+//					fri.put("image", details.getImage());
+//					fri.put("name", details.getName());
+//					fri.put("isAdded",details.isAdded());
+//					fri.put("isIgnored", details.isIgnored());
+//					fri.put("isBlocked", details.isIgnored());
+//					friendDetails.add(fri);
+//				}
+//			}
+//			document.put("requests", friendDetails);
+//			connection.createConnectionforUserNotificationTable().update(searchForEmail, document);
+//
+//		} else {
+//			document.put("requests", friendDetails);
+//			connection.createConnectionforUserNotificationTable().insert(document);
+//
+//		}
+
+		
+	}
+
+	@Override
+	public List<FriendDetails> getFriendDetails(String email) throws JsonParseException, JsonMappingException, IOException {
+		
+		BasicDBObject searchForEmail = new BasicDBObject().append("email", email);
+		DBCursor checkEmailExistence = connection.createConnectionforUserNotificationTable().find(searchForEmail);
+		FriendRequests friendRequests = new FriendRequests();
+		Gson gson=new Gson();
+		List<FriendDetails> friendDetails=new ArrayList<>();
+		if (checkEmailExistence.hasNext()) {
+
+			friendRequests = gson.fromJson(checkEmailExistence.next().toString(), FriendRequests.class);
+
+			for (FriendDetails details : friendRequests.getRequests()) {
+				if(details.isAdded())
+				friendDetails.add(details);
+				
+			}
+				
+			}
+		return friendDetails;
+		
+		
+		
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public List<String> allFriends(String email) throws JsonParseException, JsonMappingException, IOException {
+		
+		BasicDBObject searchForEmail = new BasicDBObject().append("email", email);
+		DBCursor checkEmailExistence = connection.createConnectionforUserNotificationTable().find(searchForEmail);
+		FriendRequests friendRequests = new FriendRequests();
+		Gson gson=new Gson();
+		List<String> friends=new ArrayList<>();
+		if (checkEmailExistence.hasNext()) {
+
+			friendRequests = gson.fromJson(checkEmailExistence.next().toString(), FriendRequests.class);
+
+			for (FriendDetails details : friendRequests.getRequests()) {
+				friends.add(details.getEmail());
+				
+			}
+				
+			}
+		return friends;
+		
+		
+		
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 }
