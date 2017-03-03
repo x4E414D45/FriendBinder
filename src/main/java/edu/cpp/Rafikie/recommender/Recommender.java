@@ -44,8 +44,8 @@ public class Recommender {
 				friend.setInterests(intersectInterests(user, similarUser));
 				friend.setLanguages(similarUser.getLanguage());
 				friend.setLocation(similarUser.getLocation());
-				// FIXME: Add actual image
-				friend.setImage("");
+				friend.setImage(similarUser.getImage());
+				friend.setEmail(similarUser.getEmail());
 				recommendations.add(friend);
 			}
 		}
