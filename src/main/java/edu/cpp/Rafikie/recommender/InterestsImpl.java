@@ -24,6 +24,8 @@ public class InterestsImpl implements Interests {
 	private UserManager userManager;
 
 	public InterestsImpl() {
+		allInterests = getInterestsFromDB();
+		interestIndex = createInterestIndex();
 	}
 
 	private ArrayList<String> getInterestsFromDB() {
