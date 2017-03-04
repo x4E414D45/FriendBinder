@@ -6,7 +6,7 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
      $scope.user = {about:'', name:'', dob:'', telnum:'', email:'', relationship:'',
                     education:'', career:'', location:'', interests:[], language:'', 
                     gender:'', areacode:'', other:''};
-     $scope.addFriend = {email:'',friendEmail:''};
+     $scope.addFriend = {email:'',name:'',image:'',friendEmail:''};
      $scope.image = '';
      $scope.countries = {};
      $scope.getCountriesStates = getCountriesStates;
@@ -27,6 +27,7 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
         getUser();
         getImage();
         fetchFriendsWithSimilarInterests();
+        getNotifications();
     }
     
     function getUser(){       
@@ -49,7 +50,7 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
      
      function getNotifications()
      {
-    	 $http.post('getNotifications/',$scope.user.email)
+    	 $http.post("/getNotifications", $scope.user.email)
     	 .then(function (success){
                 $scope.notifications = success.data;
 
@@ -62,9 +63,10 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
      function friendRequestSent(friendAdd)
      {
     	 $scope.addFriend.email = $scope.user.email;
+         $scope.addFriend.name = $scope.user.name;
     	 $scope.addFriend.image = $scope.image;
     	 $scope.addFriend.friendEmail = friendAdd.email;
-    	 $http.post('addFriend/',$scope.addFriend)
+    	 $http.post("/addFriend",$scope.addFriend)
     	 .then(function (success){
 
     	   },function (error){
@@ -82,7 +84,7 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
      };*/
      function getCountriesStates()
      {
-    	 $http.get('fetchCountriesStates/')
+    	 $http.get("/fetchCountriesStates")
     	 .then(function (success){
     		 $scope.countries = success.data;
 
@@ -94,10 +96,9 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
      
      function fetchFriendsWithSimilarInterests()
      {
-    	 $http.post("fetchFriendsList", $scope.user.email)
+    	 $http.post("/fetchFriendsList", $scope.user.email)
     	 .then(function (success){
-    		 $scope.recommendedFriends = success.data;
-    		 console.log($scope.data);
+    		 $scope.recommendedFriends = success.data;   
     	   },
            function (error){
 

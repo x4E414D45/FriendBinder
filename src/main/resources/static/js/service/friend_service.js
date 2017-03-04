@@ -6,13 +6,13 @@ angular.module('myFriends')
         var userfac = {};
 
         userfac.getUser = function(email){
-            return $http.post("fetchUserDetails", email);
+            return $http.post("/fetchUserDetails", email);
         };
         userfac.updateUser = function(user){
-            return $http.post("userDetails", user);
+            return $http.post("/userDetails", user);
         };
         userfac.getImage = function(email){
-            return $http.post("fetchImage", email);
+            return $http.post("/fetchImage", email);
         };
         return userfac;
         }])

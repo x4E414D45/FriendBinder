@@ -6,10 +6,10 @@ angular.module('myApp')
         var userfac = {};
 
         userfac.createUser = function(user){
-            return $http.post("register", user);
+            return $http.post("/register", user);
         };
         userfac.login = function (user) {
-            return $http.post("login", user);
+            return $http.post("/login", user);
         };
         return userfac;
         }])

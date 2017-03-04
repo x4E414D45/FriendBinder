@@ -106,7 +106,7 @@
                     </div>
                </form>
          </div>
-    	<div class="col-md-7">
+    	<div class="col-md-6">
 
             <!-- Post Create Box
             ================================================= -->
@@ -132,9 +132,10 @@
                   </div>
                   <div class="col-md-7 col-sm-7">
                     <h5><a href="#" class="profile-link">{{user.name}}</a></h5>
-                    <p>{{user.about}}</p>
+                    <p>About : {{user.about}}</p>
+                    <p>Interest : </p>
                     <p ng-repeat="interest in user.interests">{{interest}}<p>
-                    <p class="text-muted">{{user.location}}</p>
+                    <p class="text-muted">Location : {{user.location}}</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
                     <button ng-click="friendRequestSent(user)"class="btn btn-primary pull-right">Add Friend</button>
@@ -155,49 +156,25 @@
 
           <!-- Newsfeed Common Side Bar Right
           ================================================= -->
-    	<div class="col-md-2 static">
+    	<div class="col-md-3 static">
             <div class="suggestions" id="sticky-sidebar">
-              <h4 class="grey">Notifications</h4>
-              <div class="follow-user">
-                <img src="images/users/user-11.jpg" alt="" class="profile-photo-sm pull-left" />
+              <h4 class="grey">Notifications</h4>                                           
+              <div class="follow-user" ng-repeat="request in notifications">
+                <img src="../../images/users/{{request.image}}" alt="" class="profile-photo-sm pull-left" />
                 <div>
-                  <h5><a href="timeline.html">Satyam</a></h5>
-                  <p class="text-green">Send you a message</p>
+                  <h5><a href="timeline.html">{{request.name}}</a></h5>
+                  <p class="text-red">Send you a friend request</p>                
                 </div>
-              </div>
-              <div class="follow-user">
-                <img src="images/users/user-12.jpg" alt="" class="profile-photo-sm pull-left" />
-                <div>
-                  <h5><a href="timeline.html">Cris Haris</a></h5>
-                  <p class="text-green">Send you a message</p>
-                </div>
-              </div>
-              <div class="follow-user">
-                <img src="images/users/user-13.jpg" alt="" class="profile-photo-sm pull-left" />
-                <div>
-                  <h5><a href="timeline.html">Brian Walton</a></h5>
-                  <p class="text-green">Send you a message</p>
-                </div>
-              </div>
-              <div class="follow-user">
-                <img src="images/users/user-14.jpg" alt="" class="profile-photo-sm pull-left" />
-                <div>
-                  <h5><a href="timeline.html">Olivia Steward</a></h5>
-                  <p class="text-green">Send you a message</p>
-                </div>
-              </div>
-              <div class="follow-user">
-                <img src="images/users/user-15.jpg" alt="" class="profile-photo-sm pull-left" />
-                <div>
-                  <h5><a href="timeline.html">Dat Do</a></h5>
-                  <p class="text-green">Send you a message</p>
-                </div>
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-success">Accept</button>
+                    <button type="button" class="btn btn-warning">Decline</button>
+                  </div>
               </div>
             </div>
           </div>
-    		</div>
     	</div>
     </div>
+   </div>
 
     <!-- Footer
     ================================================= -->

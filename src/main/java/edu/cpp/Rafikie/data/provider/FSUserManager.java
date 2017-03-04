@@ -71,12 +71,14 @@ public class FSUserManager implements UserManager {
 
 	@Override
 	public UserDetails fetchUserDetails(String email) {
-		DBObject query = new BasicDBObject().append("email", email);
-		System.out.println(query);
-		DBObject data = connection.createConnectionforUserTable().findOne(query);
+		BasicDBObject query = new BasicDBObject().append("email", email);
+		DBCursor checkEmailExistence = connection.createConnectionforUserTable().find(query);
 		Gson gson = new GsonBuilder().create();
 		UserDetails details = new UserDetails();
-		details = gson.fromJson(data.toString(), UserDetails.class);
+		while (checkEmailExistence.hasNext()) {
+			details = gson.fromJson(checkEmailExistence.next().toString(), UserDetails.class);
+			return details;
+		}
 		System.out.println(details);
 		return details;
 
@@ -97,7 +99,7 @@ public class FSUserManager implements UserManager {
 	}
 
 	@Override
-	public List<String> isUserExist(String email) {
+	public  List<String> isUserExist(String email) {
 		List<String> list = new ArrayList<>();
 		BasicDBObject searchForEmail = new BasicDBObject().append("email", email);
 		DBCursor checkEmailExistence = connection.createConnection().find(searchForEmail);
@@ -108,8 +110,7 @@ public class FSUserManager implements UserManager {
 			list.add(register.getEmail());
 			return list;
 		}
-
-		return list;
+            return list;
 	}
 
 	@Override
@@ -250,19 +251,19 @@ public class FSUserManager implements UserManager {
 		ArrayList<Notifications> arrayList = new ArrayList<>();
 
 		UserManager manager = new FSUserManager();
-		int count = 0;
 
 		while (checkEmailExistence.hasNext()) {
 			friendRequests = gson.fromJson(checkEmailExistence.next().toString(), FriendRequests.class);
 			for (Image image : friendRequests.getRequests()) {
 				Notifications notifications = new Notifications();
-				notifications.setName(manager.fetchUserDetails(image.getEmail()).getName());
-				notifications.setEmail(image.getImage());
+				notifications.setName(fetchUserDetails(image.getEmail()).getName());
+				notifications.setEmail(image.getEmail());
 				notifications.setImage(image.getImage());
 				arrayList.add(notifications);
 			}
 
 		}
+                System.out.println(arrayList);
 		return arrayList;
 
 	}

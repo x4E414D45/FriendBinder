@@ -44,7 +44,8 @@ public class Recommender {
 				friend.setInterests(intersectInterests(user, similarUser));
 				friend.setLanguages(similarUser.getLanguage());
 				friend.setLocation(similarUser.getLocation());
-				friend.setImage(similarUser.getImage());
+				friend.setImage(userManager.fetchImage(similarUser.getEmail()).getImage());
+                                System.out.println(friend.getImage());
 				friend.setEmail(similarUser.getEmail());
 				recommendations.add(friend);
 			}
