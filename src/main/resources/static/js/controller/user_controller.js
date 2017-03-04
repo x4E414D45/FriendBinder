@@ -2,7 +2,7 @@
 
 angular.module('myApp')
 
-    .controller('UserController', ['$scope', '$location', 'AuthenticationService','UserService', function($scope, $location, AuthenticationService, UserService) {
+    .controller('UserController', ['$http','$scope', '$location', 'AuthenticationService','UserService', function($http,$scope, $location, AuthenticationService, UserService) {
 
     $scope.user={email:'',password:''};
     $scope.showForm = false;
@@ -15,6 +15,12 @@ angular.module('myApp')
 
     function initController() {
         AuthenticationService.ClearCredentials();
+        $http.get('updateAllVectors/')
+        .then(function (success){
+   		 
+   	   },function (error){
+
+   	   });
     }
 
     $scope.login = function(){

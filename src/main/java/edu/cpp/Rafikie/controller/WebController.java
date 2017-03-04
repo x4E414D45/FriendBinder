@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import edu.cpp.Rafikie.data.FriendDetails;
 import edu.cpp.Rafikie.data.FriendsWithSimilarInterests;
 import edu.cpp.Rafikie.data.Image;
 import edu.cpp.Rafikie.data.Login;
@@ -63,15 +65,23 @@ public class WebController extends WebMvcConfigurerAdapter {
 
 	}
 
+	@RequestMapping(value = "/acceptFriendRequest", method = RequestMethod.POST, consumes = "application/json")
+	public boolean addedFriendDetails(@RequestBody String details) throws JsonParseException, JsonMappingException, IOException {
+		userManager.addFriendRequests(details);
+		return false;
+
+	}
+
 	@RequestMapping(value = "/fetchFriendsList", method = RequestMethod.POST, consumes = "application/json")
-	public List<FriendsWithSimilarInterests> getFriends(@RequestBody String email) {
+	public List<FriendsWithSimilarInterests> getFriends(@RequestBody String email) throws JsonParseException, JsonMappingException, IOException {
+		interests.updateAllUserVectors();
 		ArrayList<FriendsWithSimilarInterests> friendsWithSimilarInterests = new ArrayList<>();
 		friendsWithSimilarInterests = recommender.recommend(email);
 		return friendsWithSimilarInterests;
 
 	}
 
-	@RequestMapping(value = "/addFriend", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/sendFriendRequest", method = RequestMethod.POST, consumes = "application/json")
 	public boolean addFriend(@RequestBody String email) throws JsonParseException, JsonMappingException, IOException {
 		userManager.addFriendRequests(email);
 		return false;
@@ -87,6 +97,20 @@ public class WebController extends WebMvcConfigurerAdapter {
 		Image image = userManager.fetchImage(email);
 
 		return image;
+
+	}
+
+	@RequestMapping(value = "/fetchAddedFriends", method = RequestMethod.POST, consumes = "application/json")
+	public List<FriendDetails> getAddedFriends(@RequestBody String email) throws JsonParseException, JsonMappingException, IOException {
+		List<FriendDetails> friendDetails = new ArrayList<>();
+		friendDetails = userManager.getFriendDetails(email);
+		return friendDetails;
+
+	}
+
+	@RequestMapping(value = "/updateAllVectors", method = RequestMethod.GET)
+	public void updateAllVectors() {
+		interests.updateAllUserVectors();
 
 	}
 
@@ -125,6 +149,7 @@ public class WebController extends WebMvcConfigurerAdapter {
 
 	@RequestMapping(value = "/userDetails", method = RequestMethod.POST, consumes = "application/json")
 	public boolean insertUserDetails(@RequestBody String userDetails) throws JsonParseException, JsonMappingException, IOException {
+
 		userManager.insertUserDetails(userDetails);
 		return false;
 

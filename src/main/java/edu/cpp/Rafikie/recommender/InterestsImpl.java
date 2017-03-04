@@ -3,6 +3,7 @@ package edu.cpp.Rafikie.recommender;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import edu.cpp.Rafikie.data.UserDetails;
+import edu.cpp.Rafikie.data.provider.FSUserManager;
 import edu.cpp.Rafikie.data.provider.MongoDBConnection;
 import edu.cpp.Rafikie.data.provider.UserManager;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class InterestsImpl implements Interests {
 					interestsSet.add(StringProcessor.preprocessInterest(interest));
 				}
 			} catch (NullPointerException e) {
+				System.out.println("Error: getInterestsFromDB could not fetch details");
 				System.out.println(e);
 			}
 		}
@@ -56,7 +58,8 @@ public class InterestsImpl implements Interests {
 
 	// Call this every time the user updates their interests
 	public void updateUserVector(String userEmail) {
-		UserDetails userDetails = userManager.fetchUserDetails(userEmail);
+		UserManager manager = new FSUserManager();
+		UserDetails userDetails = manager.fetchUserDetails(userEmail);
 		String[] userInterests = userDetails.getInterests();
 		if (userInterests != null) {
 			Double[] d_v = new Double[interestIndex.size()];
@@ -75,8 +78,8 @@ public class InterestsImpl implements Interests {
 				String userDetailsStr = gson.toJson(userDetails);
 				userManager.insertUserDetails(userDetailsStr);
 			} catch (Exception e) {
-				System.out.println(e);
 				System.out.println("Could not convert UserDetails to string and add to DB.");
+				System.out.println(e);
 			}
 		}
 	}
@@ -90,7 +93,7 @@ public class InterestsImpl implements Interests {
 		for (String email : allUserEmails) {
 			updateUserVector(email);
 		}
-		
+
 	}
 
 }

@@ -5,7 +5,13 @@ import java.util.ArrayList;
 public class AddedFriends {
 	
 	private String email;
-	private ArrayList<String> addedFriends;
+	private ArrayList<Notifications> addedFriends;
+	public ArrayList<Notifications> getAddedFriends() {
+		return addedFriends;
+	}
+	public void setAddedFriends(ArrayList<Notifications> addedFriends) {
+		this.addedFriends = addedFriends;
+	}
 	public String getEmail() {
 		return email;
 	}
