@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import edu.cpp.Rafikie.util.Geocoder;
 
 @Service("Recommender")
 public class Recommender {
@@ -90,25 +91,26 @@ public class Recommender {
 		RealVector rv_a = new ArrayRealVector(a.getVectorRepr());
 		RealVector rv_b = new ArrayRealVector(b.getVectorRepr());
 		Double interestSimilarity = rv_a.cosine(rv_b);
-		// Double physicalDistanceNorm = getNormalizedPhysicalDistance(a, b);
-
-		//return interestSimilarity - physicalDistanceNorm;
-		return interestSimilarity;
+		Double physicalDistanceNorm = getNormalizedPhysicalDistance(a, b);
+		return interestSimilarity - physicalDistanceNorm;
 	}
 
 	private Double getNormalizedPhysicalDistance(UserDetails a, UserDetails b) {
 		Double MAX_DIST = 6356000.0;
-		/*
 		try {
-			Double dist = Geocoder.getDistanceMeters(a.getCoordinates(), b.getCoordinates());
+			Double[] a_coords = new Double[2];
+			Double[] b_coords = new Double[2];
+			a_coords[0] = Double.parseDouble(a.getLat());
+			a_coords[1] = Double.parseDouble(a.getLng());
+			b_coords[0] = Double.parseDouble(b.getLat());
+			b_coords[1] = Double.parseDouble(b.getLng());
+			Double dist = Geocoder.getDistanceMeters(a_coords, b_coords);
 			Double distNormalized = dist / MAX_DIST;
 			return distNormalized;
-		} catch(NullPointerException e) {
-			System.out.println("Error: location is not set");
+		} catch(Exception e) {
+			System.out.println("Error getting location from userDetails");  
 			return 1.0;
 		}
-		*/
-		return null;
 	}
 
 	private Map<UserDetails, Double> sortByValue(Map<UserDetails, Double> unsortMap) {
