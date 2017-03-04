@@ -267,7 +267,7 @@
               <div class="col-md-3">
                 <div class="profile-info">
 		<div>
-                  <img ng-src="../../images/{{image}}" alt="" class="img-responsive profile-photo" />
+                  <img ng-src="../../images/users/{{image}}" alt="" class="img-responsive profile-photo" />
              
                         <button type="button" class="btn btn-primary" id="upload">Upload Profile Photo</button>
                     </div>
@@ -515,23 +515,6 @@
     <script src="js/jquery.scrollbar.min.js"></script>
     <script src="js/jquery.sticky-kit.min.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/checklist-model.js"></script>
-    <script src="js/angular-checkboxes.js"></script>
-        <script>
-        google.maps.event.addDomListener(window, 'load', initialize);
-        function initialize() {
-            var input = document.getElementById('pac-input');
-            var autocomplete = new google.maps.places.Autocomplete(input);
-            autocomplete.addListener('place_changed', function () {
-                var place = autocomplete.getPlace();
-                console.log(place);
-                console.log(place.geometry['location'].lat());
-                console.log(place.geometry['location'].lng());
-            });
-
-        }
-
-    </script>
     <script src="js/angular.min.js"></script>
     <script src="js/angular-cookies.min.js"></script>
     <script src="js/app.js"></script>

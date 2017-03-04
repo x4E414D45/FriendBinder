@@ -14,9 +14,6 @@ angular.module('myProfile')
     $scope.image = '';
 
     var geocoder = new google.maps.Geocoder();
-    var lat = lat;
-    var lng = lng;
-
 
     initController();
 
@@ -48,9 +45,10 @@ angular.module('myProfile')
     var address = document.getElementById('location').value;
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status === 'OK') {
-          lat = results[0].geometry.location.lat();
-          alert(lat);
-          lng = results[0].geometry.location.lng();
+          $scope.user.lat = results[0].geometry.location.lat();
+          $scope.user.lng = results[0].geometry.location.lng();
+          console.log($scope.user);
+          ProfileService.updateUser($scope.user);
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }

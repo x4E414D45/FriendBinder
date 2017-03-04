@@ -4,7 +4,7 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
      $scope.user = {about:'', name:'', dob:'', telnum:'', email:'', relationship:'',
                     education:'', career:'', location:'', interests:[], language:'', 
                     gender:'', areacode:'', other:''};
-     $scope.addFriend = {email:'',name:'',image:'',friendEmail:''};
+     $scope.addFriend = {email:'',friendName:'',image:'',friendEmail:'', isAdded:null};
      $scope.image = '';
      $scope.countries = {};
      $scope.getCountriesStates = getCountriesStates;
@@ -61,10 +61,11 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
      function friendRequestSent(friendAdd)
      {
     	 $scope.addFriend.email = $scope.user.email;
-         $scope.addFriend.name = $scope.user.name;
+         $scope.addFriend.friendName= $scope.user.name;
     	 $scope.addFriend.image = $scope.image;
     	 $scope.addFriend.friendEmail = friendAdd.email;
-    	 $http.post("/addFriend",$scope.addFriend)
+         $scope.addFriend.isAdded = false;
+    	 $http.post("/sendFriendRequest",$scope.addFriend)
     	 .then(function (success){
 
     	   },function (error){
