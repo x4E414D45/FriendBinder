@@ -20,14 +20,12 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
-import edu.cpp.Rafikie.data.AddedFriends;
 import edu.cpp.Rafikie.data.FriendDetails;
 import edu.cpp.Rafikie.data.FriendRequests;
 import edu.cpp.Rafikie.data.Image;
 import edu.cpp.Rafikie.data.Notifications;
 import edu.cpp.Rafikie.data.Register;
 import edu.cpp.Rafikie.data.UserDetails;
-import edu.cpp.Rafikie.recommender.InterestsImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -61,7 +59,6 @@ public class FSUserManager implements UserManager {
 		HashMap<String, Object> result = new ObjectMapper().readValue(userDetails, HashMap.class);
 		BasicDBObject document = new BasicDBObject();
 		String object = (String) result.get("email");
-		InterestsImpl impl=new InterestsImpl();
 		
 		BasicDBObject searchForEmail = new BasicDBObject().append("email", object);
 		DBCursor checkEmailExistence = connection.createConnectionforUserTable().find(searchForEmail);
@@ -70,10 +67,8 @@ public class FSUserManager implements UserManager {
 		if (checkEmailExistence.hasNext()) {
 			connection.createConnectionforUserTable().update(searchForEmail, document);
 			System.out.println("Updated");
-			impl.updateUserVector(object);
 		} else {
 			connection.createConnectionforUserTable().insert(document);
-			impl.updateUserVector(object);
 		}
 
 	}
