@@ -22,6 +22,7 @@ public class LoginTest {
     private UserManager userManager = new FSUserManager();
     private List<String> list = new ArrayList<>();
     
+    /*
     @Test
     public void testLogin() {
         String email = "pham@cpp.edu";
@@ -35,5 +36,6 @@ public class LoginTest {
             result = true;
         assertEquals(test, result);
     }
+*/
     
 }
