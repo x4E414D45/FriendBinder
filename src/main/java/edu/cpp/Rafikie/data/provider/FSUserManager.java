@@ -177,31 +177,32 @@ public class FSUserManager implements UserManager {
 	@Override
 	public void uploadImageToDatabase(HttpServletRequest request, String email) throws JsonParseException, JsonMappingException, IOException {
 		MultipartHttpServletRequest mRequest;
-		String filename = email;
-		mRequest = (MultipartHttpServletRequest) request;
-		mRequest.getParameterMap();
-		java.nio.file.Path path = null;
-		Iterator itr = mRequest.getFileNames();
-		while (itr.hasNext()) {
-			MultipartFile mFile = mRequest.getFile((String) itr.next());
-			String fileName = mFile.getOriginalFilename();
-			String[] split = fileName.split("\\.");
-			Files.deleteIfExists(path);
-			InputStream in = mFile.getInputStream();
-			Files.copy(in, path);
-			filename = filename + "." + split[split.length - 1];
+                String filename = email;
+                mRequest = (MultipartHttpServletRequest) request;
+                mRequest.getParameterMap();
+                java.nio.file.Path path = null;
+                Iterator itr = mRequest.getFileNames();
+                while (itr.hasNext()) {
+                 MultipartFile mFile = mRequest.getFile((String) itr.next());
+                 String fileName = mFile.getOriginalFilename();
+                 String[] split = fileName.split("\\.");
+                 path = Paths.get("/home/ec2-user/images/" + filename + "." + split[split.length - 1]);
+                 Files.deleteIfExists(path);
+                 InputStream in = mFile.getInputStream();
+                 Files.copy(in, path);
+                 filename = filename + "." + split[split.length - 1];
 
-		}
-		BasicDBObject document = new BasicDBObject();
-		BasicDBObject searchForEmail = new BasicDBObject().append("email", email);
-		DBCursor checkEmailExistence = connection.createConnectionforUserImageTable().find(searchForEmail);
-		document.put("email", email);
-		document.put("image", filename);
-		if (checkEmailExistence.hasNext()) {
-			connection.createConnectionforUserImageTable().update(searchForEmail, document);
-		} else {
-			connection.createConnectionforUserImageTable().insert(document);
-		}
+                }
+                BasicDBObject document = new BasicDBObject();
+                BasicDBObject searchForEmail = new BasicDBObject().append("email", email);
+                DBCursor checkEmailExistence = connection.createConnectionforUserImageTable().find(searchForEmail);
+                document.put("email", email);
+                document.put("image", filename);
+                if (checkEmailExistence.hasNext()) {
+                 connection.createConnectionforUserImageTable().update(searchForEmail, document);
+                } else {
+                 connection.createConnectionforUserImageTable().insert(document);
+                }
 	}
 
 	@Override
