@@ -186,7 +186,8 @@ public class FSUserManager implements UserManager {
                  MultipartFile mFile = mRequest.getFile((String) itr.next());
                  String fileName = mFile.getOriginalFilename();
                  String[] split = fileName.split("\\.");
-                 path = Paths.get("/home/ec2-user/images/" + filename + "." + split[split.length - 1]);
+		 String currentUsersHomeDir = System.getProperty("user.home");
+                 path = Paths.get(currentUsersHomeDir +"/userImages/" + filename + "." + split[split.length - 1]);
                  Files.deleteIfExists(path);
                  InputStream in = mFile.getInputStream();
                  Files.copy(in, path);

@@ -10,11 +10,13 @@ import org.springframework.context.annotation.Configuration;
 
 import edu.cpp.Rafikie.data.provider.FSUserManager;
 import edu.cpp.Rafikie.data.provider.UserManager;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-public class App {
+public class App extends WebMvcConfigurerAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(App.class.getName());
 
@@ -27,6 +29,12 @@ public class App {
 	public static void main(String[] args) throws Exception {
 		// Run Spring Boot
 		SpringApplication.run(App.class, args);
-	
+
+	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		String currentUsersHomeDir = System.getProperty("user.home");
+		registry.addResourceHandler("/userImages/**").addResourceLocations("file://" + currentUsersHomeDir+ "/userImages/");
 	}
 }
