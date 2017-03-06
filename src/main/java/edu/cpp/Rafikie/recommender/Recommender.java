@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import edu.cpp.Rafikie.util.Geocoder;
+import org.apache.commons.math3.exception.MathArithmeticException;
 
 @Service("Recommender")
 public class Recommender {
@@ -90,9 +91,15 @@ public class Recommender {
 		}
 		RealVector rv_a = new ArrayRealVector(a.getVectorRepr());
 		RealVector rv_b = new ArrayRealVector(b.getVectorRepr());
-		Double interestSimilarity = rv_a.cosine(rv_b);
 		Double physicalDistanceNorm = getNormalizedPhysicalDistance(a, b);
-		return interestSimilarity - physicalDistanceNorm;
+		try {
+			Double interestSimilarity = rv_a.cosine(rv_b);
+			return interestSimilarity - physicalDistanceNorm;
+		}
+		catch (MathArithmeticException e) {
+			e.printStackTrace();		
+		}
+		return physicalDistanceNorm;
 	}
 
 	private Double getNormalizedPhysicalDistance(UserDetails a, UserDetails b) {
