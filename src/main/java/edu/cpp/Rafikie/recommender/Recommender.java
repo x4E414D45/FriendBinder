@@ -99,7 +99,7 @@ public class Recommender {
 		catch (MathArithmeticException e) {
 			e.printStackTrace();		
 		}
-		return physicalDistanceNorm;
+		return -physicalDistanceNorm;
 	}
 
 	private Double getNormalizedPhysicalDistance(UserDetails a, UserDetails b) {
