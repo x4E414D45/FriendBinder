@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import edu.cpp.Rafikie.data.FetchMessage;
 import edu.cpp.Rafikie.data.FriendDetails;
 import edu.cpp.Rafikie.data.Image;
 import edu.cpp.Rafikie.data.Notifications;
@@ -28,6 +29,9 @@ public interface UserManager {
 	public void addFriend(String email)throws JsonParseException, JsonMappingException, IOException ;
 	public List<FriendDetails> getFriendDetails(String email)throws JsonParseException, JsonMappingException, IOException ;
 	public List<String> allFriends(String email) throws JsonParseException, JsonMappingException, IOException;
+	public void messageDetails(String details) throws JsonParseException, JsonMappingException, IOException;
+	public int getLastCount(String email, String receiverEmail) throws JsonParseException, JsonMappingException, IOException;
+	public ArrayList<FetchMessage> fetchMessages(String address) throws JsonParseException, JsonMappingException, IOException;
 	
 
 }

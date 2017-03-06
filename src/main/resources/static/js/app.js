@@ -113,3 +113,43 @@ var Friends = angular.module('myFriends',['ngCookies'])
  var FriendList = angular.module('friendList',['ngCookies'])
 
     .run(run);
+    
+    run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
+      function run($rootScope, $location, $cookies, $http) {
+          // keep user logged in after page refresh
+          $rootScope.globals = $cookies.getObject('globals') || {};
+          if ($rootScope.globals.currentUser) {
+              $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+          }
+
+          $rootScope.$on('$locationChangeStart', function (event, next, current) {
+              // redirect to login page if not logged in and trying to access a restricted page
+              var restrictedPage = $.inArray($location.path(), ['/index.html','/profile.html']) === -1;
+              var loggedIn = $rootScope.globals.currentUser;
+              if (restrictedPage && !loggedIn) {
+                  $location.path('/index.html');
+              }
+          });
+      }
+    
+var Chatroom = angular.module('myChatroom',['ngCookies'])
+
+    .run(run);
+    
+    run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
+      function run($rootScope, $location, $cookies, $http) {
+          // keep user logged in after page refresh
+          $rootScope.globals = $cookies.getObject('globals') || {};
+          if ($rootScope.globals.currentUser) {
+              $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+          }
+
+          $rootScope.$on('$locationChangeStart', function (event, next, current) {
+              // redirect to login page if not logged in and trying to access a restricted page
+              var restrictedPage = $.inArray($location.path(), ['/index.html','/profile.html']) === -1;
+              var loggedIn = $rootScope.globals.currentUser;
+              if (restrictedPage && !loggedIn) {
+                  $location.path('/index.html');
+              }
+          });
+      }

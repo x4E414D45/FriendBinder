@@ -8,5 +8,6 @@ public interface MongoDBConnection {
 	 public DBCollection createConnectionforUserTable();
 	 public	DBCollection createConnectionforUserImageTable();
 	 public DBCollection  createConnectionforUserNotificationTable();
+	 public DBCollection createConnectionforMessageTable();
 
 }

@@ -10,6 +10,7 @@ angular.module('friendList').controller('FriendListController', ['$scope','$root
      $scope.notifications = {};
      $scope.addedFriends = {};
      $scope.friendCount = 0;
+     $scope.acceptFriend = acceptFriend;
      
      initController();
 
@@ -61,5 +62,28 @@ angular.module('friendList').controller('FriendListController', ['$scope','$root
       	   });	
     	
     }
+     function acceptFriend(notificationAccept)
+    {
+    	 $scope.addFriend.email = $scope.user.email;
+       	 $scope.addFriend.image = $scope.image;
+       	 $scope.addFriend.friendEmail = notificationAccept.email;
+       	 $scope.addFriend.friendName = $scope.user.name;
+       	 $scope.addFriend.isAdded = true;
+       	 $http.post("/sendFriendRequest", $scope.addFriend)
+       	 .then(function (success){
+       		 
+       		 $scope.addFriend.email = notificationAccept.email;
+           	 $scope.addFriend.image = notificationAccept.image;
+           	 $scope.addFriend.friendEmail = $scope.user.email;
+           	 $scope.addFriend.friendName = notificationAccept.name;
+           	 $scope.addFriend.isAdded = true;
+           	$http.post("/sendFriendRequest", $scope.addFriend)
+
+       	   },function (error){
+
+       	});
+        
+     }
+     
      
  }]);

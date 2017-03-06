@@ -18,6 +18,7 @@ angular.module('myProfile')
     initController();
 
     function initController() {
+        location.reload();
         $scope.user.email = $rootScope.globals.currentUser.email;
         getUser();
         getImage();
