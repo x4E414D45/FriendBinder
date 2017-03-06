@@ -4,7 +4,7 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
      $scope.user = {about:'', name:'', dob:'', telnum:'', email:'', relationship:'',
                     education:'', career:'', location:'', interests:[], language:'', 
                     gender:'', areacode:'', other:''};
-     $scope.addFriend = {email:'',friendName:'',image:'',friendEmail:'', isAdded:null};
+     $scope.addFriend = {email:'',friendName:'',image:'',friendEmail:'', isAdded: false};
      $scope.image = '';
      $scope.countries = {};
      $scope.getCountriesStates = getCountriesStates;
@@ -13,7 +13,10 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
      $scope.recommendedFriends = {};
      $scope.friendRequestSent = friendRequestSent;
      $scope.getNotifications = getNotifications;
+     $scope.acceptFriend = acceptFriend;
      $scope.notifications = {};
+     $scope.addedFriends = {};
+     $scope.friendCount = 0;
      
      
      $scope.data = {};
@@ -27,6 +30,7 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
         getImage();
         fetchFriendsWithSimilarInterests();
         getNotifications();
+        getAddedFriends();
     }
     
     function getUser(){       
@@ -118,7 +122,7 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
            	 $scope.addFriend.image = notificationAccept.image;
            	 $scope.addFriend.friendEmail = $scope.user.email;
            	 $scope.addFriend.friendName = notificationAccept.name;
-           	 $scope.addFriend.isAdded=true;
+           	 $scope.addFriend.isAdded = true;
            	$http.post("/sendFriendRequest", $scope.addFriend)
 
        	   },function (error){
@@ -127,8 +131,24 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
         
      }
      
-     $scope.remove=function($index){ 
+     $scope.removeSuggest=function($index){ 
             $scope.recommendedFriends.splice($index,1);     
-         }
+        }
+        
+      $scope.removeRequest=function($index){ 
+            $scope.notifications.splice($index,1);     
+        }
+         
+    function getAddedFriends()
+    {
+    	$http.post('fetchAddedFriends/', $scope.user.email)
+      	 .then(function (success){
+      		$scope.addedFriends = success.data;
+      		$scope.friendCount = $scope.addedFriends.length;
+      	   },function (error){
+
+      	   });	
+    	
+    }
      
  }]);

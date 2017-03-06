@@ -82,8 +82,8 @@
             <div class="profile-card">
             	<img ng-src="userImages/{{image}}" alt="user" class="profile-photo" />
             	<h5><a href="timeline.html" class="text-white">{{user.name}}</a></h5>
-            	<a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 100 friends</a>
-                        </div><!--profile card ends-->
+            	<a href="#" class="text-white"><i class="ion ion-android-person-add"></i>{{friendCount}} friends</a>
+            </div><!--profile card ends-->
                     <form>
                             <h4 class="grey">Search for Friends</h4>
                       <div class="form-group">
@@ -136,7 +136,7 @@
                     <p class="text-muted">Location : {{user.location}}</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
-                    <button ng-click="friendRequestSent(user);remove($index)"class="btn btn-primary pull-right">Add Friend</button>
+                    <button ng-click="friendRequestSent(user);removeSuggest($index)"class="btn btn-primary pull-right">Add Friend</button>
                   </div>
                   </div>
                 </div>
@@ -164,7 +164,7 @@
                   <p class="text-red">Send you a friend request</p>                
                 </div>
                 <div class="btn-group" role="group" aria-label="...">
-                    <button type="button" class="btn btn-success" ng-click="acceptFriend(request)">Accept</button>
+                    <button type="button" class="btn btn-success" ng-click="acceptFriend(request); removeRequest($index)">Accept</button>
                     <button type="button" class="btn btn-warning">Decline</button>
                   </div>
               </div>

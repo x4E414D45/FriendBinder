@@ -207,66 +207,66 @@ public class FSUserManager implements UserManager {
 	}
 
 	@Override
-	public boolean addFriendRequests(String email) throws JsonParseException, JsonMappingException, IOException {
-		int count=0;
-		HashMap<String, Object> result = new ObjectMapper().readValue(email, HashMap.class);
+            public boolean addFriendRequests(String email) throws JsonParseException, JsonMappingException, IOException {
+             int count=0;
+             HashMap<String, Object> result = new ObjectMapper().readValue(email, HashMap.class);
 
-		BasicDBObject document = new BasicDBObject();
-		BasicDBList friendDetails = new BasicDBList();
-		BasicDBObject friend = new BasicDBObject();
-		friend.put("email", (String) result.get("email"));
-		friend.put("image", (String) result.get("image"));
-		friend.put("name", (String) result.get("friendName"));
-		friend.put("isAdded", (Boolean) result.get("isAdded"));
-		friendDetails.add(friend);
-		Gson gson = new Gson();
-		String userEmail = (String) result.get("email");
-		FriendRequests friendRequests = new FriendRequests();
-		BasicDBObject searchForEmail = new BasicDBObject().append("email", (String) result.get("friendEmail"));
-		DBCursor checkEmailExistence = connection.createConnectionforUserNotificationTable().find(searchForEmail);
-		document.put("email", (String) result.get("friendEmail"));
+             BasicDBObject document = new BasicDBObject();
+             BasicDBList friendDetails = new BasicDBList();
+             BasicDBObject friend = new BasicDBObject();
+             friend.put("email", (String) result.get("email"));
+             friend.put("image", (String) result.get("image"));
+             friend.put("name", (String) result.get("friendName"));
+             friend.put("isAdded", (Boolean) result.get("isAdded"));
+             friendDetails.add(friend);
+             Gson gson = new Gson();
+             String userEmail = (String) result.get("email");
+             FriendRequests friendRequests = new FriendRequests();
+             BasicDBObject searchForEmail = new BasicDBObject().append("email", (String) result.get("friendEmail"));
+             DBCursor checkEmailExistence = connection.createConnectionforUserNotificationTable().find(searchForEmail);
+             document.put("email", (String) result.get("friendEmail"));
 
-		if (checkEmailExistence.hasNext()) {
+             if (checkEmailExistence.hasNext()) {
 
-			friendRequests = gson.fromJson(checkEmailExistence.next().toString(), FriendRequests.class);
+              friendRequests = gson.fromJson(checkEmailExistence.next().toString(), FriendRequests.class);
 
-			for (FriendDetails details : friendRequests.getRequests()) {
-				BasicDBObject fri = new BasicDBObject();
-				if (!details.getEmail().equals((String) result.get("email"))) {
-					fri.put("email", details.getEmail());
-					fri.put("image", details.getImage());
-					fri.put("name", details.getName());
-					fri.put("isAdded",details.isAdded());
-					fri.put("isIgnored", details.isIgnored());
-					fri.put("isBlocked", details.isIgnored());
-					friendDetails.add(fri);
-				}
-				else if(details.getEmail().equals((String) result.get("email"))&& (Boolean) result.get("isAdded"))
-				{
-					count++;
-				}
-			}
-			if(count!=0)
-			{
-				connection.createConnectionforUserNotificationTable().remove(searchForEmail);
-				document.put("requests", friendDetails);
-				connection.createConnectionforUserNotificationTable().insert(document);
-				
-			}
-			else
-			{
-			document.put("requests", friendDetails);
-			connection.createConnectionforUserNotificationTable().update(searchForEmail, document);
-			}
+              for (FriendDetails details : friendRequests.getRequests()) {
+               BasicDBObject fri = new BasicDBObject();
+               if (!details.getEmail().equals((String) result.get("email"))) {
+                fri.put("email", details.getEmail());
+                fri.put("image", details.getImage());
+                fri.put("name", details.getName());
+                fri.put("isAdded",details.isAdded());
+                fri.put("isIgnored", details.isIgnored());
+                fri.put("isBlocked", details.isIgnored());
+                friendDetails.add(fri);
+               }
+               else if(details.getEmail().equals((String) result.get("email"))&& (Boolean) result.get("isAdded"))
+               {
+                count++;
+               }
+              }
+              if(count!=0)
+              {
+               connection.createConnectionforUserNotificationTable().remove(searchForEmail);
+               document.put("requests", friendDetails);
+               connection.createConnectionforUserNotificationTable().insert(document);
 
-		} else {
-			document.put("requests", friendDetails);
-			connection.createConnectionforUserNotificationTable().insert(document);
+              }
+              else
+              {
+              document.put("requests", friendDetails);
+              connection.createConnectionforUserNotificationTable().update(searchForEmail, document);
+              }
 
-		}
+             } else {
+              document.put("requests", friendDetails);
+              connection.createConnectionforUserNotificationTable().insert(document);
 
-		return false;
-	}
+             }
+
+        return false;
+    }
 
 	public ArrayList<Notifications> getNotifications(String email) {
 		BasicDBObject searchForEmail = new BasicDBObject().append("email", email);

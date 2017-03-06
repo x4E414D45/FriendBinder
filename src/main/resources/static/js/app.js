@@ -109,3 +109,7 @@ var Friends = angular.module('myFriends',['ngCookies'])
               }
           });
       }
+      
+ var FriendList = angular.module('friendList',['ngCookies'])
+
+    .run(run);
