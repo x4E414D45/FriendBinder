@@ -15,6 +15,7 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
      $scope.getNotifications = getNotifications;
      $scope.notifications = {};
      
+     
      $scope.data = {};
      
      
@@ -125,5 +126,9 @@ angular.module('myFriends').controller('FriendController', ['$scope','$rootScope
        	});
         
      }
+     
+     $scope.remove=function($index){ 
+            $scope.recommendedFriends.splice($index,1);     
+         }
      
  }]);

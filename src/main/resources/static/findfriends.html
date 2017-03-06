@@ -80,7 +80,7 @@
           ================================================= -->
     	<div class="col-md-3 static">
             <div class="profile-card">
-            	<img ng-src="../../images/users/{{image}}" alt="user" class="profile-photo" />
+            	<img ng-src="userImages/{{image}}" alt="user" class="profile-photo" />
             	<h5><a href="timeline.html" class="text-white">{{user.name}}</a></h5>
             	<a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 100 friends</a>
                         </div><!--profile card ends-->
@@ -126,7 +126,7 @@
               <div class="nearby-user" ng-repeat="user in recommendedFriends">
                 <div class="row">
                   <div class="col-md-2 col-sm-2">
-                    <img ng-src="../../images/users/{{user.image}}" alt="user" class="profile-photo-lg" />
+                    <img ng-src="userImages/{{user.image}}" alt="user" class="profile-photo-lg" />
                   </div>
                   <div class="col-md-7 col-sm-7">
                     <h5><a href="#" class="profile-link">{{user.name}}</a></h5>
@@ -136,7 +136,7 @@
                     <p class="text-muted">Location : {{user.location}}</p>
                   </div>
                   <div class="col-md-3 col-sm-3">
-                    <button ng-click="friendRequestSent(user)"class="btn btn-primary pull-right">Add Friend</button>
+                    <button ng-click="friendRequestSent(user);remove($index)"class="btn btn-primary pull-right">Add Friend</button>
                   </div>
                   </div>
                 </div>
@@ -158,7 +158,7 @@
             <div class="suggestions" id="sticky-sidebar">
               <h4 class="grey">Notifications</h4>                                           
               <div class="follow-user" ng-repeat="request in notifications">
-                <img src="../../images/users/{{request.image}}" alt="" class="profile-photo-sm pull-left" />
+                <img ng-src="userImages/{{request.image}}" alt="" class="profile-photo-sm pull-left" />
                 <div>
                   <h5><a href="timeline.html">{{request.name}}</a></h5>
                   <p class="text-red">Send you a friend request</p>                
