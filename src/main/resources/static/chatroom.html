@@ -82,16 +82,16 @@
 
     	<div class="col-md-3 static">
             <div class="profile-card">
-            	<img src="../../images/{{cctrl.data}}" alt="user" class="profile-photo" />
+            	<img src="userImages/{{cctrl.data}}" alt="user" class="profile-photo" />
             	<h5><a href="timeline.html" class="text-white">{{cctrl.name}}</a></h5>
             	<a href="#" class="text-white"><i class="ion ion-android-person-add"></i>{{cctrl.friendCount}} friends</a>
             </div><!--profile card ends-->
             <div class="chat-room">
              <ul class="nav nav-tabs contact-list scrollbar-wrapper scrollbar-outer">
-                    <li class="active">
-                      <a href="#contact-1"   data-toggle="tab">
-                        <div ng-repeat="friends in cctrl.addedFriends" class="contact">
-                        	<img src="../../images/{{cctrl.data}}" alt="" class="profile-photo-sm pull-left"/>
+                    <li class="active" ng-repeat="friends in cctrl.addedFriends">
+                      <a href="#contact-1" data-toggle="tab">
+                        <div class="contact">
+                        	<img src="userImages/{{friends.image}}" alt="" class="profile-photo-sm pull-left"/>
                         	<div ng-click="cctrl.getMessages(friends)" class="msg-preview">
                         		<h6>{{friends.name}}</h6>
                             <div class="chat-alert">1</div>
@@ -111,7 +111,7 @@
             	<div class="row">
                     <div class="col-md-7 col-sm-7">
                         <div>
-                            <h2>Name of Conversation</h2>
+                            <h2>Conversation</h2>
                         </div>
                     </div>
             	</div>
