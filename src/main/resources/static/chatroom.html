@@ -88,10 +88,10 @@
             </div><!--profile card ends-->
             <div class="chat-room">
              <ul class="nav nav-tabs contact-list scrollbar-wrapper scrollbar-outer">
-                    <li class="active">
+                    <li class="active" ng-repeat="friends in cctrl.addedFriends">
                       <a href="#contact-1"   data-toggle="tab">
-                        <div ng-repeat="friends in cctrl.addedFriends" class="contact">
-                        	<img src="../../images/{{cctrl.data}}" alt="" class="profile-photo-sm pull-left"/>
+                        <div class="contact">
+                        	<img src="../../images/{{friends.image}}" alt="" class="profile-photo-sm pull-left"/>
                         	<div ng-click="cctrl.getMessages(friends)" class="msg-preview">
                         		<h6>{{friends.name}}</h6>
                             <div class="chat-alert">1</div>
@@ -111,7 +111,7 @@
             	<div class="row">
                     <div class="col-md-7 col-sm-7">
                         <div>
-                            <h2>Name of Conversation</h2>
+                            <h2>Conversation</h2>
                         </div>
                     </div>
             	</div>
@@ -149,7 +149,7 @@
 
                   <div class="send-message">
                     <form class="input-group" ng-submit="cctrl.sendMessages()">
-                      <input type="text" class="form-control" ng-model="cctrl.messageBody" lplaceholder="Type your message">
+                      <input type="text" class="form-control" ng-model="cctrl.messageBody" placeholder="Type your message">
                       <span class="input-group-btn">
                         <button class="btn btn-default" type="submit">Send</button>
                       </span>
