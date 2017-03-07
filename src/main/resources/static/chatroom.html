@@ -89,15 +89,9 @@
             <div class="chat-room">
              <ul class="nav nav-tabs contact-list scrollbar-wrapper scrollbar-outer">
                     <li class="active" ng-repeat="friends in cctrl.addedFriends">
-<<<<<<< HEAD
-                      <a href="#contact-1"   data-toggle="tab">
-                        <div class="contact">
-                        	<img src="../../images/{{friends.image}}" alt="" class="profile-photo-sm pull-left"/>
-=======
                       <a href="#contact-1" data-toggle="tab">
                         <div class="contact">
-                        	<img src="userImages/{{friends.image}}" alt="" class="profile-photo-sm pull-left"/>
->>>>>>> 9bc8145c78c793f5a4046d6d10bea4b354e09727
+                        	<img ng-src="userImages/{{friends.image}}" alt="" class="profile-photo-sm pull-left"/>
                         	<div ng-click="cctrl.getMessages(friends)" class="msg-preview">
                         		<h6>{{friends.name}}</h6>
                             <div class="chat-alert">1</div>
