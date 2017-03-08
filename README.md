@@ -15,7 +15,7 @@ This application recommends other user with similar interests and close geograph
 - ```$ java -jar target/Rafikie-1.0.jar```
 
 
-###### Technologies
+#### Technologies
 - AngularJS
 - AWS
 - Bootstrap
